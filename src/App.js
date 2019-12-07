@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import './App.css';
-import Toggle from "./components/reducer-hook/Toggle";
-import {MVC} from "./components/mvc/mvc-pattern/MVCPattern";
+// import ThunkReducerPattern from "./components/thunk-reducer/ThunkReducer";
+// import AddToState from "./components/add-to-state/AddToState";
+// import Toggle from "./components/reducer-hook/Toggle";
+// import {MVC} from "./components/mvc/mvc-pattern/MVCPattern";
 // import Toggle from "./components/state-reducer/Toggle";
 // import Toggle from "./components/state-initializers/Toggle";
 // import Toggle from "./components/render-props/Toggle";
@@ -76,9 +78,14 @@ function App() {
       {/*Reducer Hook*/}
       {/*<Toggle/>*/}
       
-      MVC Pattern
-      <MVC/>
+      {/*MVC Pattern*/}
+      {/*<MVC/>*/}
       
+      {/*Thunk Dispatch*/}
+      {/*<ThunkReducerPattern/>*/}
+      
+      {/*Add To State*/}
+      {/*<AddToState/>*/}
     </div>
   );
 }
