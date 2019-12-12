@@ -1,5 +1,9 @@
 import React, {useState} from 'react';
 import './App.css';
+// import ThunkReducerPattern from "./components/thunk-reducer/ThunkReducer";
+// import AddToState from "./components/add-to-state/AddToState";
+// import Toggle from "./components/reducer-hook/Toggle";
+// import {MVC} from "./components/mvc/mvc-pattern/MVCPattern";
 import Redux from "./components/redux/redux";
 import {User} from "./components/redux/connected-component";
 
@@ -93,6 +97,14 @@ function App() {
         <User name={'Stan'}/>
       </Redux>
 
+      {/*MVC Pattern*/}
+      {/*<MVC/>*/}
+      
+      {/*Thunk Dispatch*/}
+      {/*<ThunkReducerPattern/>*/}
+      
+      {/*Add To State*/}
+      {/*<AddToState/>*/}
     </div>
   );
 }
