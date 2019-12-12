@@ -8,12 +8,16 @@ function reducer(state, action) {
 	return state
 }
 
+const toggelOfActionCreator = (payload) => {
+	return {type: 'toggle-of', payload}
+};
+
 const Toggle = () => {
 	const [state, dispatch] = useReducer(reducer, {on: false});
 	
 	const handleClick = () => {
 		const {on} = state;
-		if (on) dispatch({type: 'toggle-of'});
+		if (on) dispatch(toggelOfActionCreator());
 		else dispatch({type: 'toggle-on'});
 	};
 	

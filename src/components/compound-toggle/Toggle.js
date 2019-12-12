@@ -1,22 +1,25 @@
 import React, {createContext, useCallback, useContext, useMemo, useState} from 'react';
 
-const ToggleContext = createContext({});
+export const ToggleContext = createContext({});
 
-function useToggleContext () {
+export function useToggleContext () {
 	const context = useContext(ToggleContext);
+	if (!context){
+		throw new Error('Some')
+	}
 	return context
 }
 
-export function Toggle ({children}) {
-	const [on, setOn] = useState(false);
+export function Toggle ({children, initValue}) {
+	const [on, setOn] = useState(() => initValue || false);
 	
 	// const toggle = () => setOn(!on); // simple
 	// const toggle = () => setOn(prevOn => !prevOn); // callback
 	const toggle = useCallback(() => setOn(prevOn => !prevOn),[]); // save the ref
 	
 	// const contextValue = {toggle, on};
-	const contextValue = useMemo(()=>({toggle, on}),[on]);
-	
+	// const contextValue = useMemo(()=>({toggle, on}),[on]);
+	const contextValue = {toggle, on};
 	return (
 		<ToggleContext.Provider value={contextValue}>
 			{children}
@@ -24,21 +27,21 @@ export function Toggle ({children}) {
 	);
 }
 
-function On(){
+function On({children}){
 	const {on} = useToggleContext();
 	
-	return on ? <div>ON</div> : null
+	return on ? <div>{children}</div> : null
 }
 
-function Off(){
+function Off({children}){
 	const {on} = useToggleContext();
 	
-	return on ?  null: <div>Off</div>
+	return on ?  null: <div>{children}</div>
 }
 
-function Button(){
+function Button({children}){
 	const {toggle} = useToggleContext();
-	return <button onClick={toggle}>Toggle</button>
+	return <button data-testid={"toggle.button"} onClick={toggle}>{children}</button>
 }
 
 Toggle.On = On; // may be by it self, just nice to have

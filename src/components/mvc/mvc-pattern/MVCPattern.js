@@ -1,5 +1,6 @@
 import React, {
 	createContext,
+	useRef,
 	useCallback,
 	useContext,
 	useMemo,
@@ -13,6 +14,10 @@ const useModelContext = () => useContext(ModelContext);
 const ControllerContext = createContext({});
 const ControllerContextProvider = ControllerContext.Provider;
 const useControllerContext = () => useContext(ControllerContext);
+
+const useContext_ = () => {
+	return [useControllerContext(),useModelContext()]
+};
 
 
 const Model = ({children}) => {
@@ -29,7 +34,7 @@ const Model = ({children}) => {
 
 const Controller = ({children}) => {
 	const {counter, setCounter: _setCounter} = useModelContext();
-	
+
 	const increment = useCallback(() => _setCounter(counter + 1), [counter]);
 	const decrement = useCallback(() => _setCounter(counter - 1), [counter]);
 	const reset = useCallback(() => _setCounter(0), [counter]);
@@ -56,6 +61,7 @@ const Controller = ({children}) => {
 };
 
 const StyledInput = ({value, onChange}) => {
+
 	return (
 		<input
 			value={value}
@@ -74,7 +80,7 @@ const StyledCounter = ({value}) => {
 	return <div style={{fontSize: '3rem', fontWeight: 700}}>{value}</div>
 };
 
-const View = () => {
+const View = ({getSome, data}) => {
 	const {counter, decrement, increment, reset, setCounter } = useControllerContext();
 	
 	return (
@@ -89,10 +95,12 @@ const View = () => {
 	);
 };
 
-export const MVC = () => (
-	<Model>
-		<Controller>
-			<View/>
-		</Controller>
-	</Model>
-)
+export const MVC = () => {
+	return (
+		<Model>
+			<Controller>
+				<View data={[]}/>
+			</Controller>
+		</Model>
+	)
+}
