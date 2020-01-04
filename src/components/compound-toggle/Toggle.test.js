@@ -3,13 +3,17 @@ import {fireEvent, render} from '@testing-library/react'
 import { Toggle, ToggleContext } from "./Toggle";
 
 
+const ClickEvent = new MouseEvent('click', {
+  bubbles: true,
+  cancelable: true,
+});
+
 test('Toggle.On renders children when gets "on" true prop', () => {
     const { getByText } = render(
         <ToggleContext.Provider value={{on: true, toggle: ()=>{}}}>
             <Toggle.On>On</Toggle.On>
         </ToggleContext.Provider>
     );
-
     const a = getByText('On');
     expect(a.innerHTML).toEqual('On');
 });
@@ -69,7 +73,7 @@ test('Toggle.Button to toggle state.', () => {
         </Toggle>
     );
     const button = getByTestId('toggle.button');
-    fireEvent(button, 'click');
+    fireEvent(button, ClickEvent);
     const a = getByText('Off');
     expect(a.innerHTML).toEqual('Off');
 });
