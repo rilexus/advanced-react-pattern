@@ -1,20 +1,23 @@
 import React, {useState} from 'react';
 import './App.css';
+// import InputValidator from "./components/form/input-validator/InputValidator";
+// import InputController from "./components/form/input-controller/InputController";
 // import ThunkReducerPattern from "./components/thunk-reducer/ThunkReducer";
 // import AddToState from "./components/add-to-state/AddToState";
 // import Toggle from "./components/reducer-hook/Toggle";
 // import {MVC} from "./components/mvc/mvc-pattern/MVCPattern";
-import Redux from "./components/redux/redux";
-import {User} from "./components/redux/connected-component";
-
+// import Redux from "./components/redux/redux";
+// import {User} from "./components/redux/connected-component";
 // import {MVC} from "./components/mvc/mvc-pattern/MVCPattern";
 // import Toggle from "./components/reducer-hook/Toggle";
-// import Toggle from "./components/state-reducer/Toggle";
+import Toggle from "./components/state-reducer/Toggle";
 // import Toggle from "./components/state-initializers/Toggle";
 // import Input from "./components/props-collection/Input";
-// import InputHandler from "./components/render-props/Input";
+
+// import InputHandler from "./components/input-handler/Input";
 // import Toggle from "./components/render-props/Toggle";
 // import {Toggle} from "./components/compound-toggle/Toggle";
+
 
 
 function App() {
@@ -83,9 +86,9 @@ function App() {
       
       
       {/*State Reducer*/}
-      {/*<Toggle*/}
-      {/*    reduceState={handleState}*/}
-      {/*/>*/}
+      <Toggle
+          reduceState={handleState}
+      />
       
       {/*Reducer Hook*/}
       {/*<Toggle/>*/}
@@ -93,9 +96,9 @@ function App() {
       {/*MVC Pattern*/}
       {/*<MVC/>*/}
 
-      <Redux>
-        <User name={'Stan'}/>
-      </Redux>
+      {/*<Redux>*/}
+      {/*  <User name={'Stan'}/>*/}
+      {/*</Redux>*/}
 
       {/*MVC Pattern*/}
       {/*<MVC/>*/}
