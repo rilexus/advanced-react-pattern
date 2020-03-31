@@ -10,18 +10,18 @@ export function useToggleContext () {
 	return context
 }
 
-export function Toggle ({children, initValue}) {
+export function CompoundToggle ({children, initValue}) {
 	const [on, setOn] = useState(() => initValue || false);
 	
 	// const toggle = () => setOn(!on); // simple
 	// const toggle = () => setOn(prevOn => !prevOn); // callback
-	const toggle = useCallback(() => setOn(prevOn => !prevOn),[]); // save the ref
+	const toggle = () => setOn(prevOn => !prevOn); // save the ref
 	
 	// const contextValue = {toggle, on};
 	// const contextValue = useMemo(()=>({toggle, on}),[on]);
-	const contextValue = {toggle, on};
+
 	return (
-		<ToggleContext.Provider value={contextValue}>
+		<ToggleContext.Provider value={{toggle, on}}>
 			{children}
 		</ToggleContext.Provider>
 	);
@@ -44,8 +44,8 @@ function Button({children}){
 	return <button data-testid={"toggle.button"} onClick={toggle}>{children}</button>
 }
 
-Toggle.On = On; // may be by it self, just nice to have
-Toggle.Off = Off;
-Toggle.Button = Button;
+CompoundToggle.On = On; // may be by it self, just nice to have
+CompoundToggle.Off = Off;
+CompoundToggle.Button = Button;
 
 

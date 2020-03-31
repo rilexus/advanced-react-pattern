@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/advanced-patterns.iml" filepath="$PROJECT_DIR$/.idea/advanced-patterns.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/advanced-react-pattern.iml" filepath="$PROJECT_DIR$/.idea/advanced-react-pattern.iml" />
     </modules>
   </component>
 </project>

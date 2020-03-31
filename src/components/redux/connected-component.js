@@ -27,6 +27,6 @@ export const User = connect(
         user: state.user
     }),
     (dispatch) => ({
-        getUserById: (byId) => dispatch(() => fetchUserById(byId, dispatch))
+        getUserById: (byId) => dispatch(() => fetchUserById(dispatch, byId))
     }),
     )(_User);

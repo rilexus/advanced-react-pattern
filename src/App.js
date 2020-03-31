@@ -1,28 +1,41 @@
 import React, {useState} from 'react';
 import './App.css';
+
+
 // import InputValidator from "./components/form/input-validator/InputValidator";
 // import InputController from "./components/form/input-controller/InputController";
-// import ThunkReducerPattern from "./components/thunk-reducer/ThunkReducer";
-// import AddToState from "./components/add-to-state/AddToState";
-// import Toggle from "./components/reducer-hook/Toggle";
-// import {MVC} from "./components/mvc/mvc-pattern/MVCPattern";
-// import Redux from "./components/redux/redux";
-// import {User} from "./components/redux/connected-component";
-// import {MVC} from "./components/mvc/mvc-pattern/MVCPattern";
-// import Toggle from "./components/reducer-hook/Toggle";
-import Toggle from "./components/state-reducer/Toggle";
-// import Toggle from "./components/state-initializers/Toggle";
-// import Input from "./components/props-collection/Input";
 
-// import InputHandler from "./components/input-handler/Input";
-// import Toggle from "./components/render-props/Toggle";
-// import {Toggle} from "./components/compound-toggle/Toggle";
+
+
+import {User} from "./components/redux/connected-component";
+import Redux from "./components/redux/redux";
+
+import { MVC } from "./components/mvc/mvc-pattern/MVCPattern";
+
+
+import SimpleContext, {SimpleContextConsumer} from "./components/simple-context/SimpleContext";
+import ContextHooks from "./components/context-hooks/ContextHooks";
+import {ContextHookInput} from "./components/context-hooks/Input";
+import ThunkReducerPattern from "./components/thunk-reducer/ThunkReducer";
+import ReducerHookToggle from "./components/reducer-hook/ReducerHookToggle";
+
+
+import StateReducerToggle from "./components/state-reducer/StateReducerToggle";
+import StateInitializerToggle from "./components/state-initializers/StateInitializerToggle";
+import AddToState from "./components/add-to-state/AddToState";
+
+import RenderPropsInput from "./components/input-handler/RenderPropsInput";
+import RenderPropsToggle from "./components/render-props/RenderPropsToggle";
+import PropCollectionInput from "./components/props-collection/PropCollectionInput";
+import {CompoundToggle} from "./components/compound-toggle/CompoundToggle";
+import {ReduxConnected} from "./components/redux-connected/ReduxConnected";
 
 
 
 function App() {
   const [count, setCount] = useState(0);
-  
+
+
   const handleState = (state, changes) => {
     setCount(count + 1);
     if (count < 5) {
@@ -30,69 +43,98 @@ function App() {
     }
     return state
   }
-  
+
+
   return (
     <div className="App">
-      {/*<Toggle>*/}
-      {/*  <Toggle.Button>Toggle</Toggle.Button>*/}
-      {/*  <div>*/}
-      {/*    Some*/}
-      {/*  </div>*/}
-      {/*  <Toggle.On>On</Toggle.On>*/}
-      {/*  <Toggle.Off>Off</Toggle.Off>*/}
-      {/*</Toggle>*/}
 
+      {/*State Initializers*/}
+      {/*<StateInitializerToggle initialState={true} />*/}
+
+
+      {/*State Reducer*/}
+      {/*<StateReducerToggle reduceState={handleState}/>*/}
+
+      {/*Add To State*/}
+      {/*<AddToState/>*/}
+
+      {/*Reducer Hook*/}
+      {/*<ReducerHookToggle/>*/}
+
+      {/*Thunk Dispatch*/}
+      {/*<ThunkReducerPattern />*/}
 
       {/*Render Props 1*/}
       {/*<hr/>*/}
-      {/*<Toggle>*/}
+      {/*<RenderPropsToggle>*/}
       {/*  {({on,toggle}) => (*/}
-      {/*      <div>*/}
-      {/*        <div>{on? 'On': 'Off'}</div>*/}
-      {/*        <button onClick={toggle}>Toggle</button>*/}
-      {/*      </div>*/}
+      {/*    <div>*/}
+      {/*      <div>{on? 'On': 'Off'}</div>*/}
+      {/*      <button onClick={toggle}>Toggle</button>*/}
+      {/*    </div>*/}
       {/*  )}*/}
-      {/*</Toggle>*/}
-      
-      
+      {/*</RenderPropsToggle>*/}
+
       {/*Render Props 2*/}
       {/*<hr/>*/}
-      {/*<InputHandler>*/}
-      {/*  {({value, setValue})=>(*/}
-      {/*    <input value={value} onChange={(e)=> setValue(e)} type="text"/>*/}
+      {/*<RenderPropsInput>*/}
+      {/*  {({ value, setValue }) => (*/}
+      {/*    <div>*/}
+      {/*      <div>*/}
+      {/*        <label htmlFor={'renderinput'}>*/}
+      {/*          render props input*/}
+      {/*        </label>*/}
+      {/*      </div>*/}
+      {/*      <input value={value} id={'renderinput'} onChange={(e) => setValue(e)} type="text" placeholder={'Enter a value'}/>*/}
+      {/*    </div>*/}
       {/*  )}*/}
-      {/*</InputHandler>*/}
-      
+      {/*</RenderPropsInput>*/}
+
       {/*Props Collection*/}
       {/*<hr/>*/}
-      {/*<Input>*/}
-      {/*  {({touched, isDirty, getProps}) => (*/}
-      {/*    <input*/}
-      {/*      type="text"*/}
-      {/*      {...getProps({*/}
-      {/*        onChange: (e)=>console.log(e)*/}
-      {/*      })}*/}
-      {/*      style={{*/}
-      {/*        outline: 'none',*/}
-      {/*        border: isDirty ? '1px solid red': null*/}
-      {/*      }}*/}
-      {/*    />*/}
-      {/*  )}*/}
-      {/*</Input>*/}
-      
-      {/*State Initializers*/}
-      {/*<hr/>*/}
-      {/*<Toggle initOn={false}/>*/}
-      
-      
-      {/*State Reducer*/}
-      <Toggle
-          reduceState={handleState}
-      />
-      
-      {/*Reducer Hook*/}
-      {/*<Toggle/>*/}
-      
+      {/*<PropCollectionInput>*/}
+      {/*  {({touched, isDirty, getProps}) => {*/}
+      {/*    return (*/}
+      {/*      <div>*/}
+      {/*        <div>*/}
+      {/*          <label htmlFor="prop-collection">Prop Collection</label>*/}
+      {/*        </div>*/}
+      {/*        <input*/}
+      {/*          id={'prop-collection'}*/}
+      {/*          type="text"*/}
+      {/*          {...getProps({onChange: (e)=>console.log(e)})}*/}
+      {/*          style={{*/}
+      {/*            outline: 'none',*/}
+      {/*            border: touched ? '1px solid red': null*/}
+      {/*          }}*/}
+      {/*        />*/}
+      {/*      </div>*/}
+      {/*    )*/}
+      {/*  }}*/}
+      {/*</PropCollectionInput>*/}
+
+      {/*<SimpleContext>*/}
+      {/*  <SimpleContextConsumer>*/}
+      {/*    {({value, handleChange})=> <input type="text" value={value} onChange={({target:{value}})=>handleChange(value)}/>}*/}
+      {/*  </SimpleContextConsumer>*/}
+      {/*</SimpleContext>*/}
+
+      <ContextHooks>
+        <ContextHookInput />
+      </ContextHooks>
+
+      {/*<CompoundToggle>*/}
+      {/*  <div>*/}
+      {/*    Some*/}
+      {/*  </div>*/}
+      {/*  <CompoundToggle.Button>Toggle</CompoundToggle.Button>*/}
+      {/*  <CompoundToggle.On>On</CompoundToggle.On>*/}
+      {/*  <CompoundToggle.Off>Off</CompoundToggle.Off>*/}
+      {/*</CompoundToggle>*/}
+
+
+      {/*<ReduxConnected/>*/}
+
       {/*MVC Pattern*/}
       {/*<MVC/>*/}
 
@@ -100,14 +142,6 @@ function App() {
       {/*  <User name={'Stan'}/>*/}
       {/*</Redux>*/}
 
-      {/*MVC Pattern*/}
-      {/*<MVC/>*/}
-      
-      {/*Thunk Dispatch*/}
-      {/*<ThunkReducerPattern/>*/}
-      
-      {/*Add To State*/}
-      {/*<AddToState/>*/}
     </div>
   );
 }

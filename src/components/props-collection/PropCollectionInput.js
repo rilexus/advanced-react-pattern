@@ -1,8 +1,7 @@
 import React, {useCallback, useMemo, useState} from 'react';
 
-const Input = ({children}) => {
-	
-	
+const PropCollectionInput = ({children}) => {
+
 	
 	const [value , _setValue ] = useState('');
 	const [isDirty , setDirty ] = useState(false);
@@ -24,18 +23,20 @@ const Input = ({children}) => {
 	
 	
 	
-	const getProps = useCallback(({onChange, ...rest}) => ({
-		value,
-		onChange: (e) => {
-			onChange && onChange(e);
-			setValue(e)
-		},
-		onClick: touch
-	}),[value]);
-	
-	
-	
+	const getProps = ({onChange, ...rest}) => {
+
+		return {
+			...rest,
+			value,
+			onChange: (e) => {
+				onChange && onChange(e);
+				setValue(e)
+			},
+			onClick: touch,
+		}
+	};
+
 	return children({isDirty, touched, getProps})
 };
 
-export default Input;
+export default PropCollectionInput;

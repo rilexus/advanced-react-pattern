@@ -1,13 +1,13 @@
 import React from 'react';
 import {fireEvent, render} from '@testing-library/react'
-import Toggle from "./Toggle";
+import RenderPropsToggle from "./RenderPropsToggle";
 
 describe('Toggle (render props)', () => {
   it('should call render function (children) once.',()=>{
     const renderProp = jest.fn(()=><div>MOCK</div>);
 
     render(
-      <Toggle>{renderProp}</Toggle>
+      <RenderPropsToggle>{renderProp}</RenderPropsToggle>
     );
 
     expect(renderProp).toBeCalledTimes(1);
@@ -17,7 +17,7 @@ describe('Toggle (render props)', () => {
     const renderProp = jest.fn(({on, toggle})=><div>MOCK</div>);
 
     render(
-      <Toggle>{renderProp}</Toggle>
+      <RenderPropsToggle>{renderProp}</RenderPropsToggle>
     );
 
     expect(renderProp.mock.calls[0][0]).toHaveProperty('on');
@@ -31,14 +31,14 @@ describe('Toggle (render props)', () => {
     });
 
     const {getByText} = render(
-      <Toggle>{
+      <RenderPropsToggle>{
         ({on, toggle}) => {
           if (!on){
             toggle();
           }
           return <div>{on ? 'ON' : 'OFF'}</div>
         }
-      }</Toggle>
+      }</RenderPropsToggle>
     );
 
     expect(getByText('ON')).toBeDefined();

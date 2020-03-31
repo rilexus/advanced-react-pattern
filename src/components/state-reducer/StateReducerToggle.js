@@ -1,20 +1,18 @@
 import React, {useState} from 'react';
 
-const Toggle = ({reduceState}) => {
+
+const StateReducerToggle = ({reduceState}) => {
 	const [state, setState] = useState({on: false});
-	
+
 	const setToState = (changes) => {
 		if (reduceState){
-			const newState = reduceState(state, changes);
-			setState({...newState})
+			setState({...reduceState(state, changes)})
 		} else {
 			setState({...state, ...changes})
 		}
 	};
-	
-	const handleClick = () => {
-		setToState({on: !state.on})
-	};
+
+	const handleClick = () => setToState({on: !state.on});
 	
 	return (
 		<div>
@@ -25,4 +23,4 @@ const Toggle = ({reduceState}) => {
 	);
 };
 
-export default Toggle;
+export default StateReducerToggle;

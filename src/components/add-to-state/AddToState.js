@@ -3,9 +3,9 @@ import React, {useCallback, useState} from 'react';
 function useSpreedToState(initialState = {}) {
 	const [state, _setState] = useState(initialState);
 	
-	const setState = useCallback((changes) => {
+	const setState = (changes) => {
 		_setState({...state, ...changes});
-	}, [state,_setState]);
+	};
 	
 	return [state, setState]
 	
@@ -25,10 +25,10 @@ const defaultState = {
 const AddToState = () => {
 	const [state, spreedToState] = useSpreedToState(defaultState);
 	
-	const handleChange = useCallback((changeEvent) => {
-		const {name, value}= changeEvent.target;
-		spreedToState({[name]: value});
-	}, [spreedToState])
+	const handleChange = (changeEvent) => {
+		const {name, value} = changeEvent.target;
+		spreedToState( {[name]: value} );
+	}
 	
 	const reset = () => {
 		spreedToState(defaultState)

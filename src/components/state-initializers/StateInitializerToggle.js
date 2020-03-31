@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 
-const Toggle = ({initOn}) => {
-	const defaultState = {on: false};
-	
-	const [on, setOn] = useState(() => initOn || defaultState.on);
+const defaultState = {on: false};
+
+const StateInitializerToggle = ({initialState}) => {
+	const [on, setOn] = useState(() => initialState || defaultState.on);
 	
 	return (
 		<div>
@@ -16,4 +16,4 @@ const Toggle = ({initOn}) => {
 	);
 };
 
-export default Toggle;
+export default StateInitializerToggle;

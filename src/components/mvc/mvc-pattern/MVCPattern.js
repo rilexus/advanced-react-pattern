@@ -22,6 +22,7 @@ const useContext_ = () => {
 
 const Model = ({children}) => {
 	const [counter, _setCounter] = useState(0);
+
 	const setCounter = useCallback((number)=> _setCounter(number),[counter]);
 	const values = useMemo(()=>({counter, setCounter}), [counter]);
 	
