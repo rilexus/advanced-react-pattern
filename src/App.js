@@ -1,24 +1,21 @@
-import React, {useState} from 'react';
-import './App.css';
-
+import React, { createContext, useContext, useEffect, useState } from "react";
+import "./App.css";
 
 // import InputValidator from "./components/form/input-validator/InputValidator";
 // import InputController from "./components/form/input-controller/InputController";
 
-
-
-import {User} from "./components/redux/connected-component";
+import { User } from "./components/redux/connected-component";
 import Redux from "./components/redux/redux";
 
 import { MVC } from "./components/mvc/mvc-pattern/MVCPattern";
 
-
-import SimpleContext, {SimpleContextConsumer} from "./components/simple-context/SimpleContext";
+import SimpleContext, {
+  SimpleContextConsumer,
+} from "./components/simple-context/SimpleContext";
 import ContextHooks from "./components/context-hooks/ContextHooks";
-import {ContextHookInput} from "./components/context-hooks/Input";
+import { ContextHookInput } from "./components/context-hooks/Input";
 import ThunkReducerPattern from "./components/thunk-reducer/ThunkReducer";
 import ReducerHookToggle from "./components/reducer-hook/ReducerHookToggle";
-
 
 import StateReducerToggle from "./components/state-reducer/StateReducerToggle";
 import StateInitializerToggle from "./components/state-initializers/StateInitializerToggle";
@@ -27,30 +24,28 @@ import AddToState from "./components/add-to-state/AddToState";
 import RenderPropsInput from "./components/input-handler/RenderPropsInput";
 import RenderPropsToggle from "./components/render-props/RenderPropsToggle";
 import PropCollectionInput from "./components/props-collection/PropCollectionInput";
-import {CompoundToggle} from "./components/compound-toggle/CompoundToggle";
-import {ReduxConnected} from "./components/redux-connected/ReduxConnected";
-
+import { CompoundToggle } from "./components/compound-toggle/CompoundToggle";
+import { ReduxConnected } from "./components/redux-connected/ReduxConnected";
+import Test from "./components/test/test";
 
 
 function App() {
   const [count, setCount] = useState(0);
-
+  const [first, setFirst] = useState(false);
+  const [second, setSecond] = useState(false);
 
   const handleState = (state, changes) => {
     setCount(count + 1);
     if (count < 5) {
-      return {...state, ...changes}
+      return { ...state, ...changes };
     }
-    return state
-  }
-
+    return state;
+  };
 
   return (
     <div className="App">
-
       {/*State Initializers*/}
       {/*<StateInitializerToggle initialState={true} />*/}
-
 
       {/*State Reducer*/}
       {/*<StateReducerToggle reduceState={handleState}/>*/}
@@ -119,9 +114,9 @@ function App() {
       {/*  </SimpleContextConsumer>*/}
       {/*</SimpleContext>*/}
 
-      <ContextHooks>
-        <ContextHookInput />
-      </ContextHooks>
+      {/*<ContextHooks>*/}
+      {/*  <ContextHookInput />*/}
+      {/*</ContextHooks>*/}
 
       {/*<CompoundToggle>*/}
       {/*  <div>*/}
@@ -132,8 +127,7 @@ function App() {
       {/*  <CompoundToggle.Off>Off</CompoundToggle.Off>*/}
       {/*</CompoundToggle>*/}
 
-
-      {/*<ReduxConnected/>*/}
+      <ReduxConnected/>
 
       {/*MVC Pattern*/}
       {/*<MVC/>*/}
@@ -141,7 +135,6 @@ function App() {
       {/*<Redux>*/}
       {/*  <User name={'Stan'}/>*/}
       {/*</Redux>*/}
-
     </div>
   );
 }

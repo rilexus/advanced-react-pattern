@@ -41,6 +41,7 @@ function asyncSetName(dispatch, name) {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state)
   return {
     userName: state.user.name
   }
