@@ -1,5 +1,21 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import "./App.css";
+import StateInitializerToggle from "./components/state-initializers/StateInitializerToggle";
+import StateReducerToggle from "./components/state-reducer/StateReducerToggle";
+import AddToState from "./components/add-to-state/AddToState";
+import ReducerHookToggle from "./components/reducer-hook/ReducerHookToggle";
+import ThunkReducerPattern from "./components/thunk-reducer/ThunkReducer";
+import RenderPropsToggle from "./components/render-props/RenderPropsToggle";
+import RenderPropsInput from "./components/input-handler/RenderPropsInput";
+import PropCollectionInput from "./components/props-collection/PropCollectionInput";
+import SimpleContext, {
+  SimpleContextConsumer,
+} from "./components/simple-context/SimpleContext";
+import ContextHooks from "./components/context-hooks/ContextHooks";
+import { ContextHookInput } from "./components/context-hooks/Input";
+import { CompoundToggle } from "./components/compound-toggle/CompoundToggle";
+import { ReduxConnected } from "./components/redux-connected/ReduxConnected";
+import { MVC } from "./components/mvc/mvc-pattern/MVCPattern";
 
 // import InputValidator from "./components/form/input-validator/InputValidator";
 // import InputController from "./components/form/input-controller/InputController";
@@ -7,25 +23,6 @@ import "./App.css";
 import { User } from "./components/redux/connected-component";
 import Redux from "./components/redux/redux";
 
-import { MVC } from "./components/mvc/mvc-pattern/MVCPattern";
-
-import SimpleContext, {
-  SimpleContextConsumer,
-} from "./components/simple-context/SimpleContext";
-import ContextHooks from "./components/context-hooks/ContextHooks";
-import { ContextHookInput } from "./components/context-hooks/Input";
-import ThunkReducerPattern from "./components/thunk-reducer/ThunkReducer";
-import ReducerHookToggle from "./components/reducer-hook/ReducerHookToggle";
-
-import StateReducerToggle from "./components/state-reducer/StateReducerToggle";
-import StateInitializerToggle from "./components/state-initializers/StateInitializerToggle";
-import AddToState from "./components/add-to-state/AddToState";
-
-import RenderPropsInput from "./components/input-handler/RenderPropsInput";
-import RenderPropsToggle from "./components/render-props/RenderPropsToggle";
-import PropCollectionInput from "./components/props-collection/PropCollectionInput";
-import { CompoundToggle } from "./components/compound-toggle/CompoundToggle";
-import { ReduxConnected } from "./components/redux-connected/ReduxConnected";
 import Test from "./components/test/test";
 
 
@@ -60,7 +57,6 @@ function App() {
       {/*<ThunkReducerPattern />*/}
 
       {/*Render Props 1*/}
-      {/*<hr/>*/}
       {/*<RenderPropsToggle>*/}
       {/*  {({on,toggle}) => (*/}
       {/*    <div>*/}
@@ -71,7 +67,6 @@ function App() {
       {/*</RenderPropsToggle>*/}
 
       {/*Render Props 2*/}
-      {/*<hr/>*/}
       {/*<RenderPropsInput>*/}
       {/*  {({ value, setValue }) => (*/}
       {/*    <div>*/}
@@ -86,7 +81,6 @@ function App() {
       {/*</RenderPropsInput>*/}
 
       {/*Props Collection*/}
-      {/*<hr/>*/}
       {/*<PropCollectionInput>*/}
       {/*  {({touched, isDirty, getProps}) => {*/}
       {/*    return (*/}
@@ -127,14 +121,14 @@ function App() {
       {/*  <CompoundToggle.Off>Off</CompoundToggle.Off>*/}
       {/*</CompoundToggle>*/}
 
-      <ReduxConnected/>
+      {/*<ReduxConnected/>*/}
 
       {/*MVC Pattern*/}
       {/*<MVC/>*/}
 
-      {/*<Redux>*/}
-      {/*  <User name={'Stan'}/>*/}
-      {/*</Redux>*/}
+      <Redux>
+        <User name={'Stan'}/>
+      </Redux>
     </div>
   );
 }

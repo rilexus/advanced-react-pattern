@@ -18,6 +18,13 @@ function callAPI(dispatch) {
 
 }
 
+function fetchUser(id) {
+	return (dispatch) => {
+		// fetch here
+		dispatch({type: 'user-fetched'})
+	}
+}
+
 function reducer (state, action) {
 	console.log('reducer action: ', action);
 	const {type, payload} = action;
@@ -52,6 +59,7 @@ const ThunkReducerPattern = () => {
 				{state.data}
 			</div>
 			<button onClick={()=>thunkDispatch(callAPI)}>FETCH</button>
+			<button onClick={()=>thunkDispatch(fetchUser('userId'))}>FETCH</button>
 		</div>
 	);
 };
