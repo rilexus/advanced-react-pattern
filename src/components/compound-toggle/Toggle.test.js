@@ -1,6 +1,6 @@
 import React from 'react';
 import {fireEvent, render} from '@testing-library/react'
-import { Toggle, ToggleContext } from "./Toggle";
+import {CompoundToggle, ToggleContext} from "./CompoundToggle";
 
 
 const ClickEvent = new MouseEvent('click', {
@@ -10,9 +10,11 @@ const ClickEvent = new MouseEvent('click', {
 
 test('Toggle.On renders children when gets "on" true prop', () => {
     const { getByText } = render(
-        <ToggleContext.Provider value={{on: true, toggle: ()=>{}}}>
-            <Toggle.On>On</Toggle.On>
-        </ToggleContext.Provider>
+        <div>
+          <ToggleContext.Provider value={{on: true, toggle: ()=>{}}}>
+            <CompoundToggle.On>On</CompoundToggle.On>
+          </ToggleContext.Provider>
+        </div>
     );
     const a = getByText('On');
     expect(a.innerHTML).toEqual('On');
@@ -21,7 +23,7 @@ test('Toggle.On renders children when gets "on" true prop', () => {
 test('Toggle.Off renders children when gets "on" false prop', () => {
     const { getByText } = render(
         <ToggleContext.Provider value={{on: false, toggle: ()=>{}}}>
-            <Toggle.Off>Off</Toggle.Off>
+            <CompoundToggle.Off>Off</CompoundToggle.Off>
         </ToggleContext.Provider>
     );
 
@@ -31,11 +33,11 @@ test('Toggle.Off renders children when gets "on" false prop', () => {
 
 test('Toggle to pass initValue through context', () => {
     const {getByText}= render(
-        <Toggle initValue={true}>
+        <CompoundToggle initValue={true}>
             <ToggleContext.Consumer>
                 {({on})=> on ? <div>On</div>: null}
             </ToggleContext.Consumer>
-        </Toggle>
+        </CompoundToggle>
     );
     const a = getByText('On');
     expect(a.innerHTML).toEqual('On');
@@ -43,11 +45,11 @@ test('Toggle to pass initValue through context', () => {
 
 test('Toggle to pass "on" prop through context.', () => {
     const {getByText}= render(
-        <Toggle>
+        <CompoundToggle>
             <ToggleContext.Consumer>
                 {(props)=> props.hasOwnProperty('on') ? <div>On</div>: null}
             </ToggleContext.Consumer>
-        </Toggle>
+        </CompoundToggle>
     );
     const a = getByText('On');
     expect(a.innerHTML).toEqual('On');
@@ -55,11 +57,11 @@ test('Toggle to pass "on" prop through context.', () => {
 
 test('Toggle to pass "toggle" function in props through context.', () => {
     const {getByText}= render(
-        <Toggle>
+        <CompoundToggle>
             <ToggleContext.Consumer>
                 {(props)=> props.hasOwnProperty('toggle') ? <div>On</div>: null}
             </ToggleContext.Consumer>
-        </Toggle>
+        </CompoundToggle>
     );
     const a = getByText('On');
     expect(a.innerHTML).toEqual('On');
@@ -67,10 +69,10 @@ test('Toggle to pass "toggle" function in props through context.', () => {
 
 test('Toggle.Button to toggle state.', () => {
     const {getByTestId, getByText}= render(
-        <Toggle initValue={true}>
-            <Toggle.Off>Off</Toggle.Off>
-            <Toggle.Button>Toggle</Toggle.Button>
-        </Toggle>
+        <CompoundToggle initValue={true}>
+            <CompoundToggle.Off>Off</CompoundToggle.Off>
+            <CompoundToggle.Button>Toggle</CompoundToggle.Button>
+        </CompoundToggle>
     );
     const button = getByTestId('toggle.button');
     fireEvent(button, ClickEvent);

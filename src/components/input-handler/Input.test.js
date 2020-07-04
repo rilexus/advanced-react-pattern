@@ -1,16 +1,17 @@
 import React from 'react';
 import {fireEvent, render} from '@testing-library/react'
-import InputHandler from "./Input";
+import RenderPropsInput from "./RenderPropsInput";
+
 
 describe('InputHandler', () => {
   it('should handle input change events', async function () {
     const inputTestId = 'inputTestId';
     const wrapper = render(
-      <InputHandler>
+      <RenderPropsInput>
         {({value, setValue})=>(
           <input data-testid={inputTestId} type="text" value={value} onChange={(e)=>setValue(e)}/>
         )}
-      </InputHandler>
+      </RenderPropsInput>
     );
     const input = await wrapper.findByTestId(inputTestId);
     fireEvent.change(input, {target:{value: 'value1'}});

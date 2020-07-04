@@ -1,15 +1,15 @@
 import React from 'react';
 import {fireEvent, render} from '@testing-library/react';
-import Input from "./Input";
+import PropCollectionInput from "./PropCollectionInput";
 
 describe('Input (props getter)',()=>{
   it('should bind input handlers', function () {
     const {getByTestId} = render(
-      <Input>
+      <PropCollectionInput>
         {({getProps})=>(
           <input data-testid={'input'} type="text" {...getProps}/>
         )}
-      </Input>
+      </PropCollectionInput>
     );
 
     const input = getByTestId('input');
