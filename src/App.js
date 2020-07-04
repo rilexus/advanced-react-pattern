@@ -121,14 +121,14 @@ function App() {
       {/*  <CompoundToggle.Off>Off</CompoundToggle.Off>*/}
       {/*</CompoundToggle>*/}
 
-      {/*<ReduxConnected/>*/}
+      <ReduxConnected/>
 
       {/*MVC Pattern*/}
       {/*<MVC/>*/}
 
-      <Redux>
-        <User name={'Stan'}/>
-      </Redux>
+      {/*<Redux>*/}
+      {/*  <User name={'Stan'}/>*/}
+      {/*</Redux>*/}
     </div>
   );
 }
