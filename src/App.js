@@ -121,7 +121,7 @@ function App() {
       {/*  <CompoundToggle.Off>Off</CompoundToggle.Off>*/}
       {/*</CompoundToggle>*/}
 
-      <ReduxConnected/>
+      {/*<ReduxConnected/>*/}
 
       {/*MVC Pattern*/}
       {/*<MVC/>*/}
