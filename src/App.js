@@ -24,6 +24,7 @@ import { User } from "./components/redux/connected-component";
 import Redux from "./components/redux/redux";
 
 import Test from "./components/test/test";
+import Commando from "./components/command/Commando";
 
 
 function App() {
@@ -124,7 +125,8 @@ function App() {
       {/*<ReduxConnected/>*/}
 
       {/*MVC Pattern*/}
-      {/*<MVC/>*/}
+      <MVC/>
+      {/*<Commando />*/}
 
       {/*<Redux>*/}
       {/*  <User name={'Stan'}/>*/}
