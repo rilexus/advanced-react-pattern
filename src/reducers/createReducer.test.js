@@ -13,6 +13,16 @@ describe("createReducer", () => {
     ).toStrictEqual({ val: 1 });
   });
 
+  it("should return the name of the reducer", function () {
+    const reducer = createReducer({
+      name: "name",
+      initState: {},
+      reducers: {},
+    });
+
+    expect(reducer.name).toBe("name");
+  });
+
   it("should return an object with reduce function attribute", function () {
     const reducer = createReducer({
       name: "name",

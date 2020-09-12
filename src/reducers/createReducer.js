@@ -36,6 +36,7 @@ export function createReducer({ name, initState, reducers }) {
   };
 
   return {
+    name,
     reducer,
   };
 }
