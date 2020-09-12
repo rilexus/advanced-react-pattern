@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import "./App.css";
 import StateInitializerToggle from "./components/state-initializers/StateInitializerToggle";
 import StateReducerToggle from "./components/state-reducer/StateReducerToggle";
 import AddToState from "./components/add-to-state/AddToState";
@@ -25,7 +24,75 @@ import Redux from "./components/redux/redux";
 
 import Test from "./components/test/test";
 import Commando from "./components/command/Commando";
+import Grid from "./components/grid/Grid";
 
+function debounce(callback, time) {
+  let timeoutID = -1;
+
+  // this function will be called, if the delta(t) between executions is >= 350ms
+  return function () {
+    const functionContext = this;
+    const functionArguments = arguments;
+
+    const abortExecution = () => {
+      clearTimeout(timeoutID);
+    };
+
+    const executeCallback = () => {
+      abortExecution();
+      callback.apply(functionContext, functionArguments);
+    };
+
+    const delayExecution = (duration) => {
+      timeoutID = setTimeout(executeCallback, duration);
+    };
+
+    abortExecution();
+    delayExecution(time);
+  };
+}
+
+function throttle(callback, time) {
+  let canExecute = true;
+  return function (/* arguments */) {
+    // this function will be called at max. every 1000ms, if called periodically
+    const args = arguments;
+    const self = this;
+
+    const blockExecution = () => {
+      canExecute = false; // block next execution for `${time}ms`
+    };
+
+    const releaseExecution = () => {
+      console.timeEnd("Throttled for");
+      canExecute = true;
+    };
+
+    const executeCallback = () => {
+      // bind "this" and passed arguments to the callback
+      console.time("Throttled for");
+      callback.apply(self, args);
+    };
+
+    const makeExecutableAfter = (period) => {
+      setTimeout(releaseExecution, period);
+    };
+
+    if (canExecute) {
+      blockExecution();
+      executeCallback();
+      makeExecutableAfter(time);
+    }
+  };
+}
+
+const debouncedLog = debounce((e) => {
+  console.log("debouncedLog");
+}, 350);
+
+const throttledLog = throttle(() => {
+  console.log("throttledLog");
+}, 2000);
 
 function App() {
   const [count, setCount] = useState(0);
@@ -42,6 +109,7 @@ function App() {
 
   return (
     <div className="App">
+      <input type="text" onChange={(e) => throttledLog(e)} />
       {/*State Initializers*/}
       {/*<StateInitializerToggle initialState={true} />*/}
 
@@ -125,12 +193,13 @@ function App() {
       {/*<ReduxConnected/>*/}
 
       {/*MVC Pattern*/}
-      <MVC/>
-      {/*<Commando />*/}
+      {/*<MVC/>*/}
+      <Commando />
 
       {/*<Redux>*/}
       {/*  <User name={'Stan'}/>*/}
       {/*</Redux>*/}
+      <Grid />
     </div>
   );
 }

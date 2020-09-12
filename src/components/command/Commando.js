@@ -1,38 +1,15 @@
 import React, {useState} from 'react';
+import Command from "./src/command";
+import useCommand from "./src";
 
-const bind = (o, func) => {
-  return Object.entries(o).reduce((acc, [name, worker]) => {
 
-    if (typeof worker === "function"){
-      return {
-        ...acc,
-        [name]: (...args) => func(worker(...args))
-      }
-    }
-    return acc
-  }, {})
-}
 
-const useCommando = (initialState, commands = {}) => {
-  const [ state, setState ] = useState(() => initialState)
+// function Command(worker) {
+//   function execute(state){
+//     return worker(state)
+//   }
+// }
 
-  const execute = (command) => {
-    setState(prevState => command.execute(prevState))
-  }
-
-  const bindCommands = bind(commands, execute)
-
-  return [state, execute, bindCommands]
-}
-
-function Command(worker) {
-  function execute(state){
-    return worker(state)
-  }
-  return {
-    execute
-  }
-}
 
 const add = (num) =>  {
   return new Command((componentState) => {
@@ -56,8 +33,10 @@ const sub = createCommand/*(createReducer)*/(/* reducer function */ (state, numb
   return {...state, value: state.value - number}
 })
 
+const commandMap = {subtractValue: sub}
+
 const Commando = () => {
-  const [state, execute, { subtractValue }] = useCommando({value: 1}, /* reducer map */ {subtractValue: sub})
+  const [state, execute, { subtractValue }] = useCommand({value: 1}, /* reducer map */ commandMap)
 
   return (
     <div>

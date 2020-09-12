@@ -3,34 +3,38 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import {applyMiddleware, combineReducers, createStore} from "redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
 
 import { Provider } from "react-redux";
-import {rootReducer, RootReducerActionTypes} from "./reducers/rootReducer";
+import { rootReducer, RootReducerActionTypes } from "./reducers/rootReducer";
 
-const api = () => new Promise((res) => {
-  setTimeout(() => {
-    res(42)
-  } , 1000)
-})
+const api = () =>
+  new Promise((res) => {
+    setTimeout(() => {
+      res(42);
+    }, 1000);
+  });
 
-const asyncMiddleware = ({}) => next => async action => {
-  const res = next(action)
+const asyncMiddleware = ({}) => (next) => async (action) => {
+  const res = next(action);
   if (action.type === RootReducerActionTypes.setName) {
-    const r = await api()
-    console.log(r)
+    const r = await api();
+    console.log(r);
   }
-  return res
-}
+  return res;
+};
 
-const middleware = ({}) => next => action => {
-  console.log('action: ', action)
-  return next(action)
-}
+const middleware = ({}) => (next) => (action) => {
+  console.log("action: ", action);
+  return next(action);
+};
 
-const store = createStore(combineReducers({
-  user: rootReducer.reducer,
-}), applyMiddleware(asyncMiddleware, middleware));
+const store = createStore(
+  combineReducers({
+    user: rootReducer.reducer,
+  }),
+  applyMiddleware(asyncMiddleware, middleware)
+);
 
 ReactDOM.render(
   <Provider store={store}>

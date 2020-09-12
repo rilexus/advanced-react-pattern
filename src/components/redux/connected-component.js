@@ -5,7 +5,7 @@ const _User = (props) => {
     const {getUserById,user,name} = props;
     return (
         <div>
-            <div>{user?.name || 'No User'}</div>
+            <div>{user.name || 'No User'}</div>
             <div>
                 <button onClick={()=>getUserById(name)}>Fetch</button>
             </div>
