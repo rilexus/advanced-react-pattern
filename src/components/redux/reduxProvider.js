@@ -6,6 +6,7 @@ import React, {
   memo,
   useMemo,
 } from "react";
+import { func } from "prop-types";
 
 const ReduxStateContext = createContext({});
 const ReduxDispatchContext = createContext({});
@@ -63,6 +64,14 @@ function createUseDispatch() {
     return useCallback((...a) => dispatch(...a), [dispatch]);
   };
 }
+function createSelectorHook() {
+  return function useSelector(selector) {
+    const state = useContext(ReduxStateContext);
+    const selected = selector(state);
+    return useMemo(() => selector, [selected]);
+  };
+}
+export const useSelector = createSelectorHook();
 
 // make the store dispatch function available
 export const useDispatch = createUseDispatch();
