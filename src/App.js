@@ -20,79 +20,25 @@ import { MVC } from "./components/mvc/mvc-pattern/MVCPattern";
 // import InputController from "./components/form/input-controller/InputController";
 
 import { User } from "./components/redux/connected-component";
-import Redux from "./components/redux/redux";
+import ReduxProvider from "./components/redux/reduxProvider";
 
 import Test from "./components/test/test";
 import Commando from "./components/command/Commando";
 import Grid from "./components/grid/Grid";
+import { usePromise } from "./hooks/use-promise";
+import States from "./components/states/States";
+import AppScreen from "./components/app-screen/AppScreen";
+import AdvancedState from "./components/states/AdvancedState";
 
-function debounce(callback, time) {
-  let timeoutID = -1;
-
-  // this function will be called, if the delta(t) between executions is >= 350ms
-  return function () {
-    const functionContext = this;
-    const functionArguments = arguments;
-
-    const abortExecution = () => {
-      clearTimeout(timeoutID);
-    };
-
-    const executeCallback = () => {
-      abortExecution();
-      callback.apply(functionContext, functionArguments);
-    };
-
-    const delayExecution = (duration) => {
-      timeoutID = setTimeout(executeCallback, duration);
-    };
-
-    abortExecution();
-    delayExecution(time);
-  };
+function my() {
+  // console.log(this);
+  for (let i = 0; i < arguments.length; i++) {
+    const arg = arguments[i];
+    console.log(arg);
+  }
 }
 
-function throttle(callback, time) {
-  let canExecute = true;
-  return function (/* arguments */) {
-    // this function will be called at max. every 1000ms, if called periodically
-    const args = arguments;
-    const self = this;
-
-    const blockExecution = () => {
-      canExecute = false; // block next execution for `${time}ms`
-    };
-
-    const releaseExecution = () => {
-      console.timeEnd("Throttled for");
-      canExecute = true;
-    };
-
-    const executeCallback = () => {
-      // bind "this" and passed arguments to the callback
-      console.time("Throttled for");
-      callback.apply(self, args);
-    };
-
-    const makeExecutableAfter = (period) => {
-      setTimeout(releaseExecution, period);
-    };
-
-    if (canExecute) {
-      blockExecution();
-      executeCallback();
-      makeExecutableAfter(time);
-    }
-  };
-}
-
-const debouncedLog = debounce((e) => {
-  console.log("debouncedLog");
-}, 350);
-
-const throttledLog = throttle(() => {
-  console.log("throttledLog");
-}, 2000);
+const s = my.bind({ some: "val" });
 
 function App() {
   const [count, setCount] = useState(0);
@@ -109,7 +55,6 @@ function App() {
 
   return (
     <div className="App">
-      <input type="text" onChange={(e) => throttledLog(e)} />
       {/*State Initializers*/}
       {/*<StateInitializerToggle initialState={true} />*/}
 
@@ -194,12 +139,14 @@ function App() {
 
       {/*MVC Pattern*/}
       {/*<MVC/>*/}
-      <Commando />
+      {/*<Commando />*/}
 
-      {/*<Redux>*/}
-      {/*  <User name={'Stan'}/>*/}
-      {/*</Redux>*/}
-      <Grid />
+      <ReduxProvider initState={{ user: { name: "stan" } }}>
+        <User name={"Stan"} />
+      </ReduxProvider>
+      {/*<States />*/}
+      {/*<AdvancedState />*/}
+      {/*<AppScreen />*/}
     </div>
   );
 }

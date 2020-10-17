@@ -1,31 +1,29 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 
-const bind = (o, func) => {
-  return Object.entries(o).reduce((acc, [name, worker]) => {
-    if (typeof worker === "function") {
-      return {
-        ...acc,
-        [name]: (...args) => func(worker(...args)),
-      };
-    }
-    return acc;
-  }, {});
-};
+const isPromise = (command) => typeof command.then === "function";
+const isThunk = (command) => typeof command === "function";
 
-const useCommand = (initialState, commands = {}) => {
+const useCommand = (initialState) => {
   const [state, setState] = useState(() => initialState);
 
   const execute = useCallback(
-    (command) => setState((prevState) => command.execute(prevState)),
-    [setState]
+    (command) => {
+      if (isThunk(command)) {
+        command(execute);
+        return;
+      }
+      const stateOrPromise = command.execute(state);
+
+      if (isPromise(stateOrPromise)) {
+        stateOrPromise.then(setState);
+      } else {
+        setState(stateOrPromise);
+      }
+    },
+    [setState, state]
   );
 
-  const bindCommands = useMemo(() => bind(commands, execute), [
-    commands,
-    execute,
-  ]);
-
-  return [state, execute, bindCommands];
+  return [state, execute];
 };
 
 export default useCommand;

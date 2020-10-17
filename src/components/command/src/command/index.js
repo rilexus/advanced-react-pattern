@@ -1,9 +1,15 @@
 function Command(worker) {
-  this.execute = function(){
-    const args = arguments
-    const self = this
-    return worker.call(self, ...args)
-  }
+  this.execute = function () {
+    const args = arguments;
+    const self = this;
+    return worker.call(self, ...args);
+  };
 }
 
-export default Command
+export const createCommand = (worker) => {
+  return (...args /* action */) => {
+    return new Command((state) => worker(state, ...args));
+  };
+};
+
+export default Command;

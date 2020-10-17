@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
-import Command from "./src/command";
+import React, { useEffect, useState } from "react";
+import Command, { createCommand } from "./src/command";
 import useCommand from "./src";
-
-
+import { usePromise } from "../../hooks/use-promise";
 
 // function Command(worker) {
 //   function execute(state){
@@ -10,40 +9,33 @@ import useCommand from "./src";
 //   }
 // }
 
-
-const add = (num) =>  {
+const add = (num) => {
   return new Command((componentState) => {
-    return {...componentState, value: componentState.value + num}
-  })
-}
+    return { ...componentState, value: componentState.value + num };
+  });
+};
 
-// const sub = (num) =>  {
-//   return new Command((componentState) => {
-//     return {...componentState, value: componentState.value - 1}
-//   })
-// }
+const sleep = (time) => new Promise((res) => setTimeout(res, time));
 
-const createCommand = (worker) => {
-  return (...args/* action */) => {
-    return new Command((state) => worker(state, ...args))
-  }
-}
+const asyncAddCommand = createCommand(async (state, number) => ({
+  ...state,
+  value: state.value + number,
+}));
 
-const sub = createCommand/*(createReducer)*/(/* reducer function */ (state, number/* action */) => {
-  return {...state, value: state.value - number}
-})
-
-const commandMap = {subtractValue: sub}
+const addThunk = (num) => {
+  return (execute) => execute(add(num));
+};
 
 const Commando = () => {
-  const [state, execute, { subtractValue }] = useCommand({value: 1}, /* reducer map */ commandMap)
-
+  const [state, execute] = useCommand({ value: 1 });
   return (
     <div>
       <div>{state.value}</div>
       <div>
-        <button value={3} onClick={() => execute(add(1))}>Add</button>
-        <button onClick={() => subtractValue(1)}>Sub</button>
+        <button onClick={() => execute(asyncAddCommand(1))}>
+          Add One (Promise)
+        </button>
+        <button onClick={() => execute(addThunk(1))}>Add One (Thunk)</button>
       </div>
     </div>
   );
