@@ -1,4 +1,4 @@
-import Command from "./index";
+import Command from "./Command";
 
 describe("Command", function () {
   it('should have an "expect" function', function () {

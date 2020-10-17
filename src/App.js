@@ -139,11 +139,11 @@ function App() {
 
       {/*MVC Pattern*/}
       {/*<MVC/>*/}
-      {/*<Commando />*/}
+      <Commando />
 
-      <ReduxProvider initState={{ user: { name: "stan" } }}>
-        <User name={"Stan"} />
-      </ReduxProvider>
+      {/*<ReduxProvider initState={{ user: { name: "stan" } }}>*/}
+      {/*  <User name={"Stan"} />*/}
+      {/*</ReduxProvider>*/}
       {/*<States />*/}
       {/*<AdvancedState />*/}
       {/*<AppScreen />*/}

@@ -1,7 +1,7 @@
 import React from "react";
 import { renderHook, act } from "@testing-library/react-hooks";
 import useCommand from "./index";
-import Command, { createCommand } from "./command";
+import Command, { createCommand } from "./Command";
 
 describe("useCommand", () => {
   it("should return passed state", function () {

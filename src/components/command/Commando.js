@@ -1,13 +1,6 @@
-import React, { useEffect, useState } from "react";
-import Command, { createCommand } from "./src/command";
-import useCommand from "./src";
-import { usePromise } from "../../hooks/use-promise";
-
-// function Command(worker) {
-//   function execute(state){
-//     return worker(state)
-//   }
-// }
+import React from "react";
+import Command, { createCommand } from "../../hooks/command/Command";
+import useCommand from "../../hooks/command";
 
 const add = (num) => {
   return new Command((componentState) => {
@@ -15,9 +8,12 @@ const add = (num) => {
   });
 };
 
-const sleep = (time) => new Promise((res) => setTimeout(res, time));
-
 const asyncAddCommand = createCommand(async (state, number) => ({
+  ...state,
+  value: state.value + number,
+}));
+
+const simpleAddCommand = createCommand((state, number) => ({
   ...state,
   value: state.value + number,
 }));
@@ -36,6 +32,9 @@ const Commando = () => {
           Add One (Promise)
         </button>
         <button onClick={() => execute(addThunk(1))}>Add One (Thunk)</button>
+        <button onClick={() => execute(simpleAddCommand(1))}>
+          Add one (Simple Command)
+        </button>
       </div>
     </div>
   );
