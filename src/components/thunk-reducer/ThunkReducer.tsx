@@ -1,4 +1,5 @@
 import React, {useCallback, useReducer} from 'react';
+import {any} from "prop-types";
 
 const ActionTypes = {
 	callAPI: '[CALL-API]GOT-DATA'
@@ -36,14 +37,23 @@ function reducer (state, action) {
 	}
 	return state
 }
+type Action = { type: string }
+type Dispatcher = (action: Action) => void
+type ThunkAction = Action | ((dispatcher: Dispatcher) => void)
 
-function useThunkReducer(reducer, initialState) {
-	const [state, dispatch] = useReducer(reducer,initialState);
+type Reducer<State,Action = any> = (state: State, action: Action) => State
+type ThunkDispatcher = (action: ThunkAction) => void
+
+// type the reducer function
+function useThunkReducer<State>(reducer: Reducer<State, ThunkAction>, initialState: State): [State, ThunkDispatcher] {
+	const [state, dispatch] = useReducer(reducer, initialState);
 
 	const thunkDispatch = (action) => {
-		// if action is a function let action(function) call dispatch by itself else dispatch(action)
-		if (typeof action === 'function') action(dispatch);
-		else dispatch(action);
+		if (typeof action === 'function') {
+			action(dispatch);
+		} else {
+			dispatch(action);
+		}
 	};
 
 	return [state, thunkDispatch]

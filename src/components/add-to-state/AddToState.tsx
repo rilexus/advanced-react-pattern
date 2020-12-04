@@ -1,10 +1,13 @@
-import React, {useCallback, useState} from 'react';
+import React, { useState } from 'react';
 
-function useSpreedToState(initialState = {}) {
-	const [state, _setState] = useState(initialState);
+type Tuple<A,B> = [A,B]
+type Return<State> = Tuple<State, (change: Partial<State>) => void>
+
+function useSpreedToState<State>(initialState: State): Return<State> {
+	const [state, _setState] = useState<State>(initialState);
 	
-	const setState = (changes) => {
-		_setState({...state, ...changes});
+	const setState = (change: Partial<State>) => {
+		_setState({...state, ...change});
 	};
 	
 	return [state, setState]
@@ -12,18 +15,23 @@ function useSpreedToState(initialState = {}) {
 }
 
 
-const FieldNames = {
-	name: 'name',
-	surname: 'surname'
+enum FieldNames {
+	name = 'name',
+	surname =  'surname',
 }
 
-const defaultState = {
+type DefaultStateType = {
+	[FieldNames.name]: string,
+	[FieldNames.surname]: string
+}
+
+const defaultState: DefaultStateType = {
 	[FieldNames.name]: '',
 	[FieldNames.surname]: ''
 };
 
-const AddToState = () => {
-	const [state, spreedToState] = useSpreedToState(defaultState);
+export const AddToState = () => {
+	const [state, spreedToState] = useSpreedToState<DefaultStateType>(defaultState);
 	
 	const handleChange = (changeEvent) => {
 		const {name, value} = changeEvent.target;
@@ -61,4 +69,3 @@ const AddToState = () => {
 	);
 };
 
-export default AddToState;

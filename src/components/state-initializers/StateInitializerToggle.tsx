@@ -2,7 +2,11 @@ import React, {useState} from 'react';
 
 const defaultState = {on: false};
 
-const StateInitializerToggle = ({initialState}) => {
+interface Props<State> {
+	initialState: State 
+}
+
+const StateInitializerToggle = ({initialState}:Props<any>) => {
 	const [on, setOn] = useState(() => initialState || defaultState.on);
 	
 	return (

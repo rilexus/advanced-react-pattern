@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import StateInitializerToggle from "./components/state-initializers/StateInitializerToggle";
 import StateReducerToggle from "./components/state-reducer/StateReducerToggle";
-import AddToState from "./components/add-to-state/AddToState";
+import {AddToState} from "./components/add-to-state/AddToState";
 import ReducerHookToggle from "./components/reducer-hook/ReducerHookToggle";
 import ThunkReducerPattern from "./components/thunk-reducer/ThunkReducer";
 import RenderPropsToggle from "./components/render-props/RenderPropsToggle";
@@ -30,18 +30,9 @@ import States from "./components/states/States";
 import AppScreen from "./components/app-screen/AppScreen";
 import AdvancedState from "./components/states/AdvancedState";
 
-function my() {
-  // console.log(this);
-  for (let i = 0; i < arguments.length; i++) {
-    const arg = arguments[i];
-    console.log(arg);
-  }
-}
-
-const s = my.bind({ some: "val" });
-
 function App() {
   const [count, setCount] = useState(0);
+
   const [first, setFirst] = useState(false);
   const [second, setSecond] = useState(false);
 
@@ -59,7 +50,7 @@ function App() {
       {/*<StateInitializerToggle initialState={true} />*/}
 
       {/*State Reducer*/}
-      {/*<StateReducerToggle reduceState={handleState}/>*/}
+      {/*<StateReducerToggle reduceState={handleState} />*/}
 
       {/*Add To State*/}
       {/*<AddToState/>*/}
@@ -68,7 +59,7 @@ function App() {
       {/*<ReducerHookToggle/>*/}
 
       {/*Thunk Dispatch*/}
-      {/*<ThunkReducerPattern />*/}
+      <ThunkReducerPattern />
 
       {/*Render Props 1*/}
       {/*<RenderPropsToggle>*/}
@@ -139,7 +130,7 @@ function App() {
 
       {/*MVC Pattern*/}
       {/*<MVC/>*/}
-      <Commando />
+      {/*<Commando />*/}
 
       {/*<ReduxProvider initState={{ user: { name: "stan" } }}>*/}
       {/*  <User name={"Stan"} />*/}
