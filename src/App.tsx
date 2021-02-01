@@ -29,6 +29,7 @@ import { usePromise } from "./hooks/use-promise";
 import States from "./components/states/States";
 import AppScreen from "./components/app-screen/AppScreen";
 import AdvancedState from "./components/states/AdvancedState";
+import {Button} from "@stan-ui/buttons";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -46,6 +47,7 @@ function App() {
 
   return (
     <div className="App">
+      <Button/>
       {/*State Initializers*/}
       {/*<StateInitializerToggle initialState={true} />*/}
 
