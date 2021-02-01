@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 import StateInitializerToggle from "./components/state-initializers/StateInitializerToggle";
 import StateReducerToggle from "./components/state-reducer/StateReducerToggle";
 import {AddToState} from "./components/add-to-state/AddToState";
@@ -29,7 +35,36 @@ import { usePromise } from "./hooks/use-promise";
 import States from "./components/states/States";
 import AppScreen from "./components/app-screen/AppScreen";
 import AdvancedState from "./components/states/AdvancedState";
-import {Button} from "@stan-ui/buttons";
+// import {Button} from "@stan-ui/buttons";
+
+const lazy = (importer, name): any => {
+  return (props) => {
+    const ref = useRef<any>(null)
+    const [resolved, setResolved] = useState(false)
+
+    useEffect(() => {
+      const resolve = async () => {
+        const module = await importer()
+        if (name){
+          ref.current = module[name]
+        }else {
+          ref.current = module
+        }
+      }
+      resolve().then(() => {
+        setResolved(true)
+      })
+
+    }, [])
+    if (!ref.current){
+      return null
+    }
+
+    return React.cloneElement(ref.current(), props)
+  }
+}
+
+const Button = lazy(() => import('@stan-ui/buttons'), 'Button')
 
 function App() {
   const [count, setCount] = useState(0);
@@ -47,7 +82,13 @@ function App() {
 
   return (
     <div className="App">
-      <Button/>
+      {/*<button onClick={() => getButton().then(({Button}) => {*/}
+      {/*  console.log(Button)*/}
+      {/*})}>getButton</button>*/}
+
+      <Button onClick={() => {
+        console.log('click')
+      }}>button</Button>
       {/*State Initializers*/}
       {/*<StateInitializerToggle initialState={true} />*/}
 
