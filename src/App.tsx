@@ -35,36 +35,34 @@ import { usePromise } from "./hooks/use-promise";
 import States from "./components/states/States";
 import AppScreen from "./components/app-screen/AppScreen";
 import AdvancedState from "./components/states/AdvancedState";
-// import {Button} from "@stan-ui/buttons";
-
-const lazy = (importer, name): any => {
-  return (props) => {
-    const ref = useRef<any>(null)
-    const [resolved, setResolved] = useState(false)
-
-    useEffect(() => {
-      const resolve = async () => {
-        const module = await importer()
-        if (name){
-          ref.current = module[name]
-        }else {
-          ref.current = module
-        }
-      }
-      resolve().then(() => {
-        setResolved(true)
-      })
-
-    }, [])
-    if (!ref.current){
-      return null
-    }
-
-    return React.cloneElement(ref.current(), props)
-  }
-}
+import {lazy} from "./utils/lazy";
+import {fromEvent, map, Observable, tap} from "./utils/Observable";
 
 const Button = lazy(() => import('@stan-ui/buttons'), 'Button')
+
+function interval(time) {
+  let id:any = null;
+  let count = 0;
+  return (obs) => new Observable(({ next, done }) => {
+    id = setInterval(() => {
+      count = count + time;
+      next(count);
+    }, time);
+
+    return {
+      unsubscribe: () => {
+        if (id) {
+          clearInterval(id);
+          id = null;
+        }
+      },
+    };
+  });
+}
+
+
+const obs = interval(1000)
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -80,8 +78,25 @@ function App() {
     return state;
   };
 
+  const ref = useRef(null)
+
+  useEffect(() => {
+    if (ref.current){
+      Observable.pipe(
+        fromEvent(ref.current, "click"),
+        tap((v) => {
+          console.log(v)
+        }),
+      ).subscribe({
+          next: v => {
+          }
+        })
+    }
+  } , [ref.current])
+
+
   return (
-    <div className="App">
+    <div className="App" ref={ref}>
       {/*<button onClick={() => getButton().then(({Button}) => {*/}
       {/*  console.log(Button)*/}
       {/*})}>getButton</button>*/}
