@@ -1,5 +1,5 @@
 import React, {
-  createContext,
+  createContext, useCallback,
   useContext,
   useEffect,
   useRef,
@@ -37,31 +37,11 @@ import AppScreen from "./components/app-screen/AppScreen";
 import AdvancedState from "./components/states/AdvancedState";
 import {lazy} from "./utils/lazy";
 import {fromEvent, map, Observable, tap} from "./utils/Observable";
+import {createAtomicState} from "./utils/createAtomicState";
+import {AtomicState} from "./components/atomic-state/AtomicState";
+import {PrefetchedState} from "./components/prefetched-state/PrefetchedState";
 
 const Button = lazy(() => import('@stan-ui/buttons'), 'Button')
-
-function interval(time) {
-  let id:any = null;
-  let count = 0;
-  return (obs) => new Observable(({ next, done }) => {
-    id = setInterval(() => {
-      count = count + time;
-      next(count);
-    }, time);
-
-    return {
-      unsubscribe: () => {
-        if (id) {
-          clearInterval(id);
-          id = null;
-        }
-      },
-    };
-  });
-}
-
-
-const obs = interval(1000)
 
 
 function App() {
@@ -80,30 +60,13 @@ function App() {
 
   const ref = useRef(null)
 
-  useEffect(() => {
-    if (ref.current){
-      Observable.pipe(
-        fromEvent(ref.current, "click"),
-        tap((v) => {
-          console.log(v)
-        }),
-      ).subscribe({
-          next: v => {
-          }
-        })
-    }
-  } , [ref.current])
-
-
   return (
     <div className="App" ref={ref}>
+      <PrefetchedState/>
+      {/*<AtomicState/>*/}
       {/*<button onClick={() => getButton().then(({Button}) => {*/}
       {/*  console.log(Button)*/}
       {/*})}>getButton</button>*/}
-
-      <Button onClick={() => {
-        console.log('click')
-      }}>button</Button>
       {/*State Initializers*/}
       {/*<StateInitializerToggle initialState={true} />*/}
 
