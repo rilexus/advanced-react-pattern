@@ -62,7 +62,7 @@ function App() {
 
   return (
     <div className="App" ref={ref}>
-      <PrefetchedState/>
+      {/*<PrefetchedState/>*/}
       {/*<AtomicState/>*/}
       {/*<button onClick={() => getButton().then(({Button}) => {*/}
       {/*  console.log(Button)*/}
@@ -80,7 +80,7 @@ function App() {
       {/*<ReducerHookToggle/>*/}
 
       {/*Thunk Dispatch*/}
-      <ThunkReducerPattern />
+      {/*<ThunkReducerPattern />*/}
 
       {/*Render Props 1*/}
       {/*<RenderPropsToggle>*/}
@@ -147,7 +147,7 @@ function App() {
       {/*  <CompoundToggle.Off>Off</CompoundToggle.Off>*/}
       {/*</CompoundToggle>*/}
 
-      {/*<ReduxConnected/>*/}
+      <ReduxConnected/>
 
       {/*MVC Pattern*/}
       {/*<MVC/>*/}

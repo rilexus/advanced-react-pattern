@@ -23,7 +23,63 @@ const userState = {
   name: "stan",
 };
 
-export const rootReducer = createReducer({
+
+const undoable = (reducer) => {
+  const initState = {
+    past: [],
+    present: reducer(undefined, {}),
+    future: []
+  }
+  return (state = initState, action) => {
+    const {past, present, future} = state
+    
+    switch (action.type) {
+      case 'UNDO':{
+        if (past.length === 0){
+          return state
+        }
+        
+        const newPresent = past[past.length - 1]
+        const newPast = past.slice(0, past.length -1)
+        
+        return {
+          present: newPresent,
+          past: newPast,
+          future:[present, ...future]
+        }
+      }
+      case 'REDO': {
+        if (future.length === 0){
+          return state
+        }
+        const next = future[0]
+        const newFuture = future.slice(1)
+        return {
+          past: [...past, present],
+          present: next,
+          future: newFuture
+        }
+      }
+      default:{
+        const newPresent = reducer(present, action)
+        
+        if (present === newPresent){
+          return state
+        }
+        
+        return {
+          present: newPresent,
+          past: past.length > 5 ? [...past.slice(-4), present]:[...past, present],
+          future:[]
+        }
+      }
+    }
+    
+    
+  }
+}
+
+const rootReducer = createReducer({
   initState: userState,
   reducers: {
     [RootReducerActionTypes.defaultAction]: (state, action) =>
@@ -31,3 +87,5 @@ export const rootReducer = createReducer({
     [RootReducerActionTypes.setName]: reducerUserName,
   },
 });
+
+export {undoable, rootReducer}

@@ -2,7 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { RootReducerActionTypes } from "../../reducers/rootReducer";
 
-const _ReduxConnected = ({ userName, setName, asyncSetName }) => {
+const _ReduxConnected = ({ userName, setName, asyncSetName, state, undo, redo }) => {
+  console.log(userName)
   return (
     <div>
       <div>{userName}</div>
@@ -13,6 +14,7 @@ const _ReduxConnected = ({ userName, setName, asyncSetName }) => {
           </div>
           <input
             id={"normal"}
+            value={userName}
             type="text"
             onChange={({ target: { value } }) => setName(value)}
           />
@@ -27,6 +29,14 @@ const _ReduxConnected = ({ userName, setName, asyncSetName }) => {
             type="text"
             onChange={({ target: { value } }) => asyncSetName(value)}
           />
+        </div>
+        <div>
+          <button onClick={() => {
+            undo()
+          }}>UNDO</button>
+          <button onClick={() => {
+            redo()
+          }}>REDO</button>
         </div>
       </div>
     </div>
@@ -45,9 +55,10 @@ function asyncSetName(dispatch, name) {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  console.log(state)
   return {
-    userName: state.user.name,
+    state,
+    userName: state.user.present.name,
   };
 };
 
@@ -56,6 +67,8 @@ const mapDispatchToProps = (dispatch) => {
     asyncSetName: (name) => {
       asyncSetName(dispatch, name);
     },
+    undo: () => dispatch({type: 'UNDO'}),
+    redo: () => dispatch({type: 'REDO'}),
     setName: (name) => {
       dispatch({ type: RootReducerActionTypes.setName, payload: { name } });
     },

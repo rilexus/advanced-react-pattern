@@ -6,7 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 import { applyMiddleware, combineReducers, createStore } from "redux";
 
 import { Provider } from "react-redux";
-import { rootReducer, RootReducerActionTypes } from "./reducers/rootReducer";
+import { rootReducer, RootReducerActionTypes, undoable } from "./reducers/rootReducer";
 
 const api = () =>
   new Promise((res) => {
@@ -25,13 +25,12 @@ const asyncMiddleware = ({}) => (next) => async (action) => {
 };
 
 const middleware = ({}) => (next) => (action) => {
-  console.log("action: ", action);
   return next(action);
 };
 
 const store = createStore(
   combineReducers({
-    user: rootReducer.reducer,
+    user: undoable(rootReducer.reducer),
   }),
   applyMiddleware(asyncMiddleware, middleware)
 );
