@@ -1,13 +1,15 @@
+// import "./App.css";
 import React, {
-  createContext, useCallback,
+  createContext,
+  useCallback,
   useContext,
   useEffect,
   useRef,
-  useState
+  useState,
 } from "react";
 import StateInitializerToggle from "./components/state-initializers/StateInitializerToggle";
 import StateReducerToggle from "./components/state-reducer/StateReducerToggle";
-import {AddToState} from "./components/add-to-state/AddToState";
+import { AddToState } from "./components/add-to-state/AddToState";
 import ReducerHookToggle from "./components/reducer-hook/ReducerHookToggle";
 import ThunkReducerPattern from "./components/thunk-reducer/ThunkReducer";
 import RenderPropsToggle from "./components/render-props/RenderPropsToggle";
@@ -35,14 +37,15 @@ import { usePromise } from "./hooks/use-promise";
 import States from "./components/states/States";
 import AppScreen from "./components/app-screen/AppScreen";
 import AdvancedState from "./components/states/AdvancedState";
-import {lazy} from "./utils/lazy";
-import {fromEvent, map, Observable, tap} from "./utils/Observable";
-import {createAtomicState} from "./utils/createAtomicState";
-import {AtomicState} from "./components/atomic-state/AtomicState";
-import {PrefetchedState} from "./components/prefetched-state/PrefetchedState";
+import { lazy } from "./utils/lazy";
+import { fromEvent, map, Observable, tap } from "./utils/Observable";
+import { createAtomicState } from "./utils/createAtomicState";
+import { AtomicState } from "./components/atomic-state/AtomicState";
+import { PrefetchedState } from "./components/prefetched-state/PrefetchedState";
+import { DragDropList } from "./components/drag-drop-list/DragDropLst";
+import { Drag } from "./components/drag/Drag";
 
-const Button = lazy(() => import('@stan-ui/buttons'), 'Button')
-
+const Button = lazy(() => import("@stan-ui/buttons"), "Button");
 
 function App() {
   const [count, setCount] = useState(0);
@@ -58,10 +61,40 @@ function App() {
     return state;
   };
 
-  const ref = useRef(null)
+  const ref = useRef(null);
+
+  useEffect(() => {
+    // const $body = document.querySelector("body") as any;
+    // let scrollPosition = 0;
+    // scrollPosition = window.pageYOffset;
+    // $body.style.overflow = "hidden";
+    // $body.style.position = "fixed";
+    // $body.style.top = `-${scrollPosition}px`;
+    // $body.style.width = "100vw";
+    // $body.style.height = "100vh";
+    // $body.style.removeProperty("overflow");
+    // $body.style.removeProperty("position");
+    // $body.style.removeProperty("top");
+    // $body.style.removeProperty("width");
+    // window.scrollTo(0, scrollPosition);
+  }, []);
 
   return (
-    <div className="App" ref={ref}>
+    <div
+      className="App"
+      ref={ref}
+      style={
+        {
+          // overflow: "hidden",
+          // position: "fixed",
+          // width: "100vw",
+          // height: "100vh",
+        }
+      }
+    >
+      {/*<Drag />*/}
+      <DragDropList />
+
       {/*<PrefetchedState/>*/}
       {/*<AtomicState/>*/}
       {/*<button onClick={() => getButton().then(({Button}) => {*/}
@@ -147,7 +180,7 @@ function App() {
       {/*  <CompoundToggle.Off>Off</CompoundToggle.Off>*/}
       {/*</CompoundToggle>*/}
 
-      <ReduxConnected/>
+      {/*<ReduxConnected/>*/}
 
       {/*MVC Pattern*/}
       {/*<MVC/>*/}
