@@ -85,6 +85,10 @@ const rootReducer = createReducer({
     [RootReducerActionTypes.defaultAction]: (state, action) =>
       reducerDefaultAction(state, action),
     [RootReducerActionTypes.setName]: reducerUserName,
+    USER_FETCH_SUCCEEDED: (state, action) => {
+      console.log(action)
+      return state
+    }
   },
 });
 

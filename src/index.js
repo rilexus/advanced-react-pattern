@@ -4,9 +4,11 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { applyMiddleware, combineReducers, createStore } from "redux";
-
+import createSagaMiddleware from 'redux-saga'
 import { Provider } from "react-redux";
 import { rootReducer, RootReducerActionTypes, undoable } from "./reducers/rootReducer";
+import {fetchUsersSaga} from "./components/saga/Saga";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 const api = () =>
   new Promise((res) => {
@@ -28,12 +30,27 @@ const middleware = ({}) => (next) => (action) => {
   return next(action);
 };
 
-const store = createStore(
-  combineReducers({
-    user: undoable(rootReducer.reducer),
-  }),
-  applyMiddleware(asyncMiddleware, middleware)
-);
+const configureStore = () => {
+  const sagaMiddleware = createSagaMiddleware()
+  
+  const composeEnhancers = composeWithDevTools(applyMiddleware(asyncMiddleware, middleware, sagaMiddleware));
+  
+  const store = createStore(
+    combineReducers({
+      user: undoable(rootReducer.reducer),
+    }),
+    undefined,
+    composeEnhancers,
+    
+  );
+  
+  sagaMiddleware.run(fetchUsersSaga)
+  return store
+}
+
+const store = configureStore();
+
+
 
 ReactDOM.render(
   <Provider store={store}>
