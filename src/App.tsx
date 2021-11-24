@@ -1,14 +1,26 @@
 import React from "react";
-import { Input, useForm } from "./hooks/component-hook/Form";
+import { useForm } from "react-hook-form";
+
+const Input = ({ onChange, onBlur, placeholder }) => {
+  // comments
+  // comment
+  return (
+    <input
+      type="text"
+      onChange={onChange}
+      placeholder={placeholder}
+      onBlur={onBlur}
+    />
+  );
+};
 
 const App = () => {
-  const { Form, values } = useForm();
+  const { register } = useForm();
 
-  console.log(values);
   return (
-    <Form>
-      <Input initialValue={""} name={"firs_name"} placeholder={"First Name"} />
-    </Form>
+    <div>
+      <Input {...register("name")} placeholder={"Name"} />
+    </div>
   );
 };
 
