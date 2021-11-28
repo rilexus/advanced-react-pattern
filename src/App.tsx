@@ -1,14 +1,14 @@
 import React from "react";
-import { Input, useForm } from "./hooks/component-hook/Form";
+import { useForm } from "react-hook-form";
+import { ObservableComponent } from "./components/observables";
 
 const App = () => {
-  const { Form, values } = useForm();
+  const { register } = useForm();
 
-  console.log(values);
   return (
-    <Form>
-      <Input initialValue={""} name={"firs_name"} placeholder={"First Name"} />
-    </Form>
+    <div>
+      <ObservableComponent />
+    </div>
   );
 };
 
