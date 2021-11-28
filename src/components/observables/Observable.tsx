@@ -17,7 +17,9 @@ import {
   merge,
   NEVER,
   of,
+  timer,
 } from "../../utils/observable";
+import { retry } from "../../utils/observable/operators/retry";
 
 const fromClickEvent = (element) => {
   return fromEvent(element, "click");
@@ -63,6 +65,23 @@ const Fetch = () => {
   const fetchButtonRef = useRef<any>();
 
   useEffect(() => {
+    fromFetch("/some")
+      .pipe(
+        tap(() => {
+          console.log("call");
+        }),
+        switchMap((res) => res.json()),
+        retry(4)
+      )
+      .subscribe({
+        next: (v) => {
+          console.log(v);
+        },
+        error: (e) => {
+          console.log(e);
+        },
+      });
+
     const s = fromClickEvent(fetchButtonRef.current)
       .pipe(
         exhaustMap(() => {

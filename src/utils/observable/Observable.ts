@@ -100,4 +100,20 @@ function of(...values){
 	})
 }
 
-export { Observable, merge, fromEvent, NEVER, interval, fromFetch, of }
+function timer(wait, period){
+	return new Observable(({next}) => {
+		let intervalId: any = null;
+		const timeoutId = setTimeout(() => {
+			next()
+			intervalId = setInterval(next, period)
+		}, wait);
+		return {
+			unsubscribe(){
+				clearTimeout(timeoutId);
+				clearInterval(intervalId);
+			}
+		}
+	})
+}
+
+export { Observable, merge, fromEvent, NEVER, interval, fromFetch, of, timer }

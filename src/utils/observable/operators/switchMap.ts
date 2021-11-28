@@ -5,6 +5,7 @@ function switchMap(project) {
 		return new Observable(({ next }) => {
 			let currentObs = null;
 			let currSubscription = null;
+			// TODO: implement promise subscription
 			obs.subscribe({next: (v) => {
 				if (currentObs === null){
 					currentObs = project(v)
