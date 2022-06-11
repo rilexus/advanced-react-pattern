@@ -1,26 +1,29 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from "react";
 
-const InputValidator = ({children}) => {
+const InputValidator = ({ children }) => {
   const valueIsValid = (value) => {
-    return !!(value && value.length > 5)
+    return !!(value && value.length > 5);
   };
 
   const validateState = (state) => {
-    const {value} = state;
+    const { value } = state;
     state.valid = valueIsValid(value);
-    return state
+    return state;
   };
 
-  const handleInputControllerStateChange = useCallback((inputState, changes) => {
-    const newState = {...inputState, ...changes};
-    return validateState(newState);
-  }, []);
+  const handleInputControllerStateChange = useCallback(
+    (inputState, changes) => {
+      const newState = { ...inputState, ...changes };
+      return validateState(newState);
+    },
+    []
+  );
 
-  const renderProps = useMemo(()=>{
+  const renderProps = useMemo(() => {
     return {
-      handleInputControllerStateChange
-    }
-  },[]);
+      handleInputControllerStateChange,
+    };
+  }, []);
 
   return children(renderProps);
 };

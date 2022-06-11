@@ -1,12 +1,16 @@
-import React from 'react';
-import {useSimpleContext} from "./ContextHooks";
+import React from "react";
+import { useSimpleContext } from "./ContextHooks";
 
 export const ContextHookInput = () => {
-  const {value, handleChange} = useSimpleContext();
+  const { value, handleChange } = useSimpleContext();
 
   return (
     <div>
-      <input type="text" value={value} onChange={({target:{value}})=> handleChange(value)}/>
+      <input
+        type="text"
+        value={value}
+        onChange={({ target: { value } }) => handleChange(value)}
+      />
     </div>
   );
 };

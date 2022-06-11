@@ -8,7 +8,7 @@ const useRerender = () => {
   }, [_, setState]);
 };
 
-function createFetchedState(promise) {
+function createFetchedState(resolver) {
   const ERROR = "error";
   const RESOLVED = "resolved";
   const FETCHING = "fetching";
@@ -17,18 +17,18 @@ function createFetchedState(promise) {
   let result = null;
   let error = null;
 
-  const promised = promise
-    // subscribe to the promise as soon as this function is called
-    .then(
-      (_data) => {
-        status = RESOLVED;
-        result = _data;
-      },
-      (_error) => {
-        status = ERROR;
-        error = _error;
-      }
-    );
+  const promised = resolver();
+  // subscribe to the promise as soon as this function is called
+  promised.then(
+    (_data) => {
+      status = RESOLVED;
+      result = _data;
+    },
+    (_error) => {
+      status = ERROR;
+      error = _error;
+    }
+  );
 
   return () => {
     // return a hook function
@@ -47,4 +47,5 @@ function createFetchedState(promise) {
     return [result, error];
   };
 }
+
 export { createFetchedState };

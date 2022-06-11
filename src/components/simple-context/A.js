@@ -1,15 +1,11 @@
-import React from 'react';
-import {SimpleContextConsumer} from "./SimpleContext";
+import React from "react";
+import { SimpleContextConsumer } from "./SimpleContext";
 
 const A = () => {
   return (
     <SimpleContextConsumer>
-      {({value})=> {
-        return (
-          <div>
-            {value}
-          </div>
-        )
+      {({ value }) => {
+        return <div>{value}</div>;
       }}
     </SimpleContextConsumer>
   );
