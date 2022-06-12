@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import Factory from "./components/factory/Factory";
 import RenderProps from "./components/render-props/RenderPropsToggle";
 import { Ul } from "./ui/Ul";
-import { PrefetchedState } from "./components/prefetched-state/PrefetchedState";
+import { Prefetch } from "./components/Prefetch/Prefetch";
 import PropsCollection from "./components/props-collection/PropCollection";
 import ReducerHook from "./components/reducer-hook/ReducerHook";
 import StateReducer from "./components/state-reducer/StateReducer";
@@ -91,7 +91,7 @@ const App = () => {
         <Navigation />
         <Routes>
           <Route index element={<Home />} />
-          <Route path="utils/prefetched-state" element={<PrefetchedState />} />
+          <Route path="utils/prefetched-state" element={<Prefetch />} />
           <Route
             path="utils/state-subscription"
             element={<StateSubscription />}

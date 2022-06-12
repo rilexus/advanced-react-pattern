@@ -8,7 +8,7 @@ const useRerender = () => {
   }, [_, setState]);
 };
 
-function createFetchedState(resolver) {
+function prefetch(resolver) {
   const ERROR = "error";
   const RESOLVED = "resolved";
   const FETCHING = "fetching";
@@ -48,4 +48,4 @@ function createFetchedState(resolver) {
   };
 }
 
-export { createFetchedState };
+export { prefetch };
