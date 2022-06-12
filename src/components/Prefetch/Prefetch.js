@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Code } from "../../ui/Code";
 import Container from "../../ui/Container/Container";
 import Waterfall from "./Waterfall";
 import ParallelFetch from "./PrallelFetch";
 import H2 from "../../ui/H2/H2";
 import { P } from "../../ui/P";
+import fetchData from "./fetchData";
+
+const Component = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    // fetch as soon as component mounts
+    fetchData().then((d) => {
+      setData(d);
+    });
+  }, []);
+
+  return data && <div>children</div>;
+};
 
 const Prefetch = () => {
   return (
@@ -12,6 +26,25 @@ const Prefetch = () => {
       <main>
         <article>
           <h1>Prefetch</h1>
+
+          <div>
+            <H2>Fetch on mount</H2>
+            <Code>
+              {"const Component = () => {\n" +
+                "  const [data, setData] = useState(null);\n" +
+                "\n" +
+                "  useEffect(() => {\n" +
+                "    // fetch as soon as component mounts\n" +
+                "    fetchData().then((d) => {\n" +
+                "      setData(d);\n" +
+                "    });\n" +
+                "  }, []);\n" +
+                "\n" +
+                "  return data && <div>children</div>;\n" +
+                "};"}
+            </Code>
+          </div>
+
           <P>
             Every fetch call has a random response time between 1000 and 3000ms.
           </P>
