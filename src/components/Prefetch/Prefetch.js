@@ -13,7 +13,7 @@ const Prefetch = () => {
         <article>
           <h1>Prefetch</h1>
           <P>
-            Every fetch call has a random response time between 1000 and 4000ms.
+            Every fetch call has a random response time between 1000 and 3000ms.
           </P>
           <div>
             <H2>Sequence fetch (Waterfall)</H2>

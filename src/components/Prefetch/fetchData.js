@@ -2,7 +2,7 @@ function random(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-const fetchData = (delay = random(1000, 4000)) => {
+const fetchData = (delay = random(1000, 3000)) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       // return data after delay
