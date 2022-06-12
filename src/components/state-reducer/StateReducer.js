@@ -1,6 +1,26 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import { Code } from "../../ui/Code";
 import Container from "../../ui/Container/Container";
+
+const toggleReducer = (state, action) => {
+  const { type } = action;
+  if (type === "toggle") {
+    return !state;
+  }
+  return state;
+};
+
+const useToggle = (
+  initial = false,
+  reducer = toggleReducer /* can be overwritten */
+) => {
+  const [on, dispatch] = useReducer(reducer, initial);
+
+  const toggle = () => dispatch({ type: "toggle" });
+  const reset = () => dispatch({ type: "reset" });
+
+  return { on, toggle, reset };
+};
 
 const Toggle = ({ reduceState }) => {
   const [state, setState] = useState({ on: false });
@@ -93,6 +113,19 @@ const StateReducer = () => {
               '      <button onClick={handleClick}>{state.on ? "On" : "Off"}</button>\n' +
               "    </div>\n" +
               "  );\n" +
+              "};"}
+          </Code>
+          <Code>
+            {"const useToggle = (\n" +
+              "  initial = false,\n" +
+              "  reducer = toggleReducer /* can be overwritten */\n" +
+              ") => {\n" +
+              "  const [on, dispatch] = useReducer(reducer, initial);\n" +
+              "\n" +
+              '  const toggle = () => dispatch({ type: "toggle" });\n' +
+              '  const reset = () => dispatch({ type: "reset" });\n' +
+              "\n" +
+              "  return { on, toggle, reset };\n" +
               "};"}
           </Code>
         </div>

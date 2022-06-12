@@ -12,6 +12,9 @@ import { Home } from "./pages/Home";
 import { ThunkReducer } from "./components/thunk-reducer";
 import { CompoundToggle } from "./components/compound-toggle";
 import { ControlProps } from "./components/ControlProps";
+import { StateSubscription } from "./components/StateSubscription";
+import Decorator from "./components/Decorator/Decorator";
+import ImperativeHandler from "./hooks/imperative-handler/imperativeHandler";
 
 const Navigation = () => {
   return (
@@ -23,7 +26,12 @@ const Navigation = () => {
         <li>
           <Link to="/utils">Utils</Link>
           <Ul>
-            <Link to="/utils/prefetched-state">Prefetched State</Link>
+            <li>
+              <Link to="/utils/prefetched-state">Prefetched State</Link>
+            </li>
+            <li>
+              <Link to="/utils/state-subscription">State Subscription</Link>
+            </li>
           </Ul>
         </li>
         <li>
@@ -49,6 +57,9 @@ const Navigation = () => {
             <li>
               <Link to="/components/control-props">Control Props</Link>
             </li>
+            <li>
+              <Link to="/components/decorator">Decorator</Link>
+            </li>
           </Ul>
         </li>
         <li>
@@ -56,6 +67,9 @@ const Navigation = () => {
           <Ul>
             <li>
               <Link to="components/thunk-reducer">Thunk Reducer</Link>
+            </li>
+            <li>
+              <Link to="hooks/imperative-handler">Imperative Handler</Link>
             </li>
             <li>
               <Link to="/hooks/use-form">Form</Link>
@@ -78,6 +92,10 @@ const App = () => {
         <Routes>
           <Route index element={<Home />} />
           <Route path="utils/prefetched-state" element={<PrefetchedState />} />
+          <Route
+            path="utils/state-subscription"
+            element={<StateSubscription />}
+          />
 
           <Route path="components" element={<div>hooks</div>} />
           <Route path="components/render-props" element={<RenderProps />} />
@@ -93,10 +111,15 @@ const App = () => {
           />
           <Route path="components/state-reducer" element={<StateReducer />} />
           <Route path="components/control-props" element={<ControlProps />} />
+          <Route path="components/decorator" element={<Decorator />} />
 
           <Route path="hooks" element={<div>hooks</div>} />
           <Route path="hooks/use-form" element={<div>use-form</div>} />
           <Route path="hooks/reducer-hook" element={<ReducerHook />} />
+          <Route
+            path="hooks/imperative-handler"
+            element={<ImperativeHandler />}
+          />
         </Routes>
       </BrowserRouter>
     </div>
