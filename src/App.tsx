@@ -1,19 +1,19 @@
 import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
-import Factory from "./components/factory/Factory";
-import RenderProps from "./components/render-props/RenderPropsToggle";
+import Factory from "./pages/factory/Factory";
+import RenderProps from "./pages/render-props/RenderPropsToggle";
 import { Ul } from "./ui/Ul";
-import { Prefetch } from "./components/Prefetch/Prefetch";
-import PropsCollection from "./components/props-collection/PropCollection";
-import ReducerHook from "./components/reducer-hook/ReducerHook";
-import StateReducer from "./components/state-reducer/StateReducer";
+import { Prefetch } from "./pages/Prefetch/Prefetch";
+import PropsCollection from "./pages/props-collection/PropCollection";
+import ReducerHook from "./pages/reducer-hook/ReducerHook";
+import StateReducer from "./pages/state-reducer/StateReducer";
 import { Home } from "./pages/Home";
-import { ThunkReducer } from "./components/thunk-reducer";
-import { CompoundToggle } from "./components/compound-toggle";
-import { ControlProps } from "./components/ControlProps";
+import { ThunkReducer } from "./pages/thunk-reducer";
+import { CompoundToggle } from "./pages/compound-toggle";
+import { ControlProps } from "./pages/ControlProps";
 import { StateSubscription } from "./components/StateSubscription";
-import Decorator from "./components/Decorator/Decorator";
+import Decorator from "./pages/Decorator/Decorator";
 import ImperativeHandler from "./hooks/imperative-handler/imperativeHandler";
 
 const Navigation = () => {
