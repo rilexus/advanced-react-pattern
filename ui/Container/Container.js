@@ -12,21 +12,21 @@ const Styled = styled.div`
   }
 
   @media screen and (min-width: 576px) {
-    min-width: 540px;
-  }
-  @media screen and (min-width: 768px) {
-    max-width: 720px;
-  }
-  @media screen and (min-width: 992px) {
-    max-width: 960px;
-  }
-  @media screen and (min-width: 1200px) {
-    max-width: 1140px;
-  }
-  @media screen and (min-width: 1400px) {
-    min-width: 540px;
+    max-width: 1024px;
   }
 `;
+//@media screen and (min-width: 768px) {
+//  max-width: 720px;
+//}
+//@media screen and (min-width: 992px) {
+//  max-width: 960px;
+//}
+//@media screen and (min-width: 1200px) {
+//  max-width: 900px;
+//}
+//@media screen and (min-width: 1400px) {
+//  max-width: 1024px;
+//}
 
 const Container = ({ children }) => {
   return <Styled>{children}</Styled>;
