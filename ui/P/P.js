@@ -6,7 +6,8 @@ const P = (props) => {
     {
       ...props.style,
       lineHeight: "1.4",
-      fontSize: "1rem",
+      fontSize: "1.125rem",
+      color: "#1a1a1a",
     },
     []
   );

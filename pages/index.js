@@ -141,18 +141,18 @@ import { useEffect, useState } from "react";
 //   }, null);
 // };
 
-const Component = () => {
-  const [state, setState] = useState();
-  if (condition) {
-    const [otherState, setOther] = useState();
-  }
-  if (condition) {
-    useEffect(() => {
-      console.log("here");
-    }, []);
-  }
-  return <div>Some</div>;
-};
+// const Component = () => {
+//   const [state, setState] = useState();
+//   if (condition) {
+//     const [otherState, setOther] = useState();
+//   }
+//   if (condition) {
+//     useEffect(() => {
+//       console.log("here");
+//     }, []);
+//   }
+//   return <div>Some</div>;
+// };
 
 const App = () => {
   return (
@@ -385,10 +385,9 @@ const App = () => {
               "}"}
           </Code>
           <P>
-            to the "createElement" function. Essentially saying to react: Please
-            call this function for us. Now everytime we call "setState", we say
-            to react, please call this function again. Effectively, we say
-            please call our component again.
+            to the &quot;createElement&quot; function. Essentially saying to
+            react: Please call this function for us. Now everytime we call
+            &quot;setState&quot;, react is going to call this function again.
           </P>
           <P>Take a look in to the implementation of this component:</P>
           <Code>
@@ -438,9 +437,9 @@ const App = () => {
             define all our variables in the global scope.
           </P>
           <P>
-            The context, the "space" between the component name and the return
-            statement is ours. We can use its as we like, as if this a normal
-            javascript function.
+            The context, the &quot;space&quot; between the component name and
+            the return statement is ours. We can use its as we like, as if this
+            a normal javascript function.
           </P>
           <Code>
             {"const Component = () => {\n" +
@@ -492,8 +491,8 @@ const App = () => {
           </div>
           <P>
             The reason for this is, how react associates every hook with a
-            component. If you call a "setState" function, react needs to know
-            from which component it was called and re-render it.
+            component. If you call a &quot;setState&quot; function, react needs
+            to know from which component it was called and re-render it.
           </P>
           <P>
             When the component mounts for the first time, react keeps track of
