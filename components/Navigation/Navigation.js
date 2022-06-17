@@ -13,7 +13,7 @@ const Navigation = () => {
           <h4>Utils</h4>
           <Ul>
             <Li>
-              <Link href="/Prefetch">
+              <Link href="/Prefetch" locale={"advanced-react-pattern"}>
                 <a>Prefetched State</a>
               </Link>
             </Li>
