@@ -1,5 +1,5 @@
 const nextConfig = {
-  // basePath: "/advanced-react-pattern",
+  basePath: "/advanced-react-pattern",
   distDir: "build",
 };
 
