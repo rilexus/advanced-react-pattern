@@ -87,7 +87,6 @@ const Code = ({ children }) => {
         text={children}
         language={"jsx"}
         showLineNumbers={false}
-        startingLineNumber={1}
         theme={theme}
       />
     </div>
