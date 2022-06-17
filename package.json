@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && cp -R ./.next/server/pages ./docs",
+    "build": "next build && cp -R ./.next/server/pages/ ./docs/",
     "start": "next start",
     "serve": "serve docs",
     "lint": "next lint"
