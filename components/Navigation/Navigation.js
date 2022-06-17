@@ -13,7 +13,9 @@ const Navigation = () => {
           <h4>Utils</h4>
           <Ul>
             <Li>
-              <Link href="/Prefetch">Prefetched State</Link>
+              <Link href="/Prefetch">
+                <a>Prefetched State</a>
+              </Link>
             </Li>
             <Li>
               <Link href="/StateSubscription">State Subscription</Link>
