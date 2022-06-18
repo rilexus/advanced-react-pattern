@@ -26,6 +26,9 @@ const Navigation = () => {
           <h4>Components</h4>
           <Ul>
             <Li>
+              <Link href="/suspense">Suspense</Link>
+            </Li>
+            <Li>
               <Link href="/CompoundToggle">Compound Components</Link>
             </Li>
             <Li>
