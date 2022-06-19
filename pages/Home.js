@@ -1,11 +1,17 @@
 import React from "react";
-import Container from "../ui/Container/Container";
+import Layout from "../components/Layout/Layout";
+import Navigation from "../components/Navigation/Navigation";
 
 const Home = () => {
   return (
-    <Container>
-      <h1>React Advanced Patters</h1>
-    </Container>
+    <Layout
+      navigation={<Navigation />}
+      content={
+        <div>
+          <h1>React Advanced Patters</h1>
+        </div>
+      }
+    ></Layout>
   );
 };
 

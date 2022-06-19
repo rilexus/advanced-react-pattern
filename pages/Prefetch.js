@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Code } from "../ui/Code";
-import Container from "../ui/Container/Container";
 import Waterfall from "../components/Prefetch/Waterfall";
 import ParallelFetch from "../components/Prefetch/PrallelFetch";
 import { P } from "../ui/P";
 import fetchData from "../components/Prefetch/fetchData";
 import H1 from "../ui/H1/H1";
 import Navigation from "../components/Navigation/Navigation";
-import Flex from "../ui/Flex/Flex";
+import Layout from "../components/Layout/Layout";
 
 const Component = () => {
   const [data, setData] = useState(null);
@@ -24,15 +23,9 @@ const Component = () => {
 
 const Prefetch = () => {
   return (
-    <Container>
-      <Flex>
-        <div
-          style={{
-            marginRight: "1rem",
-          }}
-        >
-          <Navigation />
-        </div>
+    <Layout
+      navigation={<Navigation />}
+      content={
         <main>
           <article>
             <div>
@@ -218,8 +211,8 @@ const Prefetch = () => {
             </figure>
           </article>
         </main>
-      </Flex>
-    </Container>
+      }
+    ></Layout>
   );
 };
 

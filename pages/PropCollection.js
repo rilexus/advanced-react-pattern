@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from "react";
 import { Code } from "../ui/Code";
 import Container from "../ui/Container/Container";
+import Layout from "../components/Layout/Layout";
+import Navigation from "../components/Navigation/Navigation";
 
 const useInputController = () => {
   const [value, _setValue] = useState("");
@@ -85,104 +87,111 @@ const Component1 = () => {
 
 const PropsCollection = () => {
   return (
-    <div>
-      <Container>
+    <Layout
+      navigation={<Navigation />}
+      content={
         <div>
-          <h1>Props Collection</h1>
+          <main>
+            <article>
+              <div>
+                <h1>Props Collection</h1>
+              </div>
+              <div>
+                <h2>Render Props</h2>
+                <Code>
+                  {"const Component = () => {\n" +
+                    "  return (\n" +
+                    "    <InputController>\n" +
+                    "      {({ register, isDirty, touched }) => {\n" +
+                    '        return <input type="text" {...register()} />;\n' +
+                    "      }}\n" +
+                    "    </InputController>\n" +
+                    "  );\n" +
+                    "};"}
+                </Code>
+                <Code>
+                  {"const InputController = ({ children }) => {\n" +
+                    '  const [value, _setValue] = useState("");\n' +
+                    "  const [isDirty, setDirty] = useState(false);\n" +
+                    "  const [touched, setTouched] = useState(false);\n" +
+                    "\n" +
+                    "  const setValue = useCallback(\n" +
+                    "    (e) => {\n" +
+                    "      const { value: _value } = e.target;\n" +
+                    "      _setValue(() => _value);\n" +
+                    "      if (!isDirty) setDirty(() => true);\n" +
+                    "    },\n" +
+                    "    [value]\n" +
+                    "  );\n" +
+                    "\n" +
+                    "  const handleClick = useCallback(() => {\n" +
+                    "    if (!touched) setTouched(true);\n" +
+                    "  }, [touched]);\n" +
+                    "\n" +
+                    "  const register = ({ onChange, ...rest }) => {\n" +
+                    "    return {\n" +
+                    "      value,\n" +
+                    "      onChange: (e) => {\n" +
+                    "        onChange && onChange(e);\n" +
+                    "        setValue(e);\n" +
+                    "      },\n" +
+                    "      onClick: handleClick,\n" +
+                    "      ...rest,\n" +
+                    "    };\n" +
+                    "  };\n" +
+                    "\n" +
+                    "  return children({ isDirty, touched, register });\n" +
+                    "};"}
+                </Code>
+              </div>
+              <div>
+                <h2>Hook</h2>
+                <Code>
+                  {"const useInputController = () => {\n" +
+                    '  const [value, _setValue] = useState("");\n' +
+                    "  const [isDirty, setDirty] = useState(false);\n" +
+                    "  const [touched, setTouched] = useState(false);\n" +
+                    "\n" +
+                    "  const setValue = useCallback(\n" +
+                    "    (e) => {\n" +
+                    "      const { value: _value } = e.target;\n" +
+                    "      _setValue(() => _value);\n" +
+                    "      if (!isDirty) setDirty(() => true);\n" +
+                    "    },\n" +
+                    "    [value]\n" +
+                    "  );\n" +
+                    "\n" +
+                    "  const handleClick = useCallback(() => {\n" +
+                    "    if (!touched) setTouched(true);\n" +
+                    "  }, [touched]);\n" +
+                    "\n" +
+                    "  const register = ({ onChange, ...rest }) => {\n" +
+                    "    return {\n" +
+                    "      value,\n" +
+                    "      onChange: (e) => {\n" +
+                    "        onChange && onChange(e);\n" +
+                    "        setValue(e);\n" +
+                    "      },\n" +
+                    "      onClick: handleClick,\n" +
+                    "      ...rest,\n" +
+                    "    };\n" +
+                    "  };\n" +
+                    "\n" +
+                    "  return [value, register];\n" +
+                    "};\n"}
+                </Code>
+                <Code>
+                  {"const Component = () => {\n" +
+                    "  const [value, register] = useInputController();\n" +
+                    '  return <input type="text" {...register()} />;\n' +
+                    "};"}
+                </Code>
+              </div>
+            </article>
+          </main>
         </div>
-        <div>
-          <h2>Render Props</h2>
-          <Code>
-            {"const Component = () => {\n" +
-              "  return (\n" +
-              "    <InputController>\n" +
-              "      {({ register, isDirty, touched }) => {\n" +
-              '        return <input type="text" {...register()} />;\n' +
-              "      }}\n" +
-              "    </InputController>\n" +
-              "  );\n" +
-              "};"}
-          </Code>
-          <Code>
-            {"const InputController = ({ children }) => {\n" +
-              '  const [value, _setValue] = useState("");\n' +
-              "  const [isDirty, setDirty] = useState(false);\n" +
-              "  const [touched, setTouched] = useState(false);\n" +
-              "\n" +
-              "  const setValue = useCallback(\n" +
-              "    (e) => {\n" +
-              "      const { value: _value } = e.target;\n" +
-              "      _setValue(() => _value);\n" +
-              "      if (!isDirty) setDirty(() => true);\n" +
-              "    },\n" +
-              "    [value]\n" +
-              "  );\n" +
-              "\n" +
-              "  const handleClick = useCallback(() => {\n" +
-              "    if (!touched) setTouched(true);\n" +
-              "  }, [touched]);\n" +
-              "\n" +
-              "  const register = ({ onChange, ...rest }) => {\n" +
-              "    return {\n" +
-              "      value,\n" +
-              "      onChange: (e) => {\n" +
-              "        onChange && onChange(e);\n" +
-              "        setValue(e);\n" +
-              "      },\n" +
-              "      onClick: handleClick,\n" +
-              "      ...rest,\n" +
-              "    };\n" +
-              "  };\n" +
-              "\n" +
-              "  return children({ isDirty, touched, register });\n" +
-              "};"}
-          </Code>
-        </div>
-        <div>
-          <h2>Hook</h2>
-          <Code>
-            {"const useInputController = () => {\n" +
-              '  const [value, _setValue] = useState("");\n' +
-              "  const [isDirty, setDirty] = useState(false);\n" +
-              "  const [touched, setTouched] = useState(false);\n" +
-              "\n" +
-              "  const setValue = useCallback(\n" +
-              "    (e) => {\n" +
-              "      const { value: _value } = e.target;\n" +
-              "      _setValue(() => _value);\n" +
-              "      if (!isDirty) setDirty(() => true);\n" +
-              "    },\n" +
-              "    [value]\n" +
-              "  );\n" +
-              "\n" +
-              "  const handleClick = useCallback(() => {\n" +
-              "    if (!touched) setTouched(true);\n" +
-              "  }, [touched]);\n" +
-              "\n" +
-              "  const register = ({ onChange, ...rest }) => {\n" +
-              "    return {\n" +
-              "      value,\n" +
-              "      onChange: (e) => {\n" +
-              "        onChange && onChange(e);\n" +
-              "        setValue(e);\n" +
-              "      },\n" +
-              "      onClick: handleClick,\n" +
-              "      ...rest,\n" +
-              "    };\n" +
-              "  };\n" +
-              "\n" +
-              "  return [value, register];\n" +
-              "};\n"}
-          </Code>
-          <Code>
-            {"const Component = () => {\n" +
-              "  const [value, register] = useInputController();\n" +
-              '  return <input type="text" {...register()} />;\n' +
-              "};"}
-          </Code>
-        </div>
-      </Container>
-    </div>
+      }
+    ></Layout>
   );
 };
 export default PropsCollection;

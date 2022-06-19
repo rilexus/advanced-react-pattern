@@ -1,6 +1,8 @@
 import React, { useReducer } from "react";
 import { Code } from "../ui/Code";
 import Container from "../ui/Container/Container";
+import Layout from "../components/Layout/Layout";
+import Navigation from "../components/Navigation/Navigation";
 
 function reducer(state, action) {
   const { type, payload } = action;
@@ -55,54 +57,63 @@ const Thunk = () => {
 
 const ThunkReducer = () => {
   return (
-    <Container>
-      <h1>Thunk Reducer</h1>
-      <Thunk />
-      <Code>
-        {"function callAPI(dispatch) {\n" +
-          '  dispatch({ type: "call api", payload: { data: "Calling API..." } });\n' +
-          "  setTimeout(() => {\n" +
-          '    const data = "Got data after 2sec.";\n' +
-          '    dispatch({ type: "call api", payload: { data } });\n' +
-          "  }, 2000);\n" +
-          "}\n" +
-          "\n" +
-          "function fetchUser(id) {\n" +
-          "  return (dispatch) => {\n" +
-          '    dispatch({ type: "user-fetched", payload: { data: "" } });\n' +
-          "  };\n" +
-          "}\n" +
-          "\n" +
-          "const Thunk = () => {\n" +
-          '  const [state, dispatch] = useThunkReducer(reducer, { data: "" });\n' +
-          "\n" +
-          "  return (\n" +
-          "    <div>\n" +
-          "      <div>{JSON.stringify(state.data)}</div>\n" +
-          "      <button onClick={() => dispatch(callAPI /*pass function as action*/)}>\n" +
-          "        Call API\n" +
-          "      </button>\n" +
-          "      <button onClick={() => dispatch(fetchUser(1234))}>Fetch User</button>\n" +
-          "    </div>\n" +
-          "  );\n" +
-          "};"}
-      </Code>
-      <Code>
-        {"function useThunkReducer(reducer, initialState) {\n" +
-          "  const [state, dispatch] = useReducer(reducer, initialState);\n" +
-          "\n" +
-          "  const thunkDispatch = (action) => {\n" +
-          '    if (typeof action === "function") {\n' +
-          "      action(dispatch);\n" +
-          "    } else {\n" +
-          "      dispatch(action);\n" +
-          "    }\n" +
-          "  };\n" +
-          "\n" +
-          "  return [state, thunkDispatch];\n" +
-          "}"}
-      </Code>
-    </Container>
+    <Layout
+      navigation={<Navigation />}
+      content={
+        <div>
+          <main>
+            <article>
+              <h1>Thunk Reducer</h1>
+              <Thunk />
+              <Code>
+                {"function callAPI(dispatch) {\n" +
+                  '  dispatch({ type: "call api", payload: { data: "Calling API..." } });\n' +
+                  "  setTimeout(() => {\n" +
+                  '    const data = "Got data after 2sec.";\n' +
+                  '    dispatch({ type: "call api", payload: { data } });\n' +
+                  "  }, 2000);\n" +
+                  "}\n" +
+                  "\n" +
+                  "function fetchUser(id) {\n" +
+                  "  return (dispatch) => {\n" +
+                  '    dispatch({ type: "user-fetched", payload: { data: "" } });\n' +
+                  "  };\n" +
+                  "}\n" +
+                  "\n" +
+                  "const Thunk = () => {\n" +
+                  '  const [state, dispatch] = useThunkReducer(reducer, { data: "" });\n' +
+                  "\n" +
+                  "  return (\n" +
+                  "    <div>\n" +
+                  "      <div>{JSON.stringify(state.data)}</div>\n" +
+                  "      <button onClick={() => dispatch(callAPI /*pass function as action*/)}>\n" +
+                  "        Call API\n" +
+                  "      </button>\n" +
+                  "      <button onClick={() => dispatch(fetchUser(1234))}>Fetch User</button>\n" +
+                  "    </div>\n" +
+                  "  );\n" +
+                  "};"}
+              </Code>
+              <Code>
+                {"function useThunkReducer(reducer, initialState) {\n" +
+                  "  const [state, dispatch] = useReducer(reducer, initialState);\n" +
+                  "\n" +
+                  "  const thunkDispatch = (action) => {\n" +
+                  '    if (typeof action === "function") {\n' +
+                  "      action(dispatch);\n" +
+                  "    } else {\n" +
+                  "      dispatch(action);\n" +
+                  "    }\n" +
+                  "  };\n" +
+                  "\n" +
+                  "  return [state, thunkDispatch];\n" +
+                  "}"}
+              </Code>
+            </article>
+          </main>
+        </div>
+      }
+    ></Layout>
   );
 };
 
