@@ -527,9 +527,9 @@ const ReducerHook = () => {
               />
               <P>
                 For this example ill stick with 5 inputs but in the reality, you
-                we would have many more. Imagine options input, select inputs,
-                file upload etc. Lets rewrite this component in such a way that
-                its manageable and extendable.
+                would have many more. Imagine options input, select inputs, file
+                upload etc. Lets rewrite this component in such a way that its
+                manageable and extendable.
               </P>
               <Code>
                 {"const Component = () => {\n" +
@@ -564,28 +564,8 @@ const ReducerHook = () => {
                   '          type="text"\n' +
                   "          value={formValues.name}\n" +
                   '          onChange={createOnChangeHandler("name")}\n' +
+                  "          {/* nothing changed here */}\n" +
                   "        />\n" +
-                  "        <input\n" +
-                  '          type="text"\n' +
-                  "          value={formValues.surname}\n" +
-                  '          onChange={createOnChangeHandler("surname")}\n' +
-                  "        />\n" +
-                  "        <input\n" +
-                  '          type="tel"\n' +
-                  "          value={formValues.tel}\n" +
-                  '          onChange={createOnChangeHandler("tel")}\n' +
-                  "        />\n" +
-                  "        <input\n" +
-                  '          type="text"\n' +
-                  "          value={formValues.street}\n" +
-                  '          onChange={createOnChangeHandler("street")}\n' +
-                  "        />\n" +
-                  "        <input\n" +
-                  '          type="text"\n' +
-                  "          value={formValues.city}\n" +
-                  '          onChange={createOnChangeHandler("city")}\n' +
-                  "        />\n" +
-                  '        <button type={"submit"}>Submit</button>\n' +
                   "      </form>\n" +
                   "    </div>\n" +
                   "  );\n" +
@@ -657,39 +637,19 @@ const ReducerHook = () => {
                   "          value={formValues.name.value}\n" +
                   '          onChange={createOnChangeHandler("name")}\n' +
                   "        />\n" +
-                  "        <input\n" +
-                  '          type="text"\n' +
-                  "          value={formValues.surname.value}\n" +
-                  '          onChange={createOnChangeHandler("surname")}\n' +
-                  "        />\n" +
-                  "        <input\n" +
-                  '          type="tel"\n' +
-                  "          value={formValues.tel.value}\n" +
-                  '          onChange={createOnChangeHandler("tel")}\n' +
-                  "        />\n" +
-                  "        <input\n" +
-                  '          type="text"\n' +
-                  "          value={formValues.street.value}\n" +
-                  '          onChange={createOnChangeHandler("street")}\n' +
-                  "        />\n" +
-                  "        <input\n" +
-                  '          type="text"\n' +
-                  "          value={formValues.city.value}\n" +
-                  '          onChange={createOnChangeHandler("city")}\n' +
-                  "        />\n" +
-                  '        <button type={"submit"}>Submit</button>\n' +
+                  "        {/* nothing changed here */}\n" +
                   "      </form>\n" +
                   "    </div>\n" +
                   "  );\n" +
                   "};"}
               </Code>
               <P>
-                I provide a validation function and the state is larger. As you
-                can see, the component grows. And as soon as we start handling
-                onClick and on onBlur events, because we do not like to display
-                error messages as soon as the user makes a mistake, the
+                I provide a validation function and the state is larger now. As
+                you can see, the component grows. And as soon as we start
+                handling onClick and on onBlur events, because we do not like to
+                display error messages as soon as the user makes a mistake, the
                 component will explode in complexity. The state, the validation
-                function and the event handler needs to go!
+                function and the event handler need to go!
               </P>
               <Code>
                 {"const initialState = {\n" +
@@ -758,27 +718,7 @@ const ReducerHook = () => {
                   "          value={formValues.name.value}\n" +
                   '          onChange={createOnChangeHandler("name")}\n' +
                   "        />\n" +
-                  "        <input\n" +
-                  '          type="text"\n' +
-                  "          value={formValues.surname.value}\n" +
-                  '          onChange={createOnChangeHandler("surname")}\n' +
-                  "        />\n" +
-                  "        <input\n" +
-                  '          type="tel"\n' +
-                  "          value={formValues.tel.value}\n" +
-                  '          onChange={createOnChangeHandler("tel")}\n' +
-                  "        />\n" +
-                  "        <input\n" +
-                  '          type="text"\n' +
-                  "          value={formValues.street.value}\n" +
-                  '          onChange={createOnChangeHandler("street")}\n' +
-                  "        />\n" +
-                  "        <input\n" +
-                  '          type="text"\n' +
-                  "          value={formValues.city.value}\n" +
-                  '          onChange={createOnChangeHandler("city")}\n' +
-                  "        />\n" +
-                  '        <button type={"submit"}>Submit</button>\n' +
+                  "        {/* nothing changed here */}\n" +
                   "      </form>\n" +
                   "    </div>\n" +
                   "  );\n" +
@@ -789,7 +729,7 @@ const ReducerHook = () => {
                 provide it as a default prop to the component. The validation
                 and the state merging is outside now as well. Because of this
                 the component and all the logic is pretty easy to unit test as
-                too.
+                well.
               </P>
               <img
                 src="https://media.giphy.com/media/hXDrTueJWAscK3xWQ2/giphy.gif"
