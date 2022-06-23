@@ -1,8 +1,10 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import { Code } from "../ui/Code";
 import Container from "../ui/Container/Container";
 import Layout from "../components/Layout/Layout";
 import Navigation from "../components/Navigation/Navigation";
+import { P } from "../ui/P";
+import fetchData from "../components/Prefetch/fetchData";
 
 function reducer(state, action) {
   const { type, payload } = action;
@@ -55,6 +57,35 @@ const Thunk = () => {
   );
 };
 
+// const reducer = (state, action) => state /* add logic here */;
+// const Component = () => {
+//   const [state, dispatch] = useReducer(reducer, {
+//     data: null,
+//     error: null,
+//     status: false /* indicate if data is being fetched */,
+//   });
+//
+//   const handleClick = () => {
+//     dispatch({
+//       type: "start-fetching" /* show loading spinner or something */,
+//     });
+//     fetchData()
+//       .then((data) => {
+//         dispatch({ type: "data-fetched", data });
+//       })
+//       .catch((error) => {
+//         dispatch({ type: "fetching-error", error });
+//       });
+//   };
+//
+//   return (
+//     <div>
+//       <div>{JSON.stringify(state)}</div>
+//       <button onClick={handleClick}>Call API</button>
+//     </div>
+//   );
+// };
+
 const ThunkReducer = () => {
   return (
     <Layout
@@ -64,6 +95,47 @@ const ThunkReducer = () => {
           <main>
             <article>
               <h1>Thunk Reducer</h1>
+
+              <P>First I would like to point your attention to this code:</P>
+              <Code>
+                {"const reducer = (state, action) => state /* add logic here */;\n" +
+                  "const Component = () => {\n" +
+                  "  const [state, dispatch] = useReducer(reducer, {\n" +
+                  "    data: null,\n" +
+                  "    error: null,\n" +
+                  "    status: false /* indicate if data is being fetched */,\n" +
+                  "  });\n" +
+                  "\n" +
+                  "  const handleClick = () => {\n" +
+                  "    dispatch({\n" +
+                  '      type: "start-fetching" /* show loading spinner or something */,\n' +
+                  "    });\n" +
+                  "    fetchData()\n" +
+                  "      .then((data) => {\n" +
+                  '        dispatch({ type: "data-fetched", data });\n' +
+                  "      })\n" +
+                  "      .catch((error) => {\n" +
+                  '        dispatch({ type: "fetching-error", error });\n' +
+                  "      });\n" +
+                  "  };\n" +
+                  "\n" +
+                  "  return (\n" +
+                  "    <div>\n" +
+                  "      <div>{JSON.stringify(state)}</div>\n" +
+                  "      <button onClick={handleClick}>Call API</button>\n" +
+                  "    </div>\n" +
+                  "  );\n" +
+                  "};"}
+              </Code>
+              <P>The order of execution is as follows:</P>
+              <ol>
+                <li>user clicks on the button</li>
+                <li>handleClick is called</li>
+                <li>dispatch is called</li>
+                <li>fetchData is called</li>
+                <li></li>
+              </ol>
+              <hr />
               <Thunk />
               <Code>
                 {"function callAPI(dispatch) {\n" +
