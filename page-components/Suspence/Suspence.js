@@ -254,30 +254,25 @@ const Sus = () => {
               <figcaption>Screenshot of the JIRA application.</figcaption>
             </figure>
             <P>
-              Every button lead to a different page. I think the word
+              Every button leads to a different page. I think the word
               &quot;view&quot; would be more appropriate, since its not a page.
               So every view is separate and independent from each other. It has
               its own purpose, its own code.
             </P>
             <P>
-              The user is interested in one view at a time and probably he is
-              not interested in all the views of the application. Just think how
-              often you visit the &quot;setting&quot; view of any application. I
-              bet, you go there one time a month, if at all.
+              The user is interested in one view at a time and probably not in
+              all the views of the application. Just think how often you visit
+              the &quot;setting&quot; view of any application. Ill bet, you go
+              there one time a month, if at all.
             </P>
             <P>
               Now the thing is, if we as a developer do not pay attention, we
-              would bundle the whole application to one single file. We will
-              have one HTML file with a single div in it, where the application
-              is going to be mounted and a javascript file which contains the
-              application.
+              would bundle the whole application to one big file.
             </P>
             <P>
               This has an effect on the loading time ouf the application and the
-              user experience. Just think about it! How much code does the
-              application in total has? How many css lines, images, svg`s etc.
-              We ship a lot of code and in our current case, we shit a lot of
-              code at once.
+              user experience. All the javascript code, css, images, svg`s etc.
+              We ship a lot of code at once.
             </P>
             <P>
               Luckily we can improve this by utilising{" "}
