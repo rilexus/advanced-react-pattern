@@ -50,11 +50,14 @@ const Prefetch = () => {
               <P>
                 You fetch as soon as the component mounts. While the data is on
                 the way, you postpone the rendering of children. This way of
-                getting data does not do any harm in the majority of cases. It
-                has one fault tho. Its the fetching on mount. To make make case
-                clear, Ill provide couple of examples.
+                getting data does not do any harm in the majority of cases but
+                it has one fault tho. To make my case clear, Ill provide couple
+                of examples.
               </P>
-              <P>ADD TEXT</P>
+              <P>
+                In a big react application you will unavoidably end up with a
+                nested structure like this:
+              </P>
               <figure>
                 <Code>
                   {"const Component = () => {\n" +
@@ -72,52 +75,37 @@ const Prefetch = () => {
                     "};"}
                 </Code>
               </figure>
+              <P>
+                If you fetch data on mount as in the first example, you will end
+                up with a fetch watterfall: a component starts fetching only
+                when the previous component has finished. This has a devastating
+                effect on the user experience. The application feels slow and
+                dull. Just reload this page and take a look at the next example.
+              </P>
+              <P>
+                There is another way to fetch data. Start fetching as soon as
+                javascript hits the browser. And as soon as the data is
+                available, rerender.
+              </P>
+              <P>
+                Reload the page couple of times and take a look at the next
+                demo.
+              </P>
               <figure>
+                <figcaption>Sequence fetch (Waterfall)</figcaption>
                 <Waterfall />
               </figure>
-              <P>
-                One thing they have certainly in common. They render its
-                children as soon as the data is available. The difference is
-                that the sequence example fetches, as the naming suggest, in
-                sequence: on mount, while the parallel example fetches all
-                needed data parallel, even before react starts rendering
-                anything.
-              </P>
-              <P>
-                The implementation of the sequence components looks like this:
-              </P>
               <figure>
-                <Code>
-                  {"const ComponentA = ({ children }) => {\n" +
-                    "  const [data, setData] = useState(null);\n" +
-                    "\n" +
-                    "  useEffect(() => {\n" +
-                    "    fetchData().then((d) => {\n" +
-                    "      setData(d);\n" +
-                    "    });\n" +
-                    "  }, []);\n" +
-                    "\n" +
-                    "  return (\n" +
-                    "    <div\n" +
-                    "      style={{\n" +
-                    '        height: "34rem",\n' +
-                    '        border: "1px solid black",\n' +
-                    "      }}\n" +
-                    "    >\n" +
-                    "      <div>Component A</div>\n" +
-                    "      <div>Data: {data && JSON.stringify(data)}</div>\n" +
-                    '      <div style={{ padding: "3rem" }}>\n' +
-                    "        {!data ? <div>Loading...</div> : <div>{children}</div>}\n" +
-                    "      </div>\n" +
-                    "    </div>\n" +
-                    "  );\n" +
-                    "};"}
-                </Code>
+                <figcaption>Parallel Fetch</figcaption>
+                <ParallelFetch />
               </figure>
               <P>
-                And the implementation of the parallel component looks like
-                this:
+                If we run them side by side, the difference is pretty clear. The
+                response time for both, parallel and sequential fetching is set
+                to be random between 1000ms and 3000ms. Parallel fetching
+                finishes always first.
               </P>
+              <P>Parallel fetching could look like this:</P>
               <figure>
                 <Code>
                   {"const useData = prefetch(\n" +
@@ -144,24 +132,8 @@ const Prefetch = () => {
                     "};"}
                 </Code>
               </figure>
-              <P>
-                If we run them side by side, the difference is pretty clear.
-              </P>
             </div>
 
-            <figure>
-              <figcaption>Sequence fetch (Waterfall)</figcaption>
-              <Waterfall />
-            </figure>
-            <figure>
-              <figcaption>Parallel Fetch</figcaption>
-              <ParallelFetch />
-            </figure>
-            <P>
-              The parallel fetching is always faster. If you need to fetch data
-              on mount, I would suggest you not to do that. Prefetch the data
-              and rerender as soon as data is available.
-            </P>
             <P>
               A simple implementation of the &quot;prefetch&quot; function is
               below. Error handling is omitted here.

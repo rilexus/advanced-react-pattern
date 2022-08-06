@@ -55,10 +55,10 @@ const Navigation = () => {
           <h4>Hooks</h4>
           <Ul>
             <Li>
-              <Link href="/ThunkReducer">Thunk Reducer</Link>
+              <Link href="/ReducerHook">Reducer Hook</Link>
             </Li>
             <Li>
-              <Link href="/ReducerHook">Reducer Hook</Link>
+              <Link href="/ThunkReducer">Thunk Reducer</Link>
             </Li>
           </Ul>
         </Li>

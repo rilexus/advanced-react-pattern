@@ -1,96 +1,139 @@
-import React from "react";
-import { CodeBlock } from "react-code-blocks";
+import React, { useEffect, useRef } from "react";
+import hljs from "highlight.js/lib/core";
+import xml from "highlight.js/lib/languages/xml";
+import javascript from "highlight.js/lib/languages/javascript";
 
-// const theme = {
-//   lineNumberColor: `#333333`,
-//   lineNumberBgColor: `white`,
-//   backgroundColor: `#2B2B2BFF`,
-//   textColor: `#A9B7C6`,
-//   substringColor: `#6A8759`,
-//   keywordColor: `#2F92D9`,
-//   attributeColor: `#A9B7C6`,
-//   selectorAttributeColor: `#a71d5d`,
-//   docTagColor: `#333333`,
-//   nameColor: `#63a35c`,
-//   builtInColor: `#333333`,
-//   literalColor: `#0086b3`,
-//   bulletColor: `#0086b3`,
-//   codeColor: `#333333`,
-//   additionColor: `#55a532`,
-//   regexpColor: `#333333`,
-//   symbolColor: `#0086b3`,
-//   variableColor: `#df5000`,
-//   templateVariableColor: `#df5000`,
-//   linkColor: `#0366d6`,
-//   selectorClassColor: `#795da3`,
-//   typeColor: `#a71d5d`,
-//   stringColor: `#6eb240`,
-//   selectorIdColor: `#795da3`,
-//   quoteColor: `#df5000`,
-//   templateTagColor: `#FFC66D`,
-//   deletionColor: `#bd2c00`,
-//   titleColor: `#795da3`,
-//   sectionColor: `#eabe10`,
-//   commentColor: `#969896`,
-//   metaKeywordColor: `#333333`,
-//   metaColor: `#969896`,
-//   functionColor: `#f5c20a`,
-//   numberColor: `#6897BB`,
-// };
+hljs.registerLanguage("xml", xml);
+hljs.registerLanguage("javascript", javascript);
 
-const theme = {
-  lineNumberColor: `#333333`,
-  lineNumberBgColor: `white`,
-  backgroundColor: `#f3f3f3`,
-  textColor: `#25282a`,
-  substringColor: `#6A8759`,
-  keywordColor: `#c95464`,
-  attributeColor: `#c95464`,
-  selectorAttributeColor: `#a71d5d`,
-  docTagColor: `#333333`,
-  nameColor: `#63a35c`,
-  builtInColor: `#333333`,
-  literalColor: `#0086b3`,
-  bulletColor: `#0086b3`,
-  codeColor: `#333333`,
-  additionColor: `#55a532`,
-  regexpColor: `#333333`,
-  symbolColor: `#0086b3`,
-  variableColor: `#df5000`,
-  templateVariableColor: `#df5000`,
-  linkColor: `#0366d6`,
-  selectorClassColor: `#795da3`,
-  typeColor: `#a71d5d`,
-  stringColor: `#6eb240`,
-  selectorIdColor: `#795da3`,
-  quoteColor: `#df5000`,
-  templateTagColor: `#a88609`,
-  deletionColor: `#bd2c00`,
-  titleColor: `#795da3`,
-  sectionColor: `#a88609`,
-  commentColor: `#969896`,
-  metaKeywordColor: `#333333`,
-  metaColor: `#969896`,
-  functionColor: `#675c98`,
-  numberColor: `#6897BB`,
+const initLinesPlugin = (hljs) => {
+  hljs.highlightLinesAll = highlightLinesAll;
+  hljs.highlightLinesElement = highlightLinesElement;
+
+  function highlightLinesAll(options) {
+    for (var i = 0; i < options.length; ++i) {
+      for (var option of options[i]) {
+        --option.start;
+        --option.end;
+      }
+    }
+    initHighlightLinesOnLoad(options);
+  }
+
+  function initHighlightLinesOnLoad(options) {
+    function callHighlightLinesCode() {
+      var codes = document.getElementsByClassName("hljs");
+      for (var i = 0; i < codes.length; ++i) {
+        highlightLinesCode(codes[i], options[i]);
+      }
+    }
+
+    if (document.readyState !== "loading") {
+      callHighlightLinesCode();
+    } else {
+      window.addEventListener("DOMContentLoaded", function () {
+        callHighlightLinesCode();
+      });
+    }
+  }
+
+  function highlightLinesElement(code, options, has_numbers) {
+    for (var option of options) {
+      --option.start;
+      --option.end;
+    }
+    highlightLinesCode(code, options, has_numbers);
+  }
+
+  function highlightLinesCode(code, options, has_numbers) {
+    function highlightLinesCodeWithoutNumbers() {
+      code.innerHTML = code.innerHTML.replace(
+        /([ \S]*\n|[ \S]*$)/gm,
+        function (match) {
+          return '<div class="highlight-line">' + match + "</div>";
+        }
+      );
+
+      if (options === undefined) {
+        return;
+      }
+
+      var paddingLeft = parseInt(window.getComputedStyle(code).paddingLeft);
+      var paddingRight = parseInt(window.getComputedStyle(code).paddingRight);
+
+      var lines = code.getElementsByClassName("highlight-line");
+      var scroll_width = code.scrollWidth;
+      for (var option of options) {
+        for (var j = option.start; j <= option.end; ++j) {
+          lines[j].style.backgroundColor = option.color;
+          lines[j].style.minWidth =
+            scroll_width - paddingLeft - paddingRight + "px";
+        }
+      }
+    }
+    function highlightLinesCodeWithNumbers() {
+      var tables = code.getElementsByTagName("table");
+      if (tables.length == 0) {
+        if (count-- < 0) {
+          clearInterval(interval_id);
+          highlightLinesCodeWithoutNumbers();
+        }
+        return;
+      }
+
+      clearInterval(interval_id);
+
+      var table = tables[0];
+      table.style.width = "100%";
+      var hljs_ln_numbers = table.getElementsByClassName("hljs-ln-numbers");
+      for (var hljs_ln_number of hljs_ln_numbers) {
+        hljs_ln_number.style.width = "2em";
+      }
+
+      if (options === undefined) {
+        return;
+      }
+      var lines = code.getElementsByTagName("tr");
+      for (var option of options) {
+        for (var j = option.start; j <= option.end; ++j) {
+          lines[j].style.backgroundColor = option.color;
+        }
+      }
+    }
+
+    if (hljs.hasOwnProperty("initLineNumbersOnLoad") && has_numbers !== false) {
+      var count = 100;
+      var interval_id = setInterval(highlightLinesCodeWithNumbers, 100);
+      return;
+    }
+
+    highlightLinesCodeWithoutNumbers();
+  }
 };
 
-const Code = ({ children }) => {
-  return (
-    <div
-      style={{
-        margin: "1rem 0",
-        fontSize: ".9rem",
-      }}
-    >
-      <CodeBlock
-        text={children}
-        language={"jsx"}
-        showLineNumbers={false}
-        theme={theme}
-      />
-    </div>
-  );
+const Code = ({ children, highlight }) => {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const applyStyle = () => {
+      hljs.highlightElement(ref.current);
+    };
+    applyStyle();
+
+    if (highlight) {
+      if (window.hljs === undefined) {
+        initLinesPlugin(hljs);
+      }
+
+      hljs.highlightLinesElement(
+        ref.current,
+        highlight.map((h) => ({ color: "#fcf7aa", ...h })),
+        false
+      );
+    }
+  }, [highlight]);
+
+  return <pre ref={ref}>{children}</pre>;
 };
 
 export default Code;

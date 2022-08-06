@@ -1,6 +1,6 @@
 import React from "react";
 
-const HorizontalSpacer = ({ space = "0px" }) => {
+const VerticalSpacer = ({ space = "0px" }) => {
   return (
     <div
       style={{
@@ -10,4 +10,4 @@ const HorizontalSpacer = ({ space = "0px" }) => {
   );
 };
 
-export default HorizontalSpacer;
+export default VerticalSpacer;
