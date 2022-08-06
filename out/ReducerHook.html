@@ -1,0 +1,365 @@
+<!DOCTYPE html><html><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/advanced-react-pattern/_next/static/chunks/polyfills-5cd94c89d3acac5f.js"></script><script src="/advanced-react-pattern/_next/static/chunks/webpack-f9606f09ac75a39a.js" defer=""></script><script src="/advanced-react-pattern/_next/static/chunks/framework-4556c45dd113b893.js" defer=""></script><script src="/advanced-react-pattern/_next/static/chunks/main-958c758f0e3a0160.js" defer=""></script><script src="/advanced-react-pattern/_next/static/chunks/pages/_app-86ba28c549340a29.js" defer=""></script><script src="/advanced-react-pattern/_next/static/chunks/170-92720b9ef150b709.js" defer=""></script><script src="/advanced-react-pattern/_next/static/chunks/pages/ReducerHook-8901c8fac94e7d90.js" defer=""></script><script src="/advanced-react-pattern/_next/static/H3S5gKiu_FvJOdvc3MIro/_buildManifest.js" defer=""></script><script src="/advanced-react-pattern/_next/static/H3S5gKiu_FvJOdvc3MIro/_ssgManifest.js" defer=""></script><script src="/advanced-react-pattern/_next/static/H3S5gKiu_FvJOdvc3MIro/_middlewareManifest.js" defer=""></script><style data-styled="" data-styled-version="5.3.5">html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;}/*!sc*/
+body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;margin:0;padding:0;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}/*!sc*/
+figure{margin:0;}/*!sc*/
+.hljs{background:#f6f6f6;border-radius:.5rem;padding:2rem 1rem 2rem 2rem;color:black;font-size:.95rem;line-height:1.25;}/*!sc*/
+.xml .hljs-meta{color:#c0c0c0;}/*!sc*/
+.hljs-comment,.hljs-quote{color:#007400;}/*!sc*/
+.hljs-tag,.hljs-attribute,.hljs-keyword,.hljs-selector-tag,.hljs-literal,.hljs-name{color:#aa0d91;}/*!sc*/
+.hljs-variable,.hljs-template-variable{color:#3F6E74;}/*!sc*/
+.hljs-code,.hljs-string,.hljs-meta .hljs-string{color:#c41a16;}/*!sc*/
+.hljs-regexp,.hljs-link{color:#0E0EFF;}/*!sc*/
+.hljs-title,.hljs-symbol,.hljs-bullet,.hljs-number{color:#1c00cf;}/*!sc*/
+.hljs-section,.hljs-meta{color:#643820;}/*!sc*/
+.hljs-title.class_,.hljs-class .hljs-title,.hljs-type,.hljs-built_in,.hljs-params{color:#5c2699;}/*!sc*/
+.hljs-attr{color:#836C28;}/*!sc*/
+.hljs-subst{color:#000;}/*!sc*/
+.hljs-formula{background-color:#eee;font-style:italic;}/*!sc*/
+.hljs-addition{background-color:#baeeba;}/*!sc*/
+.hljs-deletion{background-color:#ffc8bd;}/*!sc*/
+.hljs-selector-id,.hljs-selector-class{color:#9b703f;}/*!sc*/
+.hljs-doctag,.hljs-strong{font-weight:bold;}/*!sc*/
+.hljs-emphasis{font-style:italic;}/*!sc*/
+data-styled.g1[id="sc-global-eTUlez1"]{content:"sc-global-eTUlez1,"}/*!sc*/
+.fHFsLe{white-space:nowrap;line-height:1.5;}/*!sc*/
+data-styled.g2[id="Li__Styled-sc-2pbekf-0"]{content:"fHFsLe,"}/*!sc*/
+.jfHJAM{margin-right:auto;margin-left:auto;padding-right:15px;padding-left:15px;width:100%;}/*!sc*/
+@media screen and (max-width:575px){.jfHJAM{min-width:97vw;}}/*!sc*/
+@media screen and (min-width:576px){.jfHJAM{max-width:1024px;}}/*!sc*/
+data-styled.g3[id="Container__Styled-sc-zkefve-0"]{content:"jfHJAM,"}/*!sc*/
+</style></head><body><div id="__next"><div class="Container__Styled-sc-zkefve-0 jfHJAM"><div style="display:flex;flex-direction:row"><div style="margin-right:1rem"><nav><ul style="padding-left:1rem"><li class="Li__Styled-sc-2pbekf-0 fHFsLe"><a href="/advanced-react-pattern">Home</a></li><li class="Li__Styled-sc-2pbekf-0 fHFsLe"><h4>Utils</h4><ul style="padding-left:1rem"><li class="Li__Styled-sc-2pbekf-0 fHFsLe"><a href="/advanced-react-pattern/Prefetch">Prefetched State</a></li><li class="Li__Styled-sc-2pbekf-0 fHFsLe"><a href="/advanced-react-pattern/StateSubscription">State Subscription</a></li></ul></li><li class="Li__Styled-sc-2pbekf-0 fHFsLe"><h4>Components</h4><ul style="padding-left:1rem"><li class="Li__Styled-sc-2pbekf-0 fHFsLe"><a href="/advanced-react-pattern/suspense">Suspense</a></li><li class="Li__Styled-sc-2pbekf-0 fHFsLe"><a href="/advanced-react-pattern/CompoundToggle">Compound Components</a></li><li class="Li__Styled-sc-2pbekf-0 fHFsLe"><a href="/advanced-react-pattern/StateReducer">State Reducer</a></li><li class="Li__Styled-sc-2pbekf-0 fHFsLe"><a href="/advanced-react-pattern/PropCollection">Props Collection</a></li><li class="Li__Styled-sc-2pbekf-0 fHFsLe"><a href="/advanced-react-pattern/RenderPropsToggle">Render Props</a></li><li class="Li__Styled-sc-2pbekf-0 fHFsLe"><a href="/advanced-react-pattern/Factory">Factory</a></li><li class="Li__Styled-sc-2pbekf-0 fHFsLe"><a href="/advanced-react-pattern/ControlProps">Control Props</a></li><li class="Li__Styled-sc-2pbekf-0 fHFsLe"><a href="/advanced-react-pattern/Decorator">Decorator</a></li></ul></li><li class="Li__Styled-sc-2pbekf-0 fHFsLe"><h4>Hooks</h4><ul style="padding-left:1rem"><li class="Li__Styled-sc-2pbekf-0 fHFsLe"><a href="/advanced-react-pattern/ReducerHook">Reducer Hook</a></li><li class="Li__Styled-sc-2pbekf-0 fHFsLe"><a href="/advanced-react-pattern/ThunkReducer">Thunk Reducer</a></li></ul></li></ul></nav></div><div><div><main><article><h1>Reducer Hook</h1><p style="line-height:1.4;font-size:1.125rem;color:#1a1a1a"><i>After this article you will understand how the useReducer hook works and why we need it.</i></p><p style="line-height:1.4;font-size:1.125rem;color:#1a1a1a">The useReducer hook helps you with handling a big state object which data needs to be processed with complex logic. And it creates pretty, uniform interface to other components.</p><p style="line-height:1.4;font-size:1.125rem;color:#1a1a1a">Lets look at an example.</p><pre>const Component = () =&gt; {
+  const [name, setName] = useState(&quot;&quot;);
+  const [surname, setSurname] = useState(&quot;&quot;);
+  const [tel, setTel] = useState(&quot;&quot;);
+  const [street, setStreet] = useState(&quot;&quot;);
+  const [city, setCity] = useState(&quot;&quot;);
+  // ... add other user and address states
+
+  const handleSubmit = (e) =&gt; {
+    e.preventDefault();
+    fetch(&quot;/api/user&quot;, {
+      method: &quot;post&quot;,
+      body: JSON.stringify({
+        name,
+        surname,
+        tel,
+        city,
+        street,
+        /* add other values */
+      }),
+    });
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;form onSubmit={handleSubmit}&gt;
+        &lt;input
+          type=&quot;text&quot;
+          value={name}
+          onChange={(e) =&gt; {
+            setName(e.target.value);
+          }}
+        /&gt;
+        &lt;input
+          type=&quot;text&quot;
+          value={surname}
+          onChange={(e) =&gt; {
+            setSurname(e.target.value);
+          }}
+        /&gt;
+        &lt;input
+          type=&quot;tel&quot;
+          value={tel}
+          onChange={(e) =&gt; {
+            setTel(e.target.value);
+          }}
+        /&gt;
+        &lt;input
+          type=&quot;text&quot;
+          value={street}
+          onChange={(e) =&gt; {
+            setStreet(e.target.value);
+          }}
+        /&gt;
+        &lt;input
+          type=&quot;text&quot;
+          value={city}
+          onChange={(e) =&gt; {
+            setCity(e.target.value);
+          }}
+        /&gt;
+        &lt;button type={&quot;submit&quot;}&gt;Submit&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  );
+};</pre><p style="line-height:1.4;font-size:1.125rem;color:#1a1a1a">As you can see this is a form. A form is usually not complicated but they are almost every time pretty complex from the programmer perspective. Take a moment and remember the times you needed to write validation logic for a form.</p><img src="https://media.giphy.com/media/Wh3ugh7bXTxUk/giphy.gif" alt=""/><p style="line-height:1.4;font-size:1.125rem;color:#1a1a1a">For this example ill stick with 5 inputs but in the reality, you would have many more. Imagine options input, select inputs, file upload etc. Lets rewrite this component in such a way that its manageable and extendable.</p><pre>const Component = () =&gt; {
+  const [formValues, setFormValues] = useState({
+    city: &quot;&quot;,
+    tel: &quot;&quot;,
+    street: &quot;&quot;,
+    name: &quot;&quot;,
+    surname: &quot;&quot;,
+  });
+  // ... add other user and address states
+
+  const handleSubmit = (e) =&gt; {
+    e.preventDefault();
+    fetch(&quot;/api/user&quot;, {
+      method: &quot;post&quot;,
+      body: JSON.stringify(formValues),
+    });
+  };
+
+  const createOnChangeHandler = (name) =&gt; {
+    return (e) =&gt; {
+      const value = e.target.value;
+      setFormValues((state) =&gt; ({ ...state, [name]: value }));
+    };
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;form onSubmit={handleSubmit}&gt;
+        &lt;input
+          type=&quot;text&quot;
+          value={formValues.name}
+          onChange={createOnChangeHandler(&quot;name&quot;)}
+          {/* nothing changed here */}
+        /&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  );
+};</pre><p style="line-height:1.4;font-size:1.125rem;color:#1a1a1a">That looks better. We have a single state and one single function to update it. But we still lack the validation tho.</p><p style="line-height:1.4;font-size:1.125rem;color:#1a1a1a">We could come up with something like this.</p><pre>const Component = () =&gt; {
+  const [formValues, setFormValues] = useState({
+    city: {
+      error: null,
+      value: &quot;&quot;,
+    },
+    tel: {
+      error: null,
+      value: &quot;&quot;,
+    },
+    street: {
+      error: null,
+      value: &quot;&quot;,
+    },
+    name: {
+      error: null,
+      value: &quot;&quot;,
+    },
+    surname: {
+      error: null,
+      value: &quot;&quot;,
+    },
+  });
+
+  const handleSubmit = (e) =&gt; {
+    e.preventDefault();
+    fetch(&quot;/api/user&quot;, {
+      method: &quot;post&quot;,
+      body: JSON.stringify(formValues),
+    });
+  };
+
+  const validate = (state, value) =&gt; {
+    // TODO:
+    //  implement validation based on the current state and the current value,
+    //  return error string e.g. &quot;Must of length ...&quot;
+    return null;
+  };
+
+  const createOnChangeHandler = (name) =&gt; {
+    return (e) =&gt; {
+      const value = e.target.value;
+
+      const error = validate(formValues, value);
+
+      setFormValues((state) =&gt; ({
+        ...state,
+        [name]: { ...state[name], value, error },
+      }));
+    };
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;form onSubmit={handleSubmit}&gt;
+        &lt;input
+          type=&quot;text&quot;
+          value={formValues.name.value}
+          onChange={createOnChangeHandler(&quot;name&quot;)}
+        /&gt;
+        {/* nothing changed here */}
+      &lt;/form&gt;
+    &lt;/div&gt;
+  );
+};</pre><p style="line-height:1.4;font-size:1.125rem;color:#1a1a1a">I provide a validation function and the state is larger now. As you can see, the component grows. And as soon as we start handling onClick and on onBlur events, because we do not like to display error messages as soon as the user makes a mistake, the component will explode in complexity. The state, the validation function and the event handler need to go!</p><pre>const initialState = {
+  city: {
+    error: null,
+    value: &quot;&quot;,
+  },
+  tel: {
+    error: null,
+    value: &quot;&quot;,
+  },
+  street: {
+    error: null,
+    value: &quot;&quot;,
+  },
+  name: {
+    error: null,
+    value: &quot;&quot;,
+  },
+  surname: {
+    error: null,
+    value: &quot;&quot;,
+  },
+};
+
+const validate = (state, value) =&gt; {
+  // TODO:
+  //  implement validation based on the current state and the current value,
+  //  return error string e.g. &quot;Must of length ...&quot;
+  return null;
+};
+
+const getNewState = (state, { name, value }) =&gt; {
+  const error = validate(state, value);
+
+  return {
+    ...state,
+    [name]: { ...state[name], value, error },
+  };
+};
+
+const Component = (reduceState = getNewState, state = initialState) =&gt; {
+  const [formValues, setFormValues] = useState(state);
+
+  const handleSubmit = (e) =&gt; {
+    e.preventDefault();
+    fetch(&quot;/api/user&quot;, {
+      method: &quot;post&quot;,
+      body: JSON.stringify(formValues),
+    });
+  };
+
+  const createOnChangeHandler = (name) =&gt; {
+    return (e) =&gt; {
+      const value = e.target.value;
+      const newState = reduceState(formValues, { name, value });
+      setFormValues(newState);
+    };
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;form onSubmit={handleSubmit}&gt;
+        &lt;input
+          type=&quot;text&quot;
+          value={formValues.name.value}
+          onChange={createOnChangeHandler(&quot;name&quot;)}
+        /&gt;
+        {/* nothing changed here */}
+      &lt;/form&gt;
+    &lt;/div&gt;
+  );
+};</pre><p style="line-height:1.4;font-size:1.125rem;color:#1a1a1a">I have moved out the initial state outside of the component and provide it as a default prop to the component. The validation and the state merging is outside now as well. Because of this the component and all the logic is pretty easy to unit test as well.</p><img src="https://media.giphy.com/media/hXDrTueJWAscK3xWQ2/giphy.gif" alt=""/><p style="line-height:1.4;font-size:1.125rem;color:#1a1a1a">We can refactor the useState and the reduceState function to something like this.</p><pre>const useStateReducer = (getNewState, initialState) =&gt; {
+  const [state, setState] = useState(initialState);
+
+  const reduceState = (action) =&gt; {
+    const newState = getNewState(state, action);
+    setState(newState);
+  };
+
+  return [state, reduceState];
+};</pre><p style="line-height:1.4;font-size:1.125rem;color:#1a1a1a">Now we do not need to set the new state ourself. The custom hook does that for us. The form implementation looks like this now.</p><pre>const Component = (reducer = getNewState, state = initialState) =&gt; {
+  const [formValues, dispatch] = useStateReducer(reducer, state);
+
+  const handleSubmit = (e) =&gt; {
+    e.preventDefault();
+    fetch(&quot;/api/user&quot;, {
+      method: &quot;post&quot;,
+      body: JSON.stringify(formValues),
+    });
+  };
+
+  const createOnChangeHandler = (name) =&gt; {
+    return (e) =&gt; {
+      const value = e.target.value;
+      dispatch({ name, value });
+    };
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;form onSubmit={handleSubmit}&gt;
+        &lt;input
+          type=&quot;text&quot;
+          value={formValues.name.value}
+          onChange={createOnChangeHandler(&quot;name&quot;)}
+        /&gt;
+        {/*nothing changed here*/}
+      &lt;/form&gt;
+    &lt;/div&gt;
+  );
+};</pre><p style="line-height:1.4;font-size:1.125rem;color:#1a1a1a">Now if we would like to handle the onClick and onBlur events as well, we can easily do that by adjusting the getState function and adding a new attribute to the dispatch object.</p><pre>const getNewState = (state, { type, name, value }) =&gt; {
+  if (type === &quot;onChange&quot;) {
+    const error = validate(state, value);
+    return {
+      ...state,
+      [name]: { ...state[name], value, error },
+    };
+  }
+  if (type === &quot;onBlur&quot;) {
+    // TODO:
+    //   handle onBlur event
+    return state;
+  }
+};
+
+const Component = (reducer = getNewState, state = initialState) =&gt; {
+  const [formValues, dispatch] = useStateReducer(reducer, state);
+
+  const handleSubmit = (e) =&gt; {
+    e.preventDefault();
+    fetch(&quot;/api/user&quot;, {
+      method: &quot;post&quot;,
+      body: JSON.stringify(formValues),
+    });
+  };
+
+  const createOnChangeHandler = (name) =&gt; {
+    return (e) =&gt; {
+      const value = e.target.value;
+      dispatch({ type: &quot;onChange&quot;, name, value });
+    };
+  };
+
+  const createOnClickHandler = (name) =&gt; {
+    return (e) =&gt; {
+      const value = e.target.value;
+      dispatch({ type: &quot;onClick&quot;, name, value });
+    };
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;form onSubmit={handleSubmit}&gt;
+        &lt;input
+          type=&quot;text&quot;
+          onClick={createOnClickHandler(&quot;name&quot;)}
+          value={formValues.name.value}
+          onChange={createOnChangeHandler(&quot;name&quot;)}
+        /&gt;
+        {/*nothing changed here*/}
+      &lt;/form&gt;
+    &lt;/div&gt;
+  );</pre><p style="line-height:1.4;font-size:1.125rem;color:#1a1a1a">The only thing left to do is to rename the custom hook and we would get the implementation of the useReducer.</p><pre>const useReducer = (reducer, initialState) =&gt; {
+  const [state, setState] = useState(initialState);
+
+  const dispatch = (action) =&gt; {
+    const newState = reducer(state, action);
+    setState(newState);
+  };
+
+  return [state, dispatch];
+};</pre><p style="line-height:1.4;font-size:1.125rem;color:#1a1a1a">That is the benefit of the useReducer hook: the component stays small and cute. All the heavy logic is outside of it. And everything is testable.</p><img src="https://media.giphy.com/media/xSM46ernAUN3y/giphy.gif" alt=""/></article></main></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/ReducerHook","query":{},"buildId":"H3S5gKiu_FvJOdvc3MIro","assetPrefix":"/advanced-react-pattern","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[]}</script></body></html>
