@@ -10,7 +10,7 @@ const App = () => {
         <div>
           <H1>Advanced React Pattern</H1>
           <P>
-            This website provides an overview of all kinds of react patterns.
+            This website provides an overview of all kinds of react patterns..
           </P>
         </div>
       }
