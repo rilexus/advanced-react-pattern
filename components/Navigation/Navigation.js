@@ -58,6 +58,9 @@ const Navigation = () => {
               <Link href="/ReducerHook">Reducer Hook</Link>
             </Li>
             <Li>
+              <Link href="/UndoState">Undo State</Link>
+            </Li>
+            <Li>
               <Link href="/ThunkReducer">Thunk Reducer</Link>
             </Li>
           </Ul>
