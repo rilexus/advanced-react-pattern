@@ -187,9 +187,10 @@ const Content = () => {
       <H1>Undo State</H1>
       <P>
         Very common requirements in some what complex web applications is the
-        "undo" functionality. The user wants to undo the recent changes made in
-        the application by pressing a button. You'll know this behaviour when
-        you press "command-z" on mac or "strg-z" on windows.
+        &ldquo;undo&ldquo; functionality. The user wants to undo the recent
+        changes made in the application by pressing a button. You&apos;ll know
+        this behaviour when you press &ldquo;command-z&ldquo; on mac or
+        &ldquo;strg-z&ldquo; on windows.
       </P>
       <P>Example:</P>
       <UndoExample />
