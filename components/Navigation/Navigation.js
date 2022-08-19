@@ -63,6 +63,9 @@ const Navigation = () => {
             <Li>
               <Link href="/ThunkReducer">Thunk Reducer</Link>
             </Li>
+            <Li>
+              <Link href="/FetchHook">Fetch Hook</Link>
+            </Li>
           </Ul>
         </Li>
       </Ul>
