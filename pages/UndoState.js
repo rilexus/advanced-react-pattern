@@ -4,6 +4,8 @@ import Navigation from "../components/Navigation/Navigation";
 import H1 from "../ui/H1/H1";
 import { P } from "../ui/P";
 import { Code } from "../ui/Code";
+import Posting from "../components/Posting/Posting";
+import BlogLayout from "../components/BlogLayout/BlogLayout";
 
 const useUndoState = (initialState) => {
   const [state, _setState] = useState({
@@ -184,399 +186,443 @@ const Component = () => {
 const Content = () => {
   return (
     <div>
-      <H1>Undo State</H1>
-      <P>
-        Very common requirements in some what complex web applications is the
-        &ldquo;undo&ldquo; functionality. The user wants to undo the recent
-        changes made in the application by pressing a button. You&apos;ll know
-        this behaviour when you press &ldquo;command-z&ldquo; on mac or
-        &ldquo;strg-z&ldquo; on windows.
-      </P>
-      <P>Example:</P>
-      <UndoExample />
-      <P>
-        Translating this requirements in to react would means setting the
-        current state of a component to the previous states.
-      </P>
-      <P>First we would need a component any state:</P>
-      <Code>
-        {"const Component = () => {\n" +
-          '  const [state, setState] = useState("");\n' +
-          "\n" +
-          "  const handleChange = (e) => {\n" +
-          "    setState(e.target.value);\n" +
-          "  };\n" +
-          "\n" +
-          "  return (\n" +
-          "    <div>\n" +
-          '      <input type="text" onChange={handleChange} value={state} />\n' +
-          "    </div>\n" +
-          "  );\n" +
-          "};"}
-      </Code>
-      <P>
-        When we set a new state, We would need to keep track of all the previous
-        states:
-      </P>
-      <Code
-        highlight={[
-          { start: 3, end: 4 },
-          { start: 10, end: 14 },
-        ]}
-      >
-        {"const Component = () => {\n" +
-          "  const [state, setState] = useState({\n" +
-          '    current: "",\n' +
-          "    past: [],\n" +
-          "  });\n" +
-          "\n" +
-          "  const handleChange = (e) => {\n" +
-          "    setState((oldState) => {\n" +
-          "      const { value } = e.target;\n" +
-          "      return {\n" +
-          "        ...oldState,\n" +
-          "        past: [...oldState.past, oldState.current],\n" +
-          "        current: value,\n" +
-          "      };\n" +
-          "    });\n" +
-          "  };\n" +
-          "\n" +
-          "  return (\n" +
-          "    <div>\n" +
-          '      <input type="text" onChange={handleChange} value={state.current} />\n' +
-          "    </div>\n" +
-          "  );\n" +
-          "};"}
-      </Code>
-      <P>
-        We save all the past states by adding the current value from the
-        oldState to the past array and in the same time add the new value to the
-        current.
-      </P>
-      <Code highlight={[{ start: 12, end: 13 }]}>
-        {"const Component = () => {\n" +
-          "  const [state, setState] = useState({\n" +
-          '    current: "",\n' +
-          "    past: [],\n" +
-          "  });\n" +
-          "\n" +
-          "  const handleChange = (e) => {\n" +
-          "    setState((oldState) => {\n" +
-          "      const { value } = e.target;\n" +
-          "      return {\n" +
-          "        ...oldState,\n" +
-          "        past: [...oldState.past, oldState.current],\n" +
-          "        current: value,\n" +
-          "      };\n" +
-          "    });\n" +
-          "  };\n" +
-          "\n" +
-          "  return (\n" +
-          "    <div>\n" +
-          '      <input type="text" onChange={handleChange} value={state.current} />\n' +
-          "    </div>\n" +
-          "  );\n" +
-          "};"}
-      </Code>
-      <P>
-        Now to undo the state change, we would need to take the last value from
-        the past and save it in the current.
-      </P>
-      <Code
-        highlight={[
-          { start: 23, end: 24 },
-          { start: 28, end: 29 },
-        ]}
-      >
-        {"const Component = () => {\n" +
-          "  const [state, setState] = useState({\n" +
-          '    current: "",\n' +
-          "    past: [],\n" +
-          "  });\n" +
-          "\n" +
-          "  const handleChange = (e) => {\n" +
-          "    setState((oldState) => {\n" +
-          "      const { value } = e.target;\n" +
-          "      return {\n" +
-          "        ...oldState,\n" +
-          "        past: [...oldState.past, oldState.current],\n" +
-          "        current: value,\n" +
-          "      };\n" +
-          "    });\n" +
-          "  };\n" +
-          "\n" +
-          "  const undo = () => {\n" +
-          "    setState((oldState) => {\n" +
-          "      if (oldState.past.length === 0) {\n" +
-          "        return oldState;\n" +
-          "      }\n" +
-          "      const newPast = [...oldState.past];\n" +
-          "      const pastValue = newPast.pop();\n" +
-          "\n" +
-          "      return {\n" +
-          "        ...oldState,\n" +
-          "        past: newPast,\n" +
-          "        current: pastValue,\n" +
-          "      };\n" +
-          "    });\n" +
-          "  };\n" +
-          "\n" +
-          "  return (\n" +
-          "    <div>\n" +
-          '      <input type="text" onChange={handleChange} value={state.current} />\n' +
-          "      <button onClick={undo}>undo</button>\n" +
-          "    </div>\n" +
-          "  );\n" +
-          "};"}
-      </Code>
-      <P>
-        First we make sure that we have values in the past. If we do not, we
-        return the old state. If we have past states, we break the reference to
-        the old past array, pop the last value and save everything to the new
-        state.
-      </P>
-      <P>
-        While this works, we have an issue! The past array could grow until we
-        run out of memory. We can prevent this from happening, by limiting the
-        length of the past array. If the array grows beyond a certain limit, we
-        remove values from the beginning of the array, effectively limiting the
-        amount of past states.
-      </P>
-      <Code highlight={[{ start: 11, end: 17 }]}>
-        {"const Component = () => {\n" +
-          "  const [state, setState] = useState({\n" +
-          '    current: "",\n' +
-          "    past: [],\n" +
-          "  });\n" +
-          "\n" +
-          "  const handleChange = (e) => {\n" +
-          "    setState((oldState) => {\n" +
-          "      const { value } = e.target;\n" +
-          "\n" +
-          "      let newPast = [];\n" +
-          "      if (oldState.past.length <= 10) {\n" +
-          "        newPast = [...oldState.past];\n" +
-          "      } else {\n" +
-          "        const [, /*remove first: the oldest element*/ ...rest] = oldState.past;\n" +
-          "        newPast = [...rest];\n" +
-          "      }\n" +
-          "\n" +
-          "      return {\n" +
-          "        ...oldState,\n" +
-          "        past: [...newPast, oldState.current],\n" +
-          "        current: value,\n" +
-          "      };\n" +
-          "    });\n" +
-          "  };\n" +
-          "\n" +
-          "  const undo = () => {\n" +
-          "    setState((oldState) => {\n" +
-          "      if (oldState.past.length === 0) {\n" +
-          "        return oldState;\n" +
-          "      }\n" +
-          "      const newPast = [...oldState.past];\n" +
-          "      const pastValue = newPast.pop();\n" +
-          "\n" +
-          "      return {\n" +
-          "        ...oldState,\n" +
-          "        past: newPast,\n" +
-          "        current: pastValue,\n" +
-          "      };\n" +
-          "    });\n" +
-          "  };\n" +
-          "  \n" +
-          "  return (\n" +
-          "    <div>\n" +
-          '      <input type="text" onChange={handleChange} value={state.current} />\n' +
-          "      <button onClick={undo}>undo</button>\n" +
-          "    </div>\n" +
-          "  );\n" +
-          "};"}
-      </Code>
-      <P>
-        If we have more then 10 past states, we remove the first (the oldest)
-        state, preventing the past from growing.
-      </P>
-      <P>
-        The current implementation works. Lets make this code reusable and move
-        it in to a dedicated hook.
-      </P>
-      <Code highlight={[{ start: 48, end: 48 }]}>
-        {"const useUndo = (initialState) => {\n" +
-          "  const [state, _setState] = useState({\n" +
-          "    current: initialState,\n" +
-          "    past: [],\n" +
-          "  });\n" +
-          "\n" +
-          "  const undo = () => {\n" +
-          "    _setState((oldState) => {\n" +
-          "      if (oldState.past.length === 0) {\n" +
-          "        return oldState;\n" +
-          "      }\n" +
-          "      const newPast = [...oldState.past];\n" +
-          "      const pastValue = newPast.pop();\n" +
-          "\n" +
-          "      return {\n" +
-          "        ...oldState,\n" +
-          "        past: newPast,\n" +
-          "        current: pastValue,\n" +
-          "      };\n" +
-          "    });\n" +
-          "  };\n" +
-          "\n" +
-          "  const setState = (newState) => {\n" +
-          "    _setState((oldState) => {\n" +
-          "      const value =\n" +
-          '        typeof newState === "function" ? newState(oldState) : newState;\n' +
-          "\n" +
-          "      let newPast = [];\n" +
-          "      if (oldState.past.length <= 10) {\n" +
-          "        newPast = [...oldState.past];\n" +
-          "      } else {\n" +
-          "        const [, /*remove first: the oldest element*/ ...rest] = oldState.past;\n" +
-          "        newPast = [...rest];\n" +
-          "      }\n" +
-          "\n" +
-          "      return {\n" +
-          "        ...oldState,\n" +
-          "        past: [...newPast, oldState.current],\n" +
-          "        current: value,\n" +
-          "      };\n" +
-          "    });\n" +
-          "  };\n" +
-          "\n" +
-          "  return [state.current, { setState, undo }];\n" +
-          "};\n" +
-          "\n" +
-          "const Component = () => {\n" +
-          '  const [state, { setState, undo }] = useUndo("");\n' +
-          "\n" +
-          "  const handleChange = (e) => {\n" +
-          "    setState(e.target.value);\n" +
-          "  };\n" +
-          "\n" +
-          "  return (\n" +
-          "    <div>\n" +
-          '      <input type="text" onChange={handleChange} value={state} />\n' +
-          "      <button onClick={undo}>undo</button>\n" +
-          "    </div>\n" +
-          "  );\n" +
-          "};"}
-      </Code>
-      <P>
-        It would be great to redo changes again. If the user undoes changes,
-        goes in to the past, it would be great to go in to the future again to
-        the last changes. I would encourage you to implement this feature
-        yourself. If youre interested in seeing the end result, feel free to
-        open the drop down.
-      </P>
-      <details>
-        <summary
-          style={{
-            cursor: "pointer",
-          }}
-        >
-          End result
-        </summary>
-        <Code>
-          {"const useUndo = (initialState) => {\n" +
-            "  const [state, _setState] = useState({\n" +
-            "    past: [],\n" +
-            "    initialState: initialState,\n" +
-            "    current: initialState,\n" +
-            "    future: [],\n" +
-            "  });\n" +
-            "\n" +
-            "  const setState = (newState) => {\n" +
-            "    _setState((oldState) => {\n" +
-            "      let newPast = [];\n" +
-            "      if (oldState.past.length <= 10) {\n" +
-            "        newPast = [...oldState.past, oldState.current];\n" +
-            "      } else {\n" +
-            "        const [, /*remove first: the oldest element*/ ...rest] = oldState.past;\n" +
-            "        newPast = [...rest, oldState.current];\n" +
-            "      }\n" +
-            "      return {\n" +
-            "        ...oldState,\n" +
-            "        past: newPast,\n" +
-            "        current:\n" +
-            '          typeof newState === "function"\n' +
-            "            ? newState(oldState.current)\n" +
-            "            : newState,\n" +
-            "        future: [],\n" +
-            "      };\n" +
-            "    });\n" +
-            "  };\n" +
-            "\n" +
-            "  const undo = () => {\n" +
-            "    _setState((oldState) => {\n" +
-            "      if (oldState.past.length === 0) {\n" +
-            "        return oldState;\n" +
-            "      }\n" +
-            "      const newFuture = [...oldState.future, oldState.current];\n" +
-            "\n" +
-            "      let newPast = [...oldState.past];\n" +
-            "      const newState = newPast.pop();\n" +
-            "\n" +
-            "      return {\n" +
-            "        ...oldState,\n" +
-            "        past: newPast,\n" +
-            "        current: newState,\n" +
-            "        future: newFuture,\n" +
-            "      };\n" +
-            "    });\n" +
-            "  };\n" +
-            "\n" +
-            "  const redo = () => {\n" +
-            "    _setState((oldState) => {\n" +
-            "      if (oldState.future.length === 0) {\n" +
-            "        return oldState;\n" +
-            "      }\n" +
-            "      const newPast = [...oldState.past, oldState.current];\n" +
-            "\n" +
-            "      const newFuture = [...oldState.future];\n" +
-            "      const newState = newFuture.pop();\n" +
-            "\n" +
-            "      return {\n" +
-            "        ...oldState,\n" +
-            "        past: newPast,\n" +
-            "        current: newState,\n" +
-            "        future: newFuture,\n" +
-            "      };\n" +
-            "    });\n" +
-            "  };\n" +
-            "\n" +
-            "  const reset = () => {\n" +
-            "    _setState((oldState) => {\n" +
-            "      return {\n" +
-            "        ...oldState,\n" +
-            "        past: [],\n" +
-            "        current: state.initialState,\n" +
-            "        future: [],\n" +
-            "      };\n" +
-            "    });\n" +
-            "  };\n" +
-            "\n" +
-            "  return [\n" +
-            "    state.current,\n" +
-            "    {\n" +
-            "      setState,\n" +
-            "      undo,\n" +
-            "      redo,\n" +
-            "      reset,\n" +
-            "      canUndo: state.past.length > 0,\n" +
-            "      canRedo: state.future.length > 0,\n" +
-            "    },\n" +
-            "  ];\n" +
-            "};"}
-        </Code>
-      </details>
+      <BlogLayout>
+        <div>
+          <Posting>
+            <Posting.Headline>
+              <H1>Undo State</H1>
+            </Posting.Headline>
+            <Posting.Author
+              name={"Stanislav Panchenko"}
+              url={"https://github.com/rilexus"}
+            />
+            <Posting.DatePublished>August 19, 2022</Posting.DatePublished>
+            <Posting.Body
+              style={{
+                marginBottom: "2rem",
+              }}
+            >
+              <div>
+                <P>
+                  Very common requirements in some what complex web applications
+                  is the &ldquo;undo&ldquo; functionality. The user wants to
+                  undo the recent changes made in the application by pressing a
+                  button. You&apos;ll know this behaviour when you press
+                  &ldquo;command-z&ldquo; on mac or &ldquo;strg-z&ldquo; on
+                  windows.
+                </P>
+                <P>Example:</P>
+                <UndoExample />
+                <P>
+                  Translating this requirements in to react would means setting
+                  the current state of a component to the previous states.
+                </P>
+                <P>First we would need a component any state:</P>
+                <Code>
+                  {"const Component = () => {\n" +
+                    '  const [state, setState] = useState("");\n' +
+                    "\n" +
+                    "  const handleChange = (e) => {\n" +
+                    "    setState(e.target.value);\n" +
+                    "  };\n" +
+                    "\n" +
+                    "  return (\n" +
+                    "    <div>\n" +
+                    '      <input type="text" onChange={handleChange} value={state} />\n' +
+                    "    </div>\n" +
+                    "  );\n" +
+                    "};"}
+                </Code>
+                <P>
+                  When we set a new state, We would need to keep track of all
+                  the previous states:
+                </P>
+                <Code
+                  highlight={[
+                    { start: 3, end: 4 },
+                    { start: 10, end: 14 },
+                  ]}
+                >
+                  {"const Component = () => {\n" +
+                    "  const [state, setState] = useState({\n" +
+                    '    current: "",\n' +
+                    "    past: [],\n" +
+                    "  });\n" +
+                    "\n" +
+                    "  const handleChange = (e) => {\n" +
+                    "    setState((oldState) => {\n" +
+                    "      const { value } = e.target;\n" +
+                    "      return {\n" +
+                    "        ...oldState,\n" +
+                    "        past: [...oldState.past, oldState.current],\n" +
+                    "        current: value,\n" +
+                    "      };\n" +
+                    "    });\n" +
+                    "  };\n" +
+                    "\n" +
+                    "  return (\n" +
+                    "    <div>\n" +
+                    '      <input type="text" onChange={handleChange} value={state.current} />\n' +
+                    "    </div>\n" +
+                    "  );\n" +
+                    "};"}
+                </Code>
+                <P>
+                  We save all the past states by adding the current value from
+                  the oldState to the past array and in the same time add the
+                  new value to the current.
+                </P>
+                <Code highlight={[{ start: 12, end: 13 }]}>
+                  {"const Component = () => {\n" +
+                    "  const [state, setState] = useState({\n" +
+                    '    current: "",\n' +
+                    "    past: [],\n" +
+                    "  });\n" +
+                    "\n" +
+                    "  const handleChange = (e) => {\n" +
+                    "    setState((oldState) => {\n" +
+                    "      const { value } = e.target;\n" +
+                    "      return {\n" +
+                    "        ...oldState,\n" +
+                    "        past: [...oldState.past, oldState.current],\n" +
+                    "        current: value,\n" +
+                    "      };\n" +
+                    "    });\n" +
+                    "  };\n" +
+                    "\n" +
+                    "  return (\n" +
+                    "    <div>\n" +
+                    '      <input type="text" onChange={handleChange} value={state.current} />\n' +
+                    "    </div>\n" +
+                    "  );\n" +
+                    "};"}
+                </Code>
+                <P>
+                  Now to undo the state change, we would need to take the last
+                  value from the past and save it in the current.
+                </P>
+                <Code
+                  highlight={[
+                    { start: 23, end: 24 },
+                    { start: 28, end: 29 },
+                  ]}
+                >
+                  {"const Component = () => {\n" +
+                    "  const [state, setState] = useState({\n" +
+                    '    current: "",\n' +
+                    "    past: [],\n" +
+                    "  });\n" +
+                    "\n" +
+                    "  const handleChange = (e) => {\n" +
+                    "    setState((oldState) => {\n" +
+                    "      const { value } = e.target;\n" +
+                    "      return {\n" +
+                    "        ...oldState,\n" +
+                    "        past: [...oldState.past, oldState.current],\n" +
+                    "        current: value,\n" +
+                    "      };\n" +
+                    "    });\n" +
+                    "  };\n" +
+                    "\n" +
+                    "  const undo = () => {\n" +
+                    "    setState((oldState) => {\n" +
+                    "      if (oldState.past.length === 0) {\n" +
+                    "        return oldState;\n" +
+                    "      }\n" +
+                    "      const newPast = [...oldState.past];\n" +
+                    "      const pastValue = newPast.pop();\n" +
+                    "\n" +
+                    "      return {\n" +
+                    "        ...oldState,\n" +
+                    "        past: newPast,\n" +
+                    "        current: pastValue,\n" +
+                    "      };\n" +
+                    "    });\n" +
+                    "  };\n" +
+                    "\n" +
+                    "  return (\n" +
+                    "    <div>\n" +
+                    '      <input type="text" onChange={handleChange} value={state.current} />\n' +
+                    "      <button onClick={undo}>undo</button>\n" +
+                    "    </div>\n" +
+                    "  );\n" +
+                    "};"}
+                </Code>
+                <P>
+                  First we make sure that we have values in the past. If we do
+                  not, we return the old state. If we have past states, we break
+                  the reference to the old past array, pop the last value and
+                  save everything to the new state.
+                </P>
+                <P>
+                  While this works, we have an issue! The past array could grow
+                  until we run out of memory. We can prevent this from
+                  happening, by limiting the length of the past array. If the
+                  array grows beyond a certain limit, we remove values from the
+                  beginning of the array, effectively limiting the amount of
+                  past states.
+                </P>
+                <Code highlight={[{ start: 11, end: 17 }]}>
+                  {"const Component = () => {\n" +
+                    "  const [state, setState] = useState({\n" +
+                    '    current: "",\n' +
+                    "    past: [],\n" +
+                    "  });\n" +
+                    "\n" +
+                    "  const handleChange = (e) => {\n" +
+                    "    setState((oldState) => {\n" +
+                    "      const { value } = e.target;\n" +
+                    "\n" +
+                    "      let newPast = [];\n" +
+                    "      if (oldState.past.length <= 10) {\n" +
+                    "        newPast = [...oldState.past];\n" +
+                    "      } else {\n" +
+                    "        const [, /*remove first: the oldest element*/ ...rest] = oldState.past;\n" +
+                    "        newPast = [...rest];\n" +
+                    "      }\n" +
+                    "\n" +
+                    "      return {\n" +
+                    "        ...oldState,\n" +
+                    "        past: [...newPast, oldState.current],\n" +
+                    "        current: value,\n" +
+                    "      };\n" +
+                    "    });\n" +
+                    "  };\n" +
+                    "\n" +
+                    "  const undo = () => {\n" +
+                    "    setState((oldState) => {\n" +
+                    "      if (oldState.past.length === 0) {\n" +
+                    "        return oldState;\n" +
+                    "      }\n" +
+                    "      const newPast = [...oldState.past];\n" +
+                    "      const pastValue = newPast.pop();\n" +
+                    "\n" +
+                    "      return {\n" +
+                    "        ...oldState,\n" +
+                    "        past: newPast,\n" +
+                    "        current: pastValue,\n" +
+                    "      };\n" +
+                    "    });\n" +
+                    "  };\n" +
+                    "  \n" +
+                    "  return (\n" +
+                    "    <div>\n" +
+                    '      <input type="text" onChange={handleChange} value={state.current} />\n' +
+                    "      <button onClick={undo}>undo</button>\n" +
+                    "    </div>\n" +
+                    "  );\n" +
+                    "};"}
+                </Code>
+                <P>
+                  If we have more then 10 past states, we remove the first (the
+                  oldest) state, preventing the past from growing.
+                </P>
+                <P>
+                  The current implementation works. Lets make this code reusable
+                  and move it in to a dedicated hook.
+                </P>
+                <Code highlight={[{ start: 48, end: 48 }]}>
+                  {"const useUndo = (initialState) => {\n" +
+                    "  const [state, _setState] = useState({\n" +
+                    "    current: initialState,\n" +
+                    "    past: [],\n" +
+                    "  });\n" +
+                    "\n" +
+                    "  const undo = () => {\n" +
+                    "    _setState((oldState) => {\n" +
+                    "      if (oldState.past.length === 0) {\n" +
+                    "        return oldState;\n" +
+                    "      }\n" +
+                    "      const newPast = [...oldState.past];\n" +
+                    "      const pastValue = newPast.pop();\n" +
+                    "\n" +
+                    "      return {\n" +
+                    "        ...oldState,\n" +
+                    "        past: newPast,\n" +
+                    "        current: pastValue,\n" +
+                    "      };\n" +
+                    "    });\n" +
+                    "  };\n" +
+                    "\n" +
+                    "  const setState = (newState) => {\n" +
+                    "    _setState((oldState) => {\n" +
+                    "      const value =\n" +
+                    '        typeof newState === "function" ? newState(oldState) : newState;\n' +
+                    "\n" +
+                    "      let newPast = [];\n" +
+                    "      if (oldState.past.length <= 10) {\n" +
+                    "        newPast = [...oldState.past];\n" +
+                    "      } else {\n" +
+                    "        const [, /*remove first: the oldest element*/ ...rest] = oldState.past;\n" +
+                    "        newPast = [...rest];\n" +
+                    "      }\n" +
+                    "\n" +
+                    "      return {\n" +
+                    "        ...oldState,\n" +
+                    "        past: [...newPast, oldState.current],\n" +
+                    "        current: value,\n" +
+                    "      };\n" +
+                    "    });\n" +
+                    "  };\n" +
+                    "\n" +
+                    "  return [state.current, { setState, undo }];\n" +
+                    "};\n" +
+                    "\n" +
+                    "const Component = () => {\n" +
+                    '  const [state, { setState, undo }] = useUndo("");\n' +
+                    "\n" +
+                    "  const handleChange = (e) => {\n" +
+                    "    setState(e.target.value);\n" +
+                    "  };\n" +
+                    "\n" +
+                    "  return (\n" +
+                    "    <div>\n" +
+                    '      <input type="text" onChange={handleChange} value={state} />\n' +
+                    "      <button onClick={undo}>undo</button>\n" +
+                    "    </div>\n" +
+                    "  );\n" +
+                    "};"}
+                </Code>
+                <P>
+                  It would be great to redo changes again. If the user undoes
+                  changes, goes in to the past, it would be great to go in to
+                  the future again to the last changes. I would encourage you to
+                  implement this feature yourself. If youre interested in seeing
+                  the end result, feel free to open the drop down.
+                </P>
+                <details>
+                  <summary
+                    style={{
+                      cursor: "pointer",
+                    }}
+                  >
+                    End result
+                  </summary>
+                  <Code>
+                    {"const useUndo = (initialState) => {\n" +
+                      "  const [state, _setState] = useState({\n" +
+                      "    past: [],\n" +
+                      "    initialState: initialState,\n" +
+                      "    current: initialState,\n" +
+                      "    future: [],\n" +
+                      "  });\n" +
+                      "\n" +
+                      "  const setState = (newState) => {\n" +
+                      "    _setState((oldState) => {\n" +
+                      "      let newPast = [];\n" +
+                      "      if (oldState.past.length <= 10) {\n" +
+                      "        newPast = [...oldState.past, oldState.current];\n" +
+                      "      } else {\n" +
+                      "        const [, /*remove first: the oldest element*/ ...rest] = oldState.past;\n" +
+                      "        newPast = [...rest, oldState.current];\n" +
+                      "      }\n" +
+                      "      return {\n" +
+                      "        ...oldState,\n" +
+                      "        past: newPast,\n" +
+                      "        current:\n" +
+                      '          typeof newState === "function"\n' +
+                      "            ? newState(oldState.current)\n" +
+                      "            : newState,\n" +
+                      "        future: [],\n" +
+                      "      };\n" +
+                      "    });\n" +
+                      "  };\n" +
+                      "\n" +
+                      "  const undo = () => {\n" +
+                      "    _setState((oldState) => {\n" +
+                      "      if (oldState.past.length === 0) {\n" +
+                      "        return oldState;\n" +
+                      "      }\n" +
+                      "      const newFuture = [...oldState.future, oldState.current];\n" +
+                      "\n" +
+                      "      let newPast = [...oldState.past];\n" +
+                      "      const newState = newPast.pop();\n" +
+                      "\n" +
+                      "      return {\n" +
+                      "        ...oldState,\n" +
+                      "        past: newPast,\n" +
+                      "        current: newState,\n" +
+                      "        future: newFuture,\n" +
+                      "      };\n" +
+                      "    });\n" +
+                      "  };\n" +
+                      "\n" +
+                      "  const redo = () => {\n" +
+                      "    _setState((oldState) => {\n" +
+                      "      if (oldState.future.length === 0) {\n" +
+                      "        return oldState;\n" +
+                      "      }\n" +
+                      "      const newPast = [...oldState.past, oldState.current];\n" +
+                      "\n" +
+                      "      const newFuture = [...oldState.future];\n" +
+                      "      const newState = newFuture.pop();\n" +
+                      "\n" +
+                      "      return {\n" +
+                      "        ...oldState,\n" +
+                      "        past: newPast,\n" +
+                      "        current: newState,\n" +
+                      "        future: newFuture,\n" +
+                      "      };\n" +
+                      "    });\n" +
+                      "  };\n" +
+                      "\n" +
+                      "  const reset = () => {\n" +
+                      "    _setState((oldState) => {\n" +
+                      "      return {\n" +
+                      "        ...oldState,\n" +
+                      "        past: [],\n" +
+                      "        current: state.initialState,\n" +
+                      "        future: [],\n" +
+                      "      };\n" +
+                      "    });\n" +
+                      "  };\n" +
+                      "\n" +
+                      "  return [\n" +
+                      "    state.current,\n" +
+                      "    {\n" +
+                      "      setState,\n" +
+                      "      undo,\n" +
+                      "      redo,\n" +
+                      "      reset,\n" +
+                      "      canUndo: state.past.length > 0,\n" +
+                      "      canRedo: state.future.length > 0,\n" +
+                      "    },\n" +
+                      "  ];\n" +
+                      "};"}
+                  </Code>
+                </details>
+              </div>
+            </Posting.Body>
+
+            <div
+              style={{
+                padding: "3rem 0 1rem 0",
+              }}
+            >
+              <Posting.DateCreated>August 19, 2022</Posting.DateCreated>
+              <Posting.Language>English</Posting.Language>
+              <Posting.Organization
+                funder={{ name: "Stanislav Panchenko" }}
+                name={"Stanislav Panchenko"}
+                email={"email@stanislavpanchenko.de"}
+              />
+              <Posting.PartOf
+                url={"https://rilexus.github.io/advanced-react-pattern/"}
+              />
+              <Posting.CopyRight
+                name={"Stanislav Panchenko"}
+                email={"email@stanislavpanchenko.de"}
+              />
+            </div>
+          </Posting>
+        </div>
+      </BlogLayout>
     </div>
   );
 };
 
 const UndoState = () => {
-  return <Layout navigation={<Navigation />} content={<Content />} />;
+  return <Content />;
 };
 
 export default UndoState;
