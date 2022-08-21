@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import Layout from "../components/Layout/Layout";
-import Navigation from "../components/Navigation/Navigation";
 import H1 from "../ui/H1/H1";
 import { P } from "../ui/P";
 import { Code } from "../ui/Code";
 import Posting from "../components/Posting/Posting";
 import BlogLayout from "../components/BlogLayout/BlogLayout";
+import { CodeContext } from "../ui/Code/Code";
 
 const useUndoState = (initialState) => {
   const [state, _setState] = useState({

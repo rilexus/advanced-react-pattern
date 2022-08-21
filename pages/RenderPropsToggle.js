@@ -38,10 +38,8 @@ const renderToHTML = ({ getValue }) => {
 };
 
 const result1 = func({ render: renderToString });
-console.log(result1);
 
 const result2 = func({ render: renderToHTML });
-console.log(result2);
 
 // const User = ({ render }) => {
 //   const [state, setState] = useState({});
