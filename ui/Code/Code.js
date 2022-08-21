@@ -10,8 +10,12 @@ import {
   ProgrammingLanguage,
   Author,
   Maintainer,
+  CodeSampleType,
+  Audience as AudienceProp,
 } from "@react-microdata/software-source-code";
 import { Name } from "@react-microdata/person";
+
+import { AudienceType } from "@react-microdata/audience";
 hljs.registerLanguage("xml", xml);
 hljs.registerLanguage("javascript", javascript);
 
@@ -482,6 +486,10 @@ const Code = ({ children, highlight }) => {
         />
       ) : null}
       <SoftwareSourceCode>
+        <AudienceProp itemScope itemtype="https://schema.org/Audience">
+          <AudienceType as={"meta"} content={"programmers"} />
+        </AudienceProp>
+        <CodeSampleType as={"meta"} content={"code snippet"} />
         <meta
           itemProp={"codeRepository"}
           content={"https://github.com/rilexus/advanced-react-pattern"}

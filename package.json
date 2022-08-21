@@ -16,6 +16,7 @@
     "@react-microdata/blog-posting":"1.0.6",
     "@react-microdata/organization":"1.0.6",
     "@react-microdata/software-source-code":"1.0.6",
+    "@react-microdata/audience":"1.0.6",
     "@react-microdata/person":"1.0.6",
     "@xstate/react": "^1.5.1",
     "babel-plugin-transform-define": "^2.0.1",
