@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[23],{41535:function(e,n,u){u.r(n);u(67294);var r=u(85893);n.default=function(){return(0,r.jsx)("div",{children:"Board"})}}}]);
