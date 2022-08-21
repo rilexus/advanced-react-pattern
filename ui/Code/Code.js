@@ -5,7 +5,13 @@ import javascript from "highlight.js/lib/languages/javascript";
 import { createContext, useContext } from "react";
 import styled, { css } from "styled-components";
 import useStyle from "../../hooks/useStyle/useStyle";
-
+import {
+  SoftwareSourceCode,
+  ProgrammingLanguage,
+  Author,
+  Maintainer,
+} from "@react-microdata/software-source-code";
+import { Name } from "@react-microdata/person";
 hljs.registerLanguage("xml", xml);
 hljs.registerLanguage("javascript", javascript);
 
@@ -475,7 +481,31 @@ const Code = ({ children, highlight }) => {
           }}
         />
       ) : null}
-      <pre ref={ref}>{children}</pre>
+      <SoftwareSourceCode>
+        <meta
+          itemProp={"codeRepository"}
+          content={"https://github.com/rilexus/advanced-react-pattern"}
+        />
+        <Maintainer.Person>
+          <meta
+            itemProp={"image"}
+            content={"https://avatars.githubusercontent.com/u/28537457?v=4"}
+          />
+          <meta itemProp={"sameAs"} content={"https://github.com/rilexus"} />
+          <Name as={"meta"} content={"Stanislav Panchenko"} />
+        </Maintainer.Person>
+        <Author.Person>
+          <meta
+            itemProp={"image"}
+            content={"https://avatars.githubusercontent.com/u/28537457?v=4"}
+          />
+          <meta itemProp={"sameAs"} content={"https://github.com/rilexus"} />
+          <Name as={"meta"} content={"Stanislav Panchenko"} />
+        </Author.Person>
+
+        <ProgrammingLanguage as={"meta"} content={"javascript"} />
+        <pre ref={ref}>{children}</pre>
+      </SoftwareSourceCode>
     </CodeTheme>
   );
 };
