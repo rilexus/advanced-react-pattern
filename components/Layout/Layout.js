@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Container from "../../ui/Container/Container";
 import useLocalStorage from "../../hooks/useLocalStorage/useLocalStorage";
+import styled from "styled-components";
 
 const ArrowForward = ({
   stroke = "currentColor",
@@ -47,6 +48,18 @@ const ArrowBack = ({
   );
 };
 
+const StyledSidebar = styled.div`
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.76);
+  top: 0;
+  backdrop-filter: blur(10px);
+  left: 0;
+  padding-left: 2rem;
+  transition: transform 200ms;
+  width: 300px;
+  position: fixed;
+`;
+
 const Sidebar = ({ children }) => {
   const [isOpen, setOpen] = useLocalStorage("sidebar-open", false);
 
@@ -65,13 +78,9 @@ const Sidebar = ({ children }) => {
     }
   };
   return (
-    <div
+    <StyledSidebar
       style={{
-        height: "100vh",
-        background: "rgba(255,255,255,0.76)",
-        top: "0",
-        backdropFilter: "blur(10px)",
-        left: 0,
+        transform: `translate(${isOpen ? 0 : -300}px)`,
         boxShadow: `${
           isOpen
             ? `
@@ -80,11 +89,6 @@ const Sidebar = ({ children }) => {
             : "none"
         }
            `,
-        paddingLeft: "2rem",
-        transition: "transform 200ms",
-        transform: `translate(${isOpen ? 0 : -300}px)`,
-        width: "300px",
-        position: "fixed",
       }}
     >
       <button
@@ -108,7 +112,7 @@ const Sidebar = ({ children }) => {
         <ArrowBack height={"1rem"} width={"1rem"} />
       </button>
       {children}
-    </div>
+    </StyledSidebar>
   );
 };
 
