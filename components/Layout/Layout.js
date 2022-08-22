@@ -80,7 +80,7 @@ const Sidebar = ({ children }) => {
   return (
     <StyledSidebar
       style={{
-        transform: `translate(${isOpen ? 0 : -300}px)`,
+        transform: `translate(${isOpen ? 0 : -350}px)`,
         boxShadow: `${
           isOpen
             ? `
@@ -93,8 +93,8 @@ const Sidebar = ({ children }) => {
     >
       <button
         style={{
-          width: "2rem",
-          height: "2rem",
+          width: "3rem",
+          height: "3rem",
           borderRadius: "3rem",
           border: "1px solid #d8d8d8",
           display: "flex",
@@ -103,7 +103,7 @@ const Sidebar = ({ children }) => {
           cursor: "pointer",
           position: "absolute",
           top: "20px",
-          right: "-1rem",
+          right: isOpen ? "-1rem" : "-5rem",
           transition: "transform 200ms",
           transform: `rotate(${isOpen ? 0 : 180}deg)`,
         }}
