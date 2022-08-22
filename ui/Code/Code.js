@@ -16,6 +16,7 @@ import {
 import { Name } from "@react-microdata/person";
 
 import { AudienceType } from "@react-microdata/audience";
+import useLocalStorage from "../../hooks/useLocalStorage/useLocalStorage";
 hljs.registerLanguage("xml", xml);
 hljs.registerLanguage("javascript", javascript);
 
@@ -122,25 +123,6 @@ const initLinesPlugin = (hljs) => {
 
     highlightLinesCodeWithoutNumbers();
   }
-};
-
-const useLocalStorage = (storageKey, fallbackState) => {
-  const [value, setValue] = useState(() => {
-    if (typeof window !== "undefined") {
-      return JSON.parse(localStorage.getItem(storageKey)) ?? fallbackState;
-    }
-
-    return null;
-  });
-
-  useEffect(() => {
-    localStorage.setItem(
-      storageKey,
-      JSON.stringify(value === null ? fallbackState : value)
-    );
-  }, [value, storageKey]);
-
-  return [value, setValue];
 };
 
 const codeContext = createContext(null);
@@ -443,6 +425,12 @@ const ThemeButton = ({ onClick, style }) => {
   );
 };
 
+const StyledPre = styled.pre`
+  margin-top: 44px;
+  margin-bottom: 44px;
+  overflow-x: scroll;
+`;
+
 const Code = ({ children, highlight }) => {
   const ref = useRef(null);
   const context = useCodeContext();
@@ -512,7 +500,7 @@ const Code = ({ children, highlight }) => {
         </Author.Person>
 
         <ProgrammingLanguage as={"meta"} content={"javascript"} />
-        <pre ref={ref}>{children}</pre>
+        <StyledPre ref={ref}>{children}</StyledPre>
       </SoftwareSourceCode>
     </CodeTheme>
   );

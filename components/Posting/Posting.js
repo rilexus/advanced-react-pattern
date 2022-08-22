@@ -12,19 +12,19 @@ import {
 } from "@react-microdata/blog-posting";
 import { Name } from "@react-microdata/person";
 import { Email, Funder } from "@react-microdata/organization";
+import Eyebrow from "../../ui/Eyebrow/Eyebrow";
 
 const Author = ({ name, url, ...props }) => {
   return (
     <BlogAuthor.Person {...props}>
       <div>
-        Author:
-        <Name as={"span"}> {name}</Name>
+        <Eyebrow as={"span"}>Author: </Eyebrow>
+        <Name as={"span"}>
+          <a href={url}>{name}</a>
+        </Name>
       </div>
       <div>
-        URL:
-        <Url as={"a"} href={url}>
-          {url}
-        </Url>
+        <Url as={"meta"} content={url} />
       </div>
     </BlogAuthor.Person>
   );
@@ -33,7 +33,7 @@ const Author = ({ name, url, ...props }) => {
 const DatePublished = ({ children, props }) => {
   return (
     <div itemProp={"datePublished"} {...props}>
-      Published at: {children}
+      <Eyebrow as={"span"}>Published</Eyebrow>: {children}
     </div>
   );
 };

@@ -5,6 +5,8 @@ import { Code } from "../ui/Code";
 import Posting from "../components/Posting/Posting";
 import BlogLayout from "../components/BlogLayout/BlogLayout";
 import { CodeContext } from "../ui/Code/Code";
+import VerticalSpacer from "../ui/VerticalSpacer/VerticalSpacer";
+import Color from "../ui/Color/Color";
 
 const useUndoState = (initialState) => {
   const [state, _setState] = useState({
@@ -185,17 +187,20 @@ const Component = () => {
 const Content = () => {
   return (
     <div>
+      <VerticalSpacer space={"4rem"} />
       <BlogLayout>
         <div>
           <Posting>
+            <Color color={"#6e6e73"}>
+              <Posting.Author
+                name={"Stanislav Panchenko"}
+                url={"https://github.com/rilexus"}
+              />
+              <Posting.DatePublished>August 19, 2022</Posting.DatePublished>
+            </Color>
             <Posting.Headline>
               <H1>Undo State</H1>
             </Posting.Headline>
-            <Posting.Author
-              name={"Stanislav Panchenko"}
-              url={"https://github.com/rilexus"}
-            />
-            <Posting.DatePublished>August 19, 2022</Posting.DatePublished>
             <Posting.Body
               style={{
                 marginBottom: "2rem",

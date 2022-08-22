@@ -7,7 +7,6 @@ import { P } from "../../ui/P";
 import prefixBasePath from "../../utils/prefixBasePath";
 import { Code } from "../../ui/Code";
 import ApplicationDemoWithoutSuspense from "./components/ApplicationDemoWithoutSuspense/ApplicationDemoWithoutSuspense";
-import { Ul } from "../../ui/Ul";
 
 const sleep = async (time = 200) => new Promise((res) => setTimeout(res, time));
 

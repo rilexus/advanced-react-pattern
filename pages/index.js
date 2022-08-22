@@ -5,17 +5,19 @@ import { P } from "../ui/P";
 
 const App = () => {
   return (
-    <Layout
-      content={
-        <div>
-          <H1>Advanced React Pattern</H1>
-          <P>
-            This website provides an overview of all kinds of react patterns..
-          </P>
-        </div>
-      }
-      navigation={<Navigation />}
-    />
+    <div>
+      <Layout
+        content={
+          <div>
+            <H1>Advanced React Pattern</H1>
+            <P>
+              This website provides an overview of all kinds of react patterns..
+            </P>
+          </div>
+        }
+        navigation={<Navigation />}
+      />
+    </div>
   );
 };
 
