@@ -1,6 +1,7 @@
 import { Ul } from "../../ui/Ul";
-import Link from "next/link";
+
 import Li from "../../ui/Li/Li";
+import Link from "../../ui/Link/Link";
 
 const Navigation = () => {
   return (
@@ -13,9 +14,7 @@ const Navigation = () => {
           <h4>Utils</h4>
           <Ul>
             <Li>
-              <Link href="/Prefetch">
-                <a>Prefetched State</a>
-              </Link>
+              <Link href="/Prefetch">Prefetched State</Link>
             </Li>
             <Li>
               <Link href="/StateSubscription">State Subscription</Link>
