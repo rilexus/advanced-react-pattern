@@ -1,22 +1,47 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 
-const useLocalStorage = (storageKey, fallbackState) => {
-  const [value, setValue] = useState(() => {
-    if (typeof window !== "undefined") {
-      return JSON.parse(localStorage.getItem(storageKey)) ?? fallbackState;
+const useLocalStorage = (key, initialValue) => {
+  // State to store our value
+  // Pass initial state function to useState so logic is only executed once
+  const [storedValue, setStoredValue] = useState(() => {
+    if (typeof window === "undefined") {
+      return null;
     }
-
-    return null;
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      console.log(error);
+      return initialValue;
+    }
   });
 
-  useEffect(() => {
-    localStorage.setItem(
-      storageKey,
-      JSON.stringify(value === null ? fallbackState : value)
-    );
-  }, [value, storageKey]);
+  const setValue = (value) => {
+    try {
+      const valueToStore =
+        value instanceof Function ? value(storedValue) : value;
+      setStoredValue(valueToStore);
 
-  return [value, setValue];
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(key, JSON.stringify(valueToStore));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (storedValue === null) {
+      try {
+        const item = window.localStorage.getItem(key);
+        setStoredValue(item ? JSON.parse(item) : initialValue);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, []);
+
+  return [storedValue, setValue];
 };
 
 export default useLocalStorage;

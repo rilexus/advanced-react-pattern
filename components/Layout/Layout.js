@@ -1,29 +1,6 @@
 import React, { useState } from "react";
 import Container from "../../ui/Container/Container";
-import useLocalStorage from "../../hooks/useLocalStorage/useLocalStorage";
 import styled from "styled-components";
-
-const ArrowForward = ({
-  stroke = "currentColor",
-  fill = "currentColor",
-  height = "1em",
-  width = "1em",
-  ...props
-}) => {
-  return (
-    <svg
-      stroke={stroke}
-      fill={fill}
-      height={height}
-      width={width}
-      strokeWidth="0"
-      viewBox="0 0 512 512"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M294.1 256L167 129c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.3 34 0L345 239c9.1 9.1 9.3 23.7.7 33.1L201.1 417c-4.7 4.7-10.9 7-17 7s-12.3-2.3-17-7c-9.4-9.4-9.4-24.6 0-33.9l127-127.1z"></path>
-    </svg>
-  );
-};
 
 const ArrowBack = ({
   stroke = "currentColor",
@@ -61,28 +38,29 @@ const StyledSidebar = styled.div`
 `;
 
 const Sidebar = ({ children }) => {
-  const [isOpen, setOpen] = useLocalStorage("sidebar-open", true);
+  const [isOpen, setOpen] = useState("open");
 
   const open = () => {
-    setOpen(true);
+    setOpen("open");
   };
   const close = () => {
-    setOpen(false);
+    setOpen("close");
   };
 
   const toggle = () => {
-    if (isOpen) {
+    if (isOpen === "open") {
       close();
     } else {
       open();
     }
   };
+
   return (
     <StyledSidebar
       style={{
-        transform: `translate(${isOpen ? 0 : -350}px)`,
+        transform: `translate(${isOpen === "open" ? 0 : -350}px)`,
         boxShadow: `${
-          isOpen
+          isOpen === "open"
             ? `
             0 0px 6px -1px rgb(0 0 0/0.1),
             0 0px 4px -2px rgb(0 0 0/0.1)`
@@ -103,9 +81,9 @@ const Sidebar = ({ children }) => {
           cursor: "pointer",
           position: "absolute",
           top: "20px",
-          right: isOpen ? "-1rem" : "-5rem",
+          right: isOpen === "open" ? "-1rem" : "-5rem",
           transition: "transform 200ms",
-          transform: `rotate(${isOpen ? 0 : 180}deg)`,
+          transform: `rotate(${isOpen === "open" ? 0 : 180}deg)`,
         }}
         onClick={toggle}
       >
