@@ -61,7 +61,7 @@ const StyledSidebar = styled.div`
 `;
 
 const Sidebar = ({ children }) => {
-  const [isOpen, setOpen] = useLocalStorage("sidebar-open", false);
+  const [isOpen, setOpen] = useLocalStorage("sidebar-open", true);
 
   const open = () => {
     setOpen(true);
