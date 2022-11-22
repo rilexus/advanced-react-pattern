@@ -342,10 +342,10 @@ const Sus = () => {
                 'script.type = "application/javascript";\n' +
                 "script.src = `https://our-server/LazyComponent.js`;\n" +
                 "script.onload = () => {\n" +
-                "  ref.current = window[name];\n" +
-                "  rerender();\n" +
+                "  ref.current = window['Lazy'];\n" +
                 "  const head = document.head;\n" +
                 "  head.appendChild(script);\n" +
+                "  rerender();\n" +
                 "};"}
             </Code>
             <P>
@@ -361,8 +361,84 @@ const Sus = () => {
                 "\n" +
                 "window.Lazy = Lazy;"}
             </Code>
+            <P>More specifically its this piece of code:</P>
+            <Code>
+              {"const Lazy = (props) => {\n" +
+                "      const [, rerender] = useReducer(() => ({}), {});\n" +
+                "      const ref = useRef(() => null);\n" +
+                "\n" +
+                "      useEffect(() => {\n" +
+                '        const script = document.createElement("script");\n' +
+                '        script.type = "application/javascript";\n' +
+                "        script.src = `https://our-server/LazyComponnet.js`;\n" +
+                "        script.onload = () => {\n" +
+                "          ref.current = window['Lazy'];\n" +
+                "          rerender();\n" +
+                "        };\n" +
+                "\n" +
+                "        const head = document.head;\n" +
+                "        head.appendChild(script);\n" +
+                "      }, []);\n" +
+                "\n" +
+                "      const Component = ref.current;\n" +
+                "      return <Component {...props} />;\n" +
+                "    };"}
+            </Code>
             <P>
-              Luckily we can improve this by simply utilising{" "}
+              There is a lot more potential for improvement. We do not need to
+              hard code the server url and the file name of the lazy component.
+              We could make use of the manifest.json file on the server and
+              specify the url path to the lazy component there. We would access
+              the path by the component name only.
+            </P>
+            <Code>
+              {"// manifest.json\n" +
+                "{\n" +
+                ' "Lazy": "/repo/LazyComponent.js" \n' +
+                "}"}
+            </Code>
+            <P>
+              Now we would need to fetch the manifest.json, get the url of the
+              component and do the script trick again.
+            </P>
+            <Code>
+              {"const Lazy = (props) => {\n" +
+                "      const [, rerender] = useReducer(() => ({}), {});\n" +
+                "      const ref = useRef(() => null);\n" +
+                "\n" +
+                "      useEffect(() => {\n" +
+                "        if (window['Lazy']) {\n" +
+                "          /**\n" +
+                "           * Look in to the cache. Prevent Fetching multiple times.\n" +
+                "           */\n" +
+                "          ref.current = window['Lazy'];\n" +
+                "          return;\n" +
+                "        }\n" +
+                "        fetch(`${endpoint}/manifest.json`)\n" +
+                "          .then((res) => res.json())\n" +
+                "          .then((manifest) => {\n" +
+                "            // Get path\n" +
+                "            const path = manifest[name];\n" +
+                "\n" +
+                '            const script = document.createElement("script");\n' +
+                '            script.type = "application/javascript";\n' +
+                "            script.src = `https://our-server${path}`;\n" +
+                "            script.onload = () => {\n" +
+                "              ref.current = window['Lazy'];\n" +
+                "              rerender();\n" +
+                "            };\n" +
+                "\n" +
+                "            const head = document.head;\n" +
+                "            head.appendChild(script);\n" +
+                "          });\n" +
+                "      }, []);\n" +
+                "\n" +
+                "      const Component = ref.current;\n" +
+                "      return <Component {...props} />;\n" +
+                "    };"}
+            </Code>
+            <P>
+              Luckily we do not need to do all this ourself. We simply utilise{" "}
               <a
                 href="https://webpack.js.org/guides/lazy-loading/"
                 style={{
@@ -371,7 +447,7 @@ const Sus = () => {
               >
                 webpack and the import function.
               </a>
-              which does exactly the same thing for us.
+              which does exactly the same things for us.
             </P>
             <Code>
               {'const Backlog = await import(/* webpackChunkName: "Backlog" */ "../Backlog");\n' +
