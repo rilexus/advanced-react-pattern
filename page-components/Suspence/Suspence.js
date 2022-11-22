@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+  createElement,
+} from "react";
 import Layout from "../../components/Layout/Layout";
 import useToggle from "../../hooks/useToggle/useToggle";
 import Navigation from "../../components/Navigation/Navigation";
@@ -9,6 +15,55 @@ import { Code } from "../../ui/Code";
 import ApplicationDemoWithoutSuspense from "./components/ApplicationDemoWithoutSuspense/ApplicationDemoWithoutSuspense";
 
 const sleep = async (time = 200) => new Promise((res) => setTimeout(res, time));
+
+const createLazy = (endpoint) => {
+  return (name) => {
+    if (typeof window === "object") {
+      /**
+       * Provide other dependencies, if needed.
+       */
+      window.createElement = createElement;
+    }
+
+    /**
+     * Return HOC Component
+     */
+    return (props) => {
+      const [, rerender] = useReducer(() => ({}), {});
+      const ref = useRef(() => null);
+
+      useEffect(() => {
+        if (window[name]) {
+          /**
+           * Look in to the cache. Prevent Fetching multiple times.
+           */
+          ref.current = window[name];
+          return;
+        }
+        fetch(`${endpoint}/manifest.json`)
+          .then((res) => res.json())
+          .then((manifest) => {
+            // Get path
+            const path = manifest.components[name];
+
+            const script = document.createElement("script");
+            script.type = "application/javascript";
+            script.src = `${endpoint}${path}`;
+            script.onload = () => {
+              ref.current = window[name];
+              rerender();
+            };
+
+            const head = document.head;
+            head.appendChild(script);
+          });
+      }, []);
+
+      const Component = ref.current;
+      return <Component {...props} />;
+    };
+  };
+};
 
 const lazy = (factory) => {
   let Component = () => null;
@@ -210,6 +265,10 @@ const LazyComponent = lazy(async function Wrapper() {
 //   return <BackLog fallback={<div>Loading</div>}/>
 // }
 
+const la = createLazy("");
+
+const Comp = la("Lazy");
+
 const Sus = () => {
   const [visible, toggle] = useToggle();
   return (
@@ -217,6 +276,7 @@ const Sus = () => {
       navigation={<Navigation />}
       content={
         <main>
+          <Comp value={"Some"} />
           <article>
             <header>
               <H1>Suspense</H1>
@@ -274,10 +334,45 @@ const Sus = () => {
               We ship a lot of code at once.
             </P>
             <P>
-              Luckily we can improve this by utilising{" "}
-              <a href="https://webpack.js.org/guides/lazy-loading/">
+              We can split our application in to smaller chunks and load the
+              needed modules dynamically.
+            </P>
+            <P>The core idea is the code snippet below.</P>
+            <Code>
+              {'const script = document.createElement("script");\n' +
+                'script.type = "application/javascript";\n' +
+                "script.src = `https://our-server/LazyComponent.js`;\n" +
+                "script.onload = () => {\n" +
+                "  ref.current = window[name];\n" +
+                "  rerender();\n" +
+                "  const head = document.head;\n" +
+                "  head.appendChild(script);\n" +
+                "};"}
+            </Code>
+            <P>
+              We create a script element and point its src prop to the component
+              we want to include in to our application. The only agreement we
+              need to follow is that in the end of our LazyComponent, we need to
+              attach ourself to the window or any other global:
+            </P>
+            <Code>
+              {"const Lazy = ({ value }) => {\n" +
+                '  return createElement("div", null, [`Lazy Loaded Component: ${value}`]);\n' +
+                "};\n" +
+                "\n" +
+                "window.Lazy = Lazy;"}
+            </Code>
+            <P>
+              Luckily we can improve this by simply utilising{" "}
+              <a
+                href="https://webpack.js.org/guides/lazy-loading/"
+                style={{
+                  marginRight: ".3rem",
+                }}
+              >
                 webpack and the import function.
               </a>
+              which does exactly the same thing for us.
             </P>
             <Code>
               {'const Backlog = await import(/* webpackChunkName: "Backlog" */ "../Backlog");\n' +
