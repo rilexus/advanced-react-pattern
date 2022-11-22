@@ -276,7 +276,6 @@ const Sus = () => {
       navigation={<Navigation />}
       content={
         <main>
-          <Comp value={"Some"} />
           <article>
             <header>
               <H1>Suspense</H1>
