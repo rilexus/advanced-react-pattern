@@ -1,10 +1,11 @@
 import React from "react";
 
-const Flex = ({ children, direction = "row" }) => {
+const Flex = ({ justify = "start", children, direction = "row" }) => {
   return (
     <div
       style={{
         display: "flex",
+        justifyContent: justify,
         flexDirection: direction,
       }}
     >

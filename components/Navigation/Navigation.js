@@ -67,6 +67,14 @@ const Navigation = () => {
             </Li>
           </Ul>
         </Li>
+        <Li>
+          <h4>Patterns</h4>
+          <Ul>
+            <Li>
+              <Link href="/mvc">MVC</Link>
+            </Li>
+          </Ul>
+        </Li>
       </Ul>
     </nav>
   );
