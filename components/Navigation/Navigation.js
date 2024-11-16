@@ -51,6 +51,9 @@ const Navigation = () => {
             <Li>
               <Link href="/Roles">Roles</Link>
             </Li>
+            <Li>
+              <Link href="/Layout">Layout</Link>
+            </Li>
           </Ul>
         </Li>
         <Li>
