@@ -94,6 +94,20 @@ const LayoutPage = () => {
               "</Counter>"}
           </Code>
           <Code>
+            {"const CounterLayout = ({ value, increment, decrement, error }) => {\n" +
+              "  return (\n" +
+              "    <div>\n" +
+              '      <Flex justify={"center"}>\n' +
+              "        <div>{increment}</div>\n" +
+              "        <div>{value}</div>\n" +
+              "        <div>{decrement}</div>\n" +
+              "      </Flex>\n" +
+              '      <Flex justify={"center"}>{error}</Flex>\n' +
+              "    </div>\n" +
+              "  );\n" +
+              "};"}
+          </Code>
+          <Code>
             {"<ThisWebsiteLayout\n" +
               "  navigation={<Navigation />}\n" +
               "  content={<main>\n" +
