@@ -4,6 +4,7 @@ import Navigation from "../components/Navigation/Navigation";
 import Layout from "../components/Layout/Layout";
 import { Code } from "../ui/Code";
 import Flex from "../ui/Flex/Flex";
+import MyArticle from "../components/my-article";
 
 const RolesContext = createContext({});
 const useRoles = (props, role) => {
@@ -83,103 +84,107 @@ const Roles = () => {
       content={
         <div>
           <main>
-            <article>
-              <h1>Role Pattern</h1>
-              <Counter initValue={1}>
-                <Flex justify={"center"}>
-                  <Button role={"increment"}>+</Button>
-                  <Input />
-                  <Button role={"decrement"}>-</Button>
-                </Flex>
-                <Flex justify={"center"}>
-                  <WarningText role={"underZeroWarning"} />
-                  <WarningText role={"overZeroWarning"} />
-                </Flex>
-              </Counter>
-              <Code>
-                {"<Counter initValue={1}>\n" +
-                  '  <Flex justify={"center"}>\n' +
-                  '    <Button role={"increment"}>+</Button>\n' +
-                  "    <Input />\n" +
-                  '    <Button role={"decrement"}>-</Button>\n' +
-                  "  </Flex>\n" +
-                  '  <Flex justify={"center"}>\n' +
-                  '    <WarningText role={"underZeroWarning"} />\n' +
-                  '    <WarningText role={"overZeroWarning"} />\n' +
-                  "  </Flex>\n" +
-                  "</Counter>"}
-              </Code>
-              <Code>
-                {"const Counter = ({ children, initValue = 0 }) => {\n" +
-                  "  const [value, setState] = useState(initValue);\n" +
-                  "\n" +
-                  "  const roles = {\n" +
-                  "    input: {\n" +
-                  '      // props or the "input" role\n' +
-                  "      value,\n" +
-                  "      onChange: (e) => {\n" +
-                  "        const { value } = e.target;\n" +
-                  "        setState(() => Number(value));\n" +
-                  "      },\n" +
-                  '      type: "number",\n' +
-                  "    },\n" +
-                  "    increment: {\n" +
-                  '      // props or the "increment" role\n' +
-                  "      onClick: () => {\n" +
-                  "        // click handling function\n" +
-                  "        setState((s) => s + 1);\n" +
-                  "      },\n" +
-                  "    },\n" +
-                  "    decrement: {\n" +
-                  '      // props or the "decrement" role\n' +
-                  "      onClick: () => {\n" +
-                  "        // click handling function\n" +
-                  "        setState((s) => s - 1);\n" +
-                  "      },\n" +
-                  "    },\n" +
-                  "    overZeroWarning: {\n" +
-                  '      children: value > 0 ? "Over Zero" : null,\n' +
-                  "      style: {\n" +
-                  '        color: "red",\n' +
-                  "      },\n" +
-                  "    },\n" +
-                  "    underZeroWarning: {\n" +
-                  '      children: value < 0 ? "Under Zero" : null,\n' +
-                  "      style: {\n" +
-                  '        color: "blue",\n' +
-                  "      },\n" +
-                  "    },\n" +
-                  "  };\n" +
-                  "\n" +
-                  "  return (\n" +
-                  "    <RolesContext.Provider value={roles}>{children}</RolesContext.Provider>\n" +
-                  "  );\n" +
-                  "};"}
-              </Code>
-              <Code>
-                {"const RolesContext = createContext({});\n" +
-                  "const useRoles = (props, role) => {\n" +
-                  "  const allRoles = useContext(RolesContext);\n" +
-                  "  return {\n" +
-                  "    ...allRoles[role], // role specific props\n" +
-                  "    role,\n" +
-                  "    ...props,\n" +
-                  "  };\n" +
-                  "};"}
-              </Code>
-              <Code>
-                {"const Button = ({ children, role, ...props }) => {\n" +
-                  '  props = useRoles(props, role || "button");\n' +
-                  "  return <button {...props}>{children}</button>;\n" +
-                  "};"}
-              </Code>
-              <Code>
-                {"const Input = ({ role, ...props }) => {\n" +
-                  '  props = useRoles(props, role || "input");\n' +
-                  "  return <input {...props} />;\n" +
-                  "};"}
-              </Code>
-            </article>
+            <MyArticle
+              title={<h1>Role Pattern</h1>}
+              body={
+                <div>
+                  <Counter initValue={1}>
+                    <Flex justify={"center"}>
+                      <Button role={"increment"}>+</Button>
+                      <Input />
+                      <Button role={"decrement"}>-</Button>
+                    </Flex>
+                    <Flex justify={"center"}>
+                      <WarningText role={"underZeroWarning"} />
+                      <WarningText role={"overZeroWarning"} />
+                    </Flex>
+                  </Counter>
+                  <Code>
+                    {"<Counter initValue={1}>\n" +
+                      '  <Flex justify={"center"}>\n' +
+                      '    <Button role={"increment"}>+</Button>\n' +
+                      "    <Input />\n" +
+                      '    <Button role={"decrement"}>-</Button>\n' +
+                      "  </Flex>\n" +
+                      '  <Flex justify={"center"}>\n' +
+                      '    <WarningText role={"underZeroWarning"} />\n' +
+                      '    <WarningText role={"overZeroWarning"} />\n' +
+                      "  </Flex>\n" +
+                      "</Counter>"}
+                  </Code>
+                  <Code>
+                    {"const Counter = ({ children, initValue = 0 }) => {\n" +
+                      "  const [value, setState] = useState(initValue);\n" +
+                      "\n" +
+                      "  const roles = {\n" +
+                      "    input: {\n" +
+                      '      // props or the "input" role\n' +
+                      "      value,\n" +
+                      "      onChange: (e) => {\n" +
+                      "        const { value } = e.target;\n" +
+                      "        setState(() => Number(value));\n" +
+                      "      },\n" +
+                      '      type: "number",\n' +
+                      "    },\n" +
+                      "    increment: {\n" +
+                      '      // props or the "increment" role\n' +
+                      "      onClick: () => {\n" +
+                      "        // click handling function\n" +
+                      "        setState((s) => s + 1);\n" +
+                      "      },\n" +
+                      "    },\n" +
+                      "    decrement: {\n" +
+                      '      // props or the "decrement" role\n' +
+                      "      onClick: () => {\n" +
+                      "        // click handling function\n" +
+                      "        setState((s) => s - 1);\n" +
+                      "      },\n" +
+                      "    },\n" +
+                      "    overZeroWarning: {\n" +
+                      '      children: value > 0 ? "Over Zero" : null,\n' +
+                      "      style: {\n" +
+                      '        color: "red",\n' +
+                      "      },\n" +
+                      "    },\n" +
+                      "    underZeroWarning: {\n" +
+                      '      children: value < 0 ? "Under Zero" : null,\n' +
+                      "      style: {\n" +
+                      '        color: "blue",\n' +
+                      "      },\n" +
+                      "    },\n" +
+                      "  };\n" +
+                      "\n" +
+                      "  return (\n" +
+                      "    <RolesContext.Provider value={roles}>{children}</RolesContext.Provider>\n" +
+                      "  );\n" +
+                      "};"}
+                  </Code>
+                  <Code>
+                    {"const RolesContext = createContext({});\n" +
+                      "const useRoles = (props, role) => {\n" +
+                      "  const allRoles = useContext(RolesContext);\n" +
+                      "  return {\n" +
+                      "    ...allRoles[role], // role specific props\n" +
+                      "    role,\n" +
+                      "    ...props,\n" +
+                      "  };\n" +
+                      "};"}
+                  </Code>
+                  <Code>
+                    {"const Button = ({ children, role, ...props }) => {\n" +
+                      '  props = useRoles(props, role || "button");\n' +
+                      "  return <button {...props}>{children}</button>;\n" +
+                      "};"}
+                  </Code>
+                  <Code>
+                    {"const Input = ({ role, ...props }) => {\n" +
+                      '  props = useRoles(props, role || "input");\n' +
+                      "  return <input {...props} />;\n" +
+                      "};"}
+                  </Code>
+                </div>
+              }
+            />
           </main>
         </div>
       }

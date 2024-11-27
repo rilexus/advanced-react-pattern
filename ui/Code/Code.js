@@ -474,7 +474,7 @@ const Code = ({ children, highlight }) => {
         />
       ) : null}
       <SoftwareSourceCode>
-        <AudienceProp itemScope itemtype="https://schema.org/Audience">
+        <AudienceProp itemScope itemType="https://schema.org/Audience">
           <AudienceType as={"meta"} content={"programmers"} />
         </AudienceProp>
         <CodeSampleType as={"meta"} content={"code snippet"} />
