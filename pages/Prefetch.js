@@ -39,6 +39,9 @@ const Prefetch = () => {
       content={
         <main>
           <MyArticle
+            keywords={
+              "react, react patterns, frontend, development, prefetch pattern, loading optimisation"
+            }
             title={
               <Name>
                 <H1>Prefetch</H1>

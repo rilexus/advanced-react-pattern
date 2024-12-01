@@ -9,12 +9,12 @@ import {
   Keywords,
 } from "@react-microdata/article";
 import Flex from "../ui/Flex/Flex";
-import { Name as PersonName } from "@react-microdata/person/dist/src/itemProps/Name";
+import { Name as PersonName } from "@react-microdata/person";
 import { Email } from "@react-microdata/person";
 
 const date = new Date().toLocaleDateString();
 
-export default function MyArticle({ title, body }) {
+export default function MyArticle({ title, body, keywords = "" }) {
   return (
     <div
       style={{
@@ -54,6 +54,7 @@ export default function MyArticle({ title, body }) {
             <div>Published: &nbsp;</div>
             <DatePublished>{date}</DatePublished>
           </Flex>
+          <Keywords style={{ display: "none" }}>{keywords}</Keywords>
         </div>
       </Article>
     </div>

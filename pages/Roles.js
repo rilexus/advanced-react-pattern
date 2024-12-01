@@ -86,6 +86,9 @@ const Roles = () => {
           <main>
             <MyArticle
               title={<h1>Role Pattern</h1>}
+              keywords={
+                "react, react patterns, frontend, development, roles pattern, slot pattern"
+              }
               body={
                 <div>
                   <Counter initValue={1}>
